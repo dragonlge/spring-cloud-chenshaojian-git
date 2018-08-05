@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+/**
+ * @author yangyueming
+ */
 public class TreeMapConvert {
     public static Gson getGson() {
         return new GsonBuilder()

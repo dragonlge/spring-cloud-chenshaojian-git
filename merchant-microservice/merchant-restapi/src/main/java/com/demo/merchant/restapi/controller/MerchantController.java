@@ -11,6 +11,7 @@ import com.demo.merchant.domain.util.CopyUtil;
 import com.demo.merchant.object.MerchantQo;
 import com.demo.merchant.object.RoleQo;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/merchant")
+@Slf4j
 public class MerchantController {
-    private static Logger logger = LoggerFactory.getLogger(MerchantController.class);
-
     @Autowired
     private MerchantService merchantService;
 
@@ -112,7 +115,7 @@ public class MerchantController {
 
             userService.save(user);
 
-            logger.info("新增->ID=" + merchant.getId());
+            log.info("新增->ID=" + merchant.getId());
             return "1";
         });
     }
@@ -124,7 +127,7 @@ public class MerchantController {
 
             merchantService.save(merchant);
 
-            logger.info("修改->ID=" + merchant.getId());
+            log.info("修改->ID=" + merchant.getId());
             return "1";
         });
     }
@@ -133,7 +136,7 @@ public class MerchantController {
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             merchantService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return "1";
         });
     }

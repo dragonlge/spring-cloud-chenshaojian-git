@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * @author yangyueming
+ */
 @Data
 public class OrderQo extends PageQo {
     private Long id;

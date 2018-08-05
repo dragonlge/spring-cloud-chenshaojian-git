@@ -2,6 +2,9 @@ package com.demo.merchant.security.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * @author yangyueming
+ */
 @ConfigurationProperties(prefix = "securityconfig")
 public class SecuritySettings {
     private String logoutsuccssurl = "/logout";

@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
+/**
+ * @author yangyueming
+ */
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
     Page<Order> findByCreatedGreaterThan(@Param("created") Date created, Pageable pageRequest);

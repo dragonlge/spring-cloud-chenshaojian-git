@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author yangyueming
+ */
 public abstract class BaseController {
     private PathMatcher pathMatcher = new AntPathMatcher();
 
@@ -53,7 +56,9 @@ public abstract class BaseController {
         Long merchantId = null;
         String json = userService.findByName(userName);
         UserQo user = new Gson().fromJson(json, UserQo.class);
-        if (user != null) merchantId = user.getMerchant().getId();
+        if (user != null) {
+            merchantId = user.getMerchant().getId();
+        }
         return merchantId;
     }
 

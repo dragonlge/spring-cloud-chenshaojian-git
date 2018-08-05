@@ -22,6 +22,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class KindService {

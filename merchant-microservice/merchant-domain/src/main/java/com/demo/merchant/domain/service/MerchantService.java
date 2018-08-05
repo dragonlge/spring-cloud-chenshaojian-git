@@ -23,6 +23,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class MerchantService {
@@ -62,8 +65,9 @@ public class MerchantService {
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             merchant = merchantRepository.findOneById(id);
-            if (merchant != null)
+            if (merchant != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString(), merchant, 12);
+            }
         } else {
             merchant = (Merchant) object;
         }

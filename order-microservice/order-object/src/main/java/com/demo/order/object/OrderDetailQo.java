@@ -5,6 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * @author yangyueming
+ */
 @Data
 public class OrderDetailQo {
     private Long id;

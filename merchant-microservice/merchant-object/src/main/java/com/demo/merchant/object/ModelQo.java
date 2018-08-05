@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Data
 public class ModelQo extends PageQo implements Serializable {
     private Long id;

@@ -1,5 +1,6 @@
 package com.demo.order.client.service;
 
+import com.demo.order.client.feign.OrderClient;
 import com.demo.order.object.OrderQo;
 import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -10,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author yangyueming
+ */
 @Service
 public class OrderRestService {
     @Autowired

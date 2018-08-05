@@ -22,6 +22,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class RoleService {
@@ -61,8 +64,9 @@ public class RoleService {
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_ROLE_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             role = roleRepository.findOneById(id);
-            if (role != null)
+            if (role != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_ROLE_ID, id.toString(), role, 12);
+            }
         } else {
             role = (Role) object;
         }

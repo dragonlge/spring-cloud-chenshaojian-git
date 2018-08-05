@@ -13,8 +13,7 @@ import com.demo.merchant.object.RoleQo;
 import com.demo.merchant.object.UserQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -37,11 +36,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController extends BaseController {
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserRestService userService;
     @Autowired
@@ -136,7 +137,7 @@ public class UserController extends BaseController {
             }
 
             String sid = userService.create(userQo);
-            logger.info("新增->ID=" + sid);
+            log.info("新增->ID=" + sid);
 
             return "1";
         });
@@ -191,7 +192,7 @@ public class UserController extends BaseController {
 
             String sid = userService.update(userQo);
 
-            logger.info("修改->ID=" + sid);
+            log.info("修改->ID=" + sid);
             return "1";
         });
     }
@@ -200,7 +201,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return userFuture.delete(id).thenApply(sid -> {
-            logger.info("删除->ID=" + sid);
+            log.info("删除->ID=" + sid);
             return "1";
         });
     }

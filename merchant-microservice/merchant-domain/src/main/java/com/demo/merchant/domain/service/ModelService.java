@@ -23,6 +23,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class ModelService {
@@ -62,8 +65,9 @@ public class ModelService {
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MODEL_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             model = modelRepository.findOneById(id);
-            if (model != null)
+            if (model != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_MODEL_ID, id.toString(), model, 12);
+            }
         } else {
             model = (Model) object;
         }

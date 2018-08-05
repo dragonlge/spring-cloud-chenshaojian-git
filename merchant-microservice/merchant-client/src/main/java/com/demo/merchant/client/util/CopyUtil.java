@@ -7,6 +7,9 @@ import org.springframework.beans.BeanUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 public class CopyUtil {
 
     private static Logger logger = LoggerFactory.getLogger(CopyUtil.class);

@@ -9,8 +9,7 @@ import com.demo.merchant.domain.util.CommonUtils;
 import com.demo.merchant.domain.util.CopyUtil;
 import com.demo.merchant.object.RoleQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +23,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/role")
+@Slf4j
 public class RoleController {
-    private static Logger logger = LoggerFactory.getLogger(RoleController.class);
-
     @Autowired
     private RoleService roleService;
     @Autowired
@@ -91,7 +92,7 @@ public class RoleController {
 
             roleService.save(role);
 
-            logger.info("新增->ID=" + role.getId());
+            log.info("新增->ID=" + role.getId());
             return "1";
         });
     }
@@ -106,7 +107,7 @@ public class RoleController {
 
             roleService.save(role);
 
-            logger.info("修改->ID=" + role.getId());
+            log.info("修改->ID=" + role.getId());
             return "1";
         });
     }
@@ -129,7 +130,7 @@ public class RoleController {
             }
             //安全删除角色
             roleService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return "1";
         });
     }

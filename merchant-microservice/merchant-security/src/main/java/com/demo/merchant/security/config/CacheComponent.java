@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author yangyueming
+ */
 @Component
 public class CacheComponent {
 

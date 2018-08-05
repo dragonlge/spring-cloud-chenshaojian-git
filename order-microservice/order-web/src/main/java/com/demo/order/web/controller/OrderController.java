@@ -5,8 +5,7 @@ import com.demo.order.client.util.TreeMapConvert;
 import com.demo.order.object.OrderQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,11 +23,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
-    private static Logger logger = LoggerFactory.getLogger(OrderController.class);
-
     @Autowired
     private OrderFuture orderFuture;
 
@@ -56,9 +57,10 @@ public class OrderController {
             Pageable pageable = new PageRequest(orderQo.getPage(), orderQo.getSize(), null);
             List<OrderQo> list = new ArrayList<>();
 
-            if (page != null && page.get("content") != null)
+            if (page != null && page.get("content") != null) {
                 list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>() {
                 }.getType());
+            }
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));

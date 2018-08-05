@@ -1,6 +1,7 @@
 package com.demo.order.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
@@ -13,28 +14,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Entity
+@Data
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "order_no", length = 64)
+    @Column(length = 64)
     private String orderNo;
     private Long userid;
     private Long merchantid;
     private double amount;
     //0：未付款，1：已付款，2：已发货，3：已收货，4：已评价，-1：已撤销，-2：已退款
-    @Column(name = "status", columnDefinition = "tinyint default 0")
+    @Column(columnDefinition = "tinyint default 0")
     private Integer status;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "created", columnDefinition = "timestamp default current_timestamp")
+    @Column(columnDefinition = "timestamp default current_timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     private String operator;
@@ -55,84 +59,5 @@ public class Order {
         orderDetails.add(orderDetail);
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public Long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
-    }
-
-    public Long getMerchantid() {
-        return merchantid;
-    }
-
-    public void setMerchantid(Long merchantid) {
-        this.merchantid = merchantid;
-    }
-
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public Date getModify() {
-        return modify;
-    }
-
-    public void setModify(Date modify) {
-        this.modify = modify;
-    }
-
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 }

@@ -6,6 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author yangyueming
+ */
 @Data
 public class ResourceQo extends PageQo implements Serializable {
     private Long id;

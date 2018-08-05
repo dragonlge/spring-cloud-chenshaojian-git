@@ -22,6 +22,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class ResourceService {
@@ -56,13 +59,14 @@ public class ResourceService {
     }
 
     public Resource findOne(Long id) {
-        Resource resource = null;
+        Resource resource;
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_RESOURCE_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             resource = resourceRepository.findOneById(id);
-            if (resource != null)
+            if (resource != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_RESOURCE_ID, id.toString(), resource, 12);
+            }
         } else {
             resource = (Resource) object;
         }

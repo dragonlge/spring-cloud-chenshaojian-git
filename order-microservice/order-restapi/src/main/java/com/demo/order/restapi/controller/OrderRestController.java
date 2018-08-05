@@ -8,6 +8,7 @@ import com.demo.order.domain.util.CopyUtil;
 import com.demo.order.object.OrderQo;
 import com.demo.order.restapi.mqchannel.OutputSource;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/order")
 @EnableBinding(OutputSource.class)
+@Slf4j
 public class OrderRestController {
-    private static Logger logger = LoggerFactory.getLogger(OrderRestController.class);
-
     @Autowired
     private OrderService orderService;
 
@@ -110,7 +113,7 @@ public class OrderRestController {
 
             orderService.save(order);
 
-            logger.info("新增->ID=" + order.getId());
+            log.info("新增->ID=" + order.getId());
             return order.getId().toString();
         });
     }
@@ -129,7 +132,7 @@ public class OrderRestController {
             //发送MQ消息，通知订单修改
             ordersChannel.send(MessageBuilder.withPayload(orderQo).build());
 
-            logger.info("修改->ID=" + order.getId());
+            log.info("修改->ID=" + order.getId());
             return order.getId().toString();
         });
     }
@@ -139,7 +142,7 @@ public class OrderRestController {
         return CompletableFuture.supplyAsync(() -> {
             orderService.delete(id);
 
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return id.toString();
         });
     }

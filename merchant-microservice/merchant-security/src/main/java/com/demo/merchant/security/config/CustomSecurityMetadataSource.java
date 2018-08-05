@@ -6,8 +6,7 @@ import com.demo.merchant.object.RoleQo;
 import com.demo.merchant.security.util.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -20,9 +19,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
+@Slf4j
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     public static final String MERCHANT_CENTER_ROLES_ALL = "MERCHANT_CENTER_ROLES_ALL_";
-    private static final Logger logger = LoggerFactory.getLogger(CustomSecurityMetadataSource.class);
     private PathMatcher pathMatcher = new AntPathMatcher();
     private RoleFuture roleFuture;
     private CacheComponent cacheComponent;
@@ -53,7 +55,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
             throws IllegalArgumentException {
         String url = ((FilterInvocation) object).getRequestUrl();
 
-        //logger.info("请求资源：" + url);
+        //log.info("请求资源：" + url);
         //先从缓存中取角色列表
         Object objects = cacheComponent.get(MERCHANT_CENTER_ROLES_ALL, "LIST");
         List<RoleQo> roleQoList = null;
@@ -74,7 +76,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
                         if (resourceQo.getUrl() != null && pathMatcher.match(resourceQo.getUrl() + "/**", url)) {
                             ConfigAttribute attribute = new SecurityConfig(roleQo.getName());
                             roles.add(attribute);
-                            //logger.info("加入权限角色列表===角色资源：{}，角色名称：{}===", resourceVo.getUrl(), roleVo.getName());
+                            //log.info("加入权限角色列表===角色资源：{}，角色名称：{}===", resourceVo.getUrl(), roleVo.getName());
                             break;
                         }
                     }
@@ -84,6 +86,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         return roles;
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return true;
     }

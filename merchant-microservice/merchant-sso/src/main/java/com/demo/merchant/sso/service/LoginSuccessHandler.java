@@ -1,8 +1,7 @@
 package com.demo.merchant.sso.service;
 
 import com.demo.merchant.object.UserQo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -11,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author yangyueming
+ */
+@Slf4j
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    protected Log log = LogFactory.getLog(getClass());
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)

@@ -15,6 +15,9 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 
 import javax.sql.DataSource;
 
+/**
+ * @author yangyueming
+ */
 @Configuration
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

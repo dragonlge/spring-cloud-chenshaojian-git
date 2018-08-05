@@ -15,15 +15,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
+/**
+ * @author yangyueming
+ */
 @Slf4j
 public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        FilterInvocation fi = new FilterInvocation(request, response, chain);
-        //log.info("===="+fi.getRequestUrl());
-        invoke(fi);
+        FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
+        //log.info("===="+filterInvocation.getRequestUrl());
+        invoke(filterInvocation);
     }
 
     public void invoke(FilterInvocation fi) {

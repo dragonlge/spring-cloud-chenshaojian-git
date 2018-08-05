@@ -1,7 +1,6 @@
 package com.demo.merchant.security.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -13,9 +12,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 
+/**
+ * @author yangyueming
+ */
+@Slf4j
 public class CustomAccessDecisionManager implements AccessDecisionManager {
-    private static final Logger logger = LoggerFactory.getLogger(CustomAccessDecisionManager.class);
-
     @Override
     public void decide(Authentication authentication, Object object,
                        Collection<ConfigAttribute> configAttributes)
@@ -31,7 +32,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
             ConfigAttribute configAttribute = iterator.next();
             //对资源访问具有权限的角色
             String needRole = configAttribute.getAttribute();
-            logger.info("具有权限的角色：" + needRole);
+            log.info("具有权限的角色：" + needRole);
             //在用户拥有的权限中检查是否具有匹配的角色
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if (needRole.equals(ga.getAuthority())) {

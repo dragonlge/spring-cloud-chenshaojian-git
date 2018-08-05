@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Component
 public class OrderFuture {
     @Autowired

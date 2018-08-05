@@ -9,8 +9,7 @@ import com.demo.merchant.domain.util.CommonUtils;
 import com.demo.merchant.domain.util.CopyUtil;
 import com.demo.merchant.object.ResourceQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +23,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/resource")
+@Slf4j
 public class ResourceController {
-    private static Logger logger = LoggerFactory.getLogger(ResourceController.class);
-
     @Autowired
     private ResourceService resourceService;
 
@@ -91,7 +92,7 @@ public class ResourceController {
 
             resourceService.save(resource);
 
-            logger.info("新增->ID=" + resource.getId());
+            log.info("新增->ID=" + resource.getId());
             return "1";
         });
     }
@@ -105,7 +106,7 @@ public class ResourceController {
 
             resourceService.save(resource);
 
-            logger.info("修改->ID=" + resource.getId());
+            log.info("修改->ID=" + resource.getId());
             return "1";
         });
     }
@@ -128,7 +129,7 @@ public class ResourceController {
             }
             //安全删除资源
             resourceService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return "1";
         });
     }

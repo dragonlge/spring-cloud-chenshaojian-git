@@ -7,8 +7,7 @@ import com.demo.merchant.domain.util.CommonUtils;
 import com.demo.merchant.domain.util.CopyUtil;
 import com.demo.merchant.object.ModelQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +21,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/model")
+@Slf4j
 public class ModelController {
-    private static Logger logger = LoggerFactory.getLogger(ModelController.class);
-
     @Autowired
     private ModelService modelService;
 
@@ -86,7 +87,7 @@ public class ModelController {
 
             modelService.save(model);
 
-            logger.info("新增->ID=" + model.getId());
+            log.info("新增->ID=" + model.getId());
             return "1";
         });
     }
@@ -100,7 +101,7 @@ public class ModelController {
 
             modelService.save(model);
 
-            logger.info("修改->ID=" + model.getId());
+            log.info("修改->ID=" + model.getId());
             return "1";
         });
     }
@@ -109,7 +110,7 @@ public class ModelController {
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             modelService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return "1";
         });
     }

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Data
 public class UserQo extends PageQo implements Serializable {
     private Long id;

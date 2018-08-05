@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
+/**
+ * @author yangyueming
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
     @Query("select o from Role o " +

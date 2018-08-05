@@ -13,6 +13,9 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 import java.security.KeyPair;
 
+/**
+ * @author yangyueming
+ */
 @Configuration
 @EnableAuthorizationServer
 public class OAuthConfigurer extends AuthorizationServerConfigurerAdapter {

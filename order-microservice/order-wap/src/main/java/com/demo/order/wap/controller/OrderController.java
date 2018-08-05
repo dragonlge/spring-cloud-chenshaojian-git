@@ -11,8 +11,7 @@ import com.demo.order.object.OrderDetailQo;
 import com.demo.order.object.OrderQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -35,11 +34,13 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
-    private static Logger logger = LoggerFactory.getLogger(OrderController.class);
-
     @Autowired
     private OrderFuture orderFuture;
     @Autowired
@@ -72,7 +73,7 @@ public class OrderController {
     @RequestMapping(value = "/list")
     public CompletableFuture<Page<Map<String, Object>>> findAll(OrderQo orderQo) {
         return orderFuture.findPage(orderQo).thenApply(json -> {
-            logger.info("order list = {}", json);
+            log.info("order list = {}", json);
             Gson gson = TreeMapConvert.getGson();
             TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
             }.getType());
@@ -157,7 +158,7 @@ public class OrderController {
                 serviceUri = service.getUri().toString();
             }
         }
-        logger.info("serviceUri={}", serviceUri);
+        log.info("serviceUri={}", serviceUri);
         return serviceUri;
     }
 

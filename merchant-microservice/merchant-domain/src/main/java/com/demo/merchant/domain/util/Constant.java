@@ -1,5 +1,8 @@
 package com.demo.merchant.domain.util;
 
+/**
+ * @author yangyueming
+ */
 public class Constant {
     public static final String MERCHANT_CENTER_USER_ID = "MERCHANT_CENTER_USER_ID_";
     public static final String MERCHANT_CENTER_MODEL_ID = "MERCHANT_CENTER_MODEL_ID_";

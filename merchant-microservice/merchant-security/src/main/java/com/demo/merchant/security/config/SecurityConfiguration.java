@@ -80,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         CsrfSecurityRequestMatcher csrfSecurityRequestMatcher = new CsrfSecurityRequestMatcher();
         List<String> list = new ArrayList<String>();
         list.add("/openhttp/");//完全开放
-        csrfSecurityRequestMatcher.setExecludeUrls(list);
+        csrfSecurityRequestMatcher.setExcludeUrlList(list);
         return csrfSecurityRequestMatcher;
     }
 
