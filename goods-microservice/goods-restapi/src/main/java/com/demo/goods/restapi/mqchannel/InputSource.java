@@ -5,6 +5,9 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
+/**
+ * @author yangyueming
+ */
 public interface InputSource {
     String ORDERSCHANNEL = "orderschannel";
     String REPLYCHANNEL = "replychannel";

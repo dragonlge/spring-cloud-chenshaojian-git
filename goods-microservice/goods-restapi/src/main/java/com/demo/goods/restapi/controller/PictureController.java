@@ -5,23 +5,31 @@ import com.demo.goods.domain.service.PictureService;
 import com.demo.goods.domain.util.CommonUtils;
 import com.demo.goods.object.PictureQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/picture")
-public class PictureRestController {
-    private static Logger logger = LoggerFactory.getLogger(PictureRestController.class);
-
+@Slf4j
+public class PictureController {
     @Autowired
     private PictureService pictureService;
 
@@ -34,7 +42,7 @@ public class PictureRestController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public CompletableFuture<String> findAll(Integer index, Integer size, Long merchantid, String created) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -69,7 +77,7 @@ public class PictureRestController {
         });
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public CompletableFuture<String> save(@RequestBody PictureQo pictureQo) {
         return CompletableFuture.supplyAsync(() -> {
             Picture picture = new Picture();
@@ -77,12 +85,12 @@ public class PictureRestController {
 
             pictureService.save(picture);
 
-            logger.info("新增->ID=" + picture.getId());
+            log.info("新增->ID=" + picture.getId());
             return picture.getId().toString();
         });
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public CompletableFuture<String> update(@RequestBody PictureQo pictureQo) {
         return CompletableFuture.supplyAsync(() -> {
             Picture picture = new Picture();
@@ -91,27 +99,27 @@ public class PictureRestController {
 
             pictureService.save(picture);
 
-            logger.info("修改->ID=" + picture.getId());
+            log.info("修改->ID=" + picture.getId());
             return picture.getId().toString();
         });
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @DeleteMapping(value="/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.delete(id);
 
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return id.toString();
         });
     }
 
-    @RequestMapping(value="/deleteByFileName/{fileName}",method = RequestMethod.DELETE)
+    @DeleteMapping(value="/deleteByFileName/{fileName}")
     public CompletableFuture<String> deleteByFileName(@PathVariable String fileName) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.deleteByFileName(fileName);
 
-            logger.info("删除->ID=" + fileName);
+            log.info("删除->ID=" + fileName);
             return "1";
         });
     }

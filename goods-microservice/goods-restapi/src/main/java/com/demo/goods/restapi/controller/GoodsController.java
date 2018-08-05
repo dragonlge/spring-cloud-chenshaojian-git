@@ -6,12 +6,18 @@ import com.demo.goods.domain.service.GoodsService;
 import com.demo.goods.domain.util.CommonUtils;
 import com.demo.goods.object.GoodsQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,11 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/goods")
-public class GoodsRestController {
-    private static Logger logger = LoggerFactory.getLogger(GoodsRestController.class);
-
+@Slf4j
+public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
@@ -36,7 +44,7 @@ public class GoodsRestController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public CompletableFuture<String> findAll(Integer index, Integer size, Long merchantid,
                                              String name, Long sortsid, Long subsid, String created) {
         return CompletableFuture.supplyAsync(() -> {
@@ -81,7 +89,7 @@ public class GoodsRestController {
         });
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public CompletableFuture<String> save(@RequestBody GoodsQo goodsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Goods goods = new Goods();
@@ -90,12 +98,12 @@ public class GoodsRestController {
 
             goodsService.save(goods);
 
-            logger.info("新增->ID=" + goods.getId());
+            log.info("新增->ID=" + goods.getId());
             return goods.getId().toString();
         });
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public CompletableFuture<String> update(@RequestBody GoodsQo goodsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Goods goods = new Goods();
@@ -104,17 +112,17 @@ public class GoodsRestController {
 
             goodsService.save(goods);
 
-            logger.info("修改->ID=" + goods.getId());
+            log.info("修改->ID=" + goods.getId());
             return goods.getId().toString();
         });
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @DeleteMapping(value="/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             goodsService.delete(id);
 
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return id.toString();
         });
     }

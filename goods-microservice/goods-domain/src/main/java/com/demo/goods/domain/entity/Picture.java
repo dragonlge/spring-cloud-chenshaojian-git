@@ -1,12 +1,21 @@
 package com.demo.goods.domain.entity;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
 @Table(name = "t_picture")
+@Data
 public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,70 +33,4 @@ public class Picture {
     private Date created;
     private Long merchantid;
 
-    public Picture() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPathInfo() {
-        return pathInfo;
-    }
-
-    public void setPathInfo(String pathInfo) {
-        this.pathInfo = pathInfo;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Long getMerchantid() {
-        return merchantid;
-    }
-
-    public void setMerchantid(Long merchantid) {
-        this.merchantid = merchantid;
-    }
 }
