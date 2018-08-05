@@ -7,7 +7,6 @@ import com.demo.order.domain.entity.OrderDetail;
 import com.demo.order.domain.service.OrderService;
 import com.demo.order.object.OrderQo;
 import com.demo.order.restapi.OrderRestApiApplication;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

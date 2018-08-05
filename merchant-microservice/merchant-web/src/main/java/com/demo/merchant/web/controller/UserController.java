@@ -1,6 +1,10 @@
 package com.demo.merchant.web.controller;
 
-import com.demo.merchant.client.service.*;
+import com.demo.merchant.client.service.MerchantRestService;
+import com.demo.merchant.client.service.RoleFuture;
+import com.demo.merchant.client.service.RoleRestService;
+import com.demo.merchant.client.service.UserFuture;
+import com.demo.merchant.client.service.UserRestService;
 import com.demo.merchant.client.util.CommonUtils;
 import com.demo.merchant.client.util.TreeMapConvert;
 import com.demo.merchant.object.MerchantQo;

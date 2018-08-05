@@ -1,8 +1,18 @@
 package com.demo.merchant.restapi.test;
 
 import com.demo.merchant.domain.config.JpaConfiguration;
-import com.demo.merchant.domain.entity.*;
-import com.demo.merchant.domain.service.*;
+import com.demo.merchant.domain.entity.Kind;
+import com.demo.merchant.domain.entity.Merchant;
+import com.demo.merchant.domain.entity.Model;
+import com.demo.merchant.domain.entity.Resource;
+import com.demo.merchant.domain.entity.Role;
+import com.demo.merchant.domain.entity.User;
+import com.demo.merchant.domain.service.KindService;
+import com.demo.merchant.domain.service.MerchantService;
+import com.demo.merchant.domain.service.ModelService;
+import com.demo.merchant.domain.service.ResourceService;
+import com.demo.merchant.domain.service.RoleService;
+import com.demo.merchant.domain.service.UserService;
 import com.demo.merchant.domain.util.CopyUtil;
 import com.demo.merchant.object.MerchantQo;
 import com.demo.merchant.object.UserQo;

@@ -1,7 +1,11 @@
 package com.demo.merchant.web.controller;
 
 import com.demo.merchant.client.service.UserRestService;
-import com.demo.merchant.object.*;
+import com.demo.merchant.object.MerchantQo;
+import com.demo.merchant.object.ModelQo;
+import com.demo.merchant.object.ResourceQo;
+import com.demo.merchant.object.RoleQo;
+import com.demo.merchant.object.UserQo;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
