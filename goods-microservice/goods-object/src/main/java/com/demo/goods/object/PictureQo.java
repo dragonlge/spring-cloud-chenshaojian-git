@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @Data
 public class PictureQo extends PageQo{
     private Long id;

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DruidConfiguration {
     @Bean
-    public ServletRegistrationBean statViewServle(){
+    public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
         //IP白名单
         servletRegistrationBean.addInitParameter("allow","192.168.0.*,127.0.0.1");

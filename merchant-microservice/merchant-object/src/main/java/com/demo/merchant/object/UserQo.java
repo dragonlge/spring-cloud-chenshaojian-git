@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @Data
 public class UserQo extends PageQo implements java.io.Serializable{
     private Long id;

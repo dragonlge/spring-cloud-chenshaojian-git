@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @Data
 public class SortsQo extends PageQo {
     private Long id;

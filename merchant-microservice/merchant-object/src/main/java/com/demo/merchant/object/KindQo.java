@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @Data
 public class KindQo extends PageQo implements java.io.Serializable{
     private Long id;

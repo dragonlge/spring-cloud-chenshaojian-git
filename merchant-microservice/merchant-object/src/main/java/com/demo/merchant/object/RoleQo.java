@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @Data
 public class RoleQo extends PageQo implements java.io.Serializable{
     private Long id;

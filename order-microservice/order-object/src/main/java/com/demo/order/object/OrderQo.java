@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 
-@NoArgsConstructor
 @Data
 public class OrderQo extends PageQo{
     private Long id;
