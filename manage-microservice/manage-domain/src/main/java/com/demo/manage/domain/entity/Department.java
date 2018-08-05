@@ -10,7 +10,6 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "t_department")
 public class Department extends IdEntity implements java.io.Serializable {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

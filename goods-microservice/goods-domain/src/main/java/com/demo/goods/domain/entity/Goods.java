@@ -18,7 +18,6 @@ import java.util.Date;
  * @author yangyueming
  */
 @Entity
-@Table(name = "t_goods")
 @Data
 public class Goods {
     @Id

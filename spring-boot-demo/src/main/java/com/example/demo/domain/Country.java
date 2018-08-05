@@ -13,7 +13,6 @@ import javax.persistence.Table;
  * @author yangyueming
  */
 @Entity
-@Table(name = "country")
 @Data
 public class Country {
     @Id

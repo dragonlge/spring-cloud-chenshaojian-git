@@ -4,13 +4,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
+/**
+ * @author yangyueming
+ */
 @Entity
-@Table(name = "t_part")
 public class Part extends IdEntity implements java.io.Serializable {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -14,7 +14,6 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "t_picture")
 @Data
 public class Picture {
     @Id
