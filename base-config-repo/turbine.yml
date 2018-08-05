@@ -1,0 +1,5 @@
+turbine:
+  appConfig: orderapi,orderweb,orderwap
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
