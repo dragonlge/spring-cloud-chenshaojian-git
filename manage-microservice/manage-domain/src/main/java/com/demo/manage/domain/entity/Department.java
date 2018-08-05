@@ -2,12 +2,16 @@ package com.demo.manage.domain.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
 @Table(name = "t_department")
-public class Department extends IdEntity implements java.io.Serializable{
+public class Department extends IdEntity implements java.io.Serializable {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created", columnDefinition = "timestamp default current_timestamp")

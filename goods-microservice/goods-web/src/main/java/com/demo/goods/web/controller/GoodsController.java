@@ -10,8 +10,7 @@ import com.demo.goods.client.util.TreeMapConvert;
 import com.demo.goods.object.GoodsQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,8 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,11 +30,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/goods")
+@Slf4j
 public class GoodsController {
-    private static Logger logger = LoggerFactory.getLogger(GoodsController.class);
-
     @Autowired
     private GoodsFuture goodsFuture;
     @Autowired
@@ -100,10 +101,10 @@ public class GoodsController {
     }
 
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @PostMapping(value="/save")
     public CompletableFuture<String> save(GoodsQo goodsQo) {
         return goodsFuture.create(goodsQo).thenApply(sid ->{
-            logger.info("新增->ID="+sid);
+            log.info("新增->ID="+sid);
             return sid;
         });
     }
@@ -134,10 +135,10 @@ public class GoodsController {
         );
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @PostMapping(value="/update")
     public CompletableFuture<String> update(GoodsQo goodsQo) {
         return goodsFuture.update(goodsQo).thenApply(sid -> {
-            logger.info("修改->ID="+sid);
+            log.info("修改->ID="+sid);
             return sid;
         });
     }
@@ -145,7 +146,7 @@ public class GoodsController {
     @RequestMapping(value="/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return goodsFuture.delete(id).thenApply(sid ->{
-            logger.info("删除->ID="+sid);
+            log.info("删除->ID="+sid);
             return sid;
         });
     }

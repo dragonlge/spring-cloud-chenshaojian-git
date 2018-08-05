@@ -18,8 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +28,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
-import java.awt.List;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
@@ -38,7 +37,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -73,7 +75,7 @@ public class PicUtilController {
      * 上传图片
      * @return
      */
-    @RequestMapping(value = "/uploadPic", method = RequestMethod.POST)
+    @PostMapping(value = "/uploadPic")
     public void uploadPic(@RequestParam("pictureFile") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) {
         try {
             String filename = fastefsClient.uploFile(multipartFile);
@@ -114,7 +116,7 @@ public class PicUtilController {
      * 剪切图片
      * @return
      */
-    @RequestMapping(value = "/cutPic", method = RequestMethod.POST)
+    @PostMapping(value = "/cutPic")
     @ResponseBody
     public void cutPic(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String fileUrl = request.getParameter("fileUrl"),
@@ -205,7 +207,7 @@ public class PicUtilController {
     }
 
     //ueditor 图片上传
-    @RequestMapping(value = "/uploadimg", method= RequestMethod.POST, produces="text/html;charset=UTF-8")
+    @PostMapping(value = "/uploadimg", produces="text/html;charset=UTF-8")
     public void uploadimg(@RequestParam("upfile") MultipartFile upfile, HttpServletRequest request, HttpServletResponse response){
         try {
             String filename = fastefsClient.uploFile(upfile);
@@ -240,7 +242,7 @@ public class PicUtilController {
         }
     }
 
-    @RequestMapping(value = "/deletePic", method = RequestMethod.POST)
+    @PostMapping(value = "/deletePic")
     @ResponseBody
     public String deletePic(HttpServletRequest request) {
         try {
@@ -265,7 +267,7 @@ public class PicUtilController {
         return "1";
     }
 
-    @RequestMapping(value = "/listPic", method = RequestMethod.POST)
+    @PostMapping(value = "/listPic")
     @ResponseBody
     public CompletableFuture<Page<Map<String, Object>>> listPic(PictureQo pictureQo){
         return pictureFuture.findPage(pictureQo).thenApply( json -> {

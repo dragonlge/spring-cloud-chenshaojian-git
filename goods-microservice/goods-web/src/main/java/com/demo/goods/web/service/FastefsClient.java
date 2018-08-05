@@ -10,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @author yangyueming
+ */
 @Service
 public class FastefsClient {
     @Autowired
@@ -23,10 +26,11 @@ public class FastefsClient {
         }catch (IOException e){
             e.printStackTrace();
         }
-        if(path != null)
+        if(path != null) {
             return path.getFullPath();
-        else
+        } else {
             return null;
+        }
     }
 
     public String uploFile(InputStream inputStream, Long size, String type){
@@ -36,10 +40,11 @@ public class FastefsClient {
         }catch (Exception e){
             e.printStackTrace();
         }
-        if(path != null)
+        if(path != null) {
             return path.getFullPath();
-        else
+        } else {
             return null;
+        }
     }
 
     public void deleteFile(String fullPath){
