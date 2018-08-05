@@ -10,15 +10,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Entity
-public class Operators extends IdEntity implements java.io.Serializable {
+public class Operator extends IdEntity implements Serializable {
     private String name;
     private String email;
     private Integer sex;
@@ -39,7 +42,7 @@ public class Operators extends IdEntity implements java.io.Serializable {
             inverseJoinColumns = {@JoinColumn(name = "part_id")})
     private List<Part> parts = new ArrayList<>();
 
-    public Operators() {
+    public Operator() {
     }
 
     public String getName() {

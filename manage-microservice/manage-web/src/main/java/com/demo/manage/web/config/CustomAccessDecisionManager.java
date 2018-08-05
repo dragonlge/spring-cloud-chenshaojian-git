@@ -11,6 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * @author yangyueming
+ */
 @Slf4j
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 

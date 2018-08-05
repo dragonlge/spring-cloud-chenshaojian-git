@@ -1,5 +1,8 @@
 package com.demo.manage.domain.util;
 
+/**
+ * @author yangyueming
+ */
 public class Constant {
     public static final String BOSS_BACKEND_OPERATOR_ID = "BOSS_BACKEND_OPERATOR_ID_";
     public static final String BOSS_BACKEND_PART_ID = "BOSS_BACKEND_PART_ID_";

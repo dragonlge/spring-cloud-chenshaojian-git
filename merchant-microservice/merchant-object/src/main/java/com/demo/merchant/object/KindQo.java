@@ -4,10 +4,11 @@ package com.demo.merchant.object;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class KindQo extends PageQo implements java.io.Serializable {
+public class KindQo extends PageQo implements Serializable {
     private Long id;
     private String name;
     private String link;

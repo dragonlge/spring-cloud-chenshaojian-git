@@ -1,20 +1,20 @@
-<script th:src="@{/scripts/operators/edit.js}"></script>
+<script th:src="@{/scripts/operator/edit.js}"></script>
 <form id="saveForm" method="post">
-    <input type="hidden" name="id" id="id" th:value="${operators.id}"/>
-    <input type="hidden" name="password" id="password" th:value="${operators.password}"/>
+    <input type="hidden" name="id" id="id" th:value="${operator.id}"/>
+    <input type="hidden" name="password" id="password" th:value="${operator.password}"/>
     <div class="addInfBtn">
         <h3 class="itemTit"><span>用户信息</span></h3>
         <table class="addNewInfList">
             <tr>
                 <th>名称</th>
                 <td width="240">
-                    <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${operators.name}" id="name"
+                    <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${operator.name}" id="name"
                            name="name" maxlength="32"/>
                     <span class="tipStar f-left">*</span>
                 </td>
                 <th>邮箱</th>
                 <td>
-                    <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${operators.email}" id="email"
+                    <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${operator.email}" id="email"
                            name="email" maxlength="120"/>
                     <span class="tipStar f-left">*</span>
                 </td>
@@ -36,7 +36,7 @@
                 <td>
                     <input onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"
                            class="inp-list w-200 clear-mr f-left"
-                           th:value="${operators.created} ? ${#dates.format(operators.created,'yyyy-MM-dd HH:mm:ss')} :''"
+                           th:value="${operator.created} ? ${#dates.format(operator.created,'yyyy-MM-dd HH:mm:ss')} :''"
                            id="created" name="created"/>
                 </td>
             </tr>
@@ -44,13 +44,13 @@
                 <th>性别</th>
                 <td>
                     <div class="selectDownMode f-left w-206">
-                        <input type="text" th:if="${operators.sex==0}" th:value="男"/>
-                        <input type="text" th:if="${operators.sex==1}" th:value="女"/>
-                        <input type="text" th:if="${operators.sex==null}" th:value="请选择"/>
+                        <input type="text" th:if="${operator.sex==0}" th:value="男"/>
+                        <input type="text" th:if="${operator.sex==1}" th:value="女"/>
+                        <input type="text" th:if="${operator.sex==null}" th:value="请选择"/>
                         <select class="selectMode" name="sex">
                             <option value="">请选择</option>
-                            <option value="0" th:selected="${operators.sex==0}">男</option>
-                            <option value="1" th:selected="${operators.sex==1}">女</option>
+                            <option value="0" th:selected="${operator.sex==0}">男</option>
+                            <option value="1" th:selected="${operator.sex==1}">女</option>
                         </select>
                     </div>
                 </td>
@@ -60,7 +60,7 @@
                         <select name="department" id="department">
                             <option th:each="department:${departments}" th:value="${department.id}"
                                     th:text="${#strings.length(department.name)>20?#strings.substring(department.name,0,20)+'...':department.name}"
-                                    th:selected="${operators.department.id == department.id}"
+                                    th:selected="${operator.department.id == department.id}"
                             ></option>
                         </select>
                     </div>

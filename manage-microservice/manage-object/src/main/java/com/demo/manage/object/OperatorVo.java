@@ -2,10 +2,14 @@ package com.demo.manage.object;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class OperatorsVo extends PageVo implements java.io.Serializable {
+/**
+ * @author yangyueming
+ */
+public class OperatorVo extends PageVo implements Serializable {
     private String id;
     private String name;
     private String email;
@@ -17,7 +21,7 @@ public class OperatorsVo extends PageVo implements java.io.Serializable {
     private DepartmentVo departmentVo;
     private List<PartVo> partVos;
 
-    public OperatorsVo() {
+    public OperatorVo() {
     }
 
     public String getId() {

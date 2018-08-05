@@ -3,25 +3,28 @@ package com.demo.manage.domain.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author yangyueming
+ */
 @Entity
-public class PersistentLogins implements java.io.Serializable {
+public class PersistentLogin implements Serializable {
     @Id
-    @Column(name = "series", length = 64, nullable = false)
+    @Column(length = 64, nullable = false)
     private String series;
-    @Column(name = "username", length = 64, nullable = false)
+    @Column(length = 64, nullable = false)
     private String username;
-    @Column(name = "token", length = 64, nullable = false)
+    @Column(length = 64, nullable = false)
     private String token;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_used", nullable = false)
-    private Date last_used;
+    @Column(nullable = false)
+    private Date lastUsed;
 
-    public PersistentLogins() {
+    public PersistentLogin() {
     }
 
     public String getSeries() {
@@ -48,11 +51,11 @@ public class PersistentLogins implements java.io.Serializable {
         this.token = token;
     }
 
-    public Date getLast_used() {
-        return last_used;
+    public Date getLastUsed() {
+        return lastUsed;
     }
 
-    public void setLast_used(Date last_used) {
-        this.last_used = last_used;
+    public void setLastUsed(Date lastUsed) {
+        this.lastUsed = lastUsed;
     }
 }

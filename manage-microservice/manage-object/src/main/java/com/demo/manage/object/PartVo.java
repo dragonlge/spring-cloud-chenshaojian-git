@@ -1,39 +1,18 @@
 package com.demo.manage.object;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PartVo extends PageVo implements java.io.Serializable {
+/**
+ * @author yangyueming
+ */
+@Data
+public class PartVo extends PageVo implements Serializable {
     private String id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date created;
-
-    public PartVo() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
 }

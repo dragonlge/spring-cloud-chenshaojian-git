@@ -97,7 +97,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         CsrfSecurityRequestMatcher csrfSecurityRequestMatcher = new CsrfSecurityRequestMatcher();
         List<String> list = new ArrayList<String>();
         list.add("/rest/");
-        csrfSecurityRequestMatcher.setExecludeUrls(list);
+        csrfSecurityRequestMatcher.setExcludeUrlList(list);
         return csrfSecurityRequestMatcher;
     }
 }

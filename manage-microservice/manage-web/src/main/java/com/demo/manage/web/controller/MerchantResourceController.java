@@ -9,8 +9,7 @@ import com.demo.merchant.object.ModelQo;
 import com.demo.merchant.object.ResourceQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,11 +29,13 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
 @RequestMapping("/merchantresource")
+@Slf4j
 public class MerchantResourceController {
-    private static Logger logger = LoggerFactory.getLogger(MerchantResourceController.class);
-
     @Autowired
     private ResourceFuture resourceFuture;
     @Autowired
@@ -63,9 +64,10 @@ public class MerchantResourceController {
             Pageable pageable = new PageRequest(resourceQo.getPage(), resourceQo.getSize(), null);
             List<ResourceQo> list = new ArrayList<>();
 
-            if (page.get("content") != null)
+            if (page.get("content") != null) {
                 list = gson.fromJson(page.get("content").toString(), new TypeToken<List<ResourceQo>>() {
                 }.getType());
+            }
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -108,7 +110,7 @@ public class MerchantResourceController {
             }
 
             String sid = resourceRestService.create(resourceQo);
-            logger.info("新增->ID=" + sid);
+            log.info("新增->ID=" + sid);
             return sid;
         });
     }
@@ -150,7 +152,7 @@ public class MerchantResourceController {
             }
 
             String sid = resourceRestService.update(resourceQo);
-            logger.info("修改->ID=" + sid);
+            log.info("修改->ID=" + sid);
             return sid;
         });
     }
@@ -159,7 +161,7 @@ public class MerchantResourceController {
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return resourceFuture.delete(id).thenApply(sid -> {
-            logger.info("删除->ID=" + sid);
+            log.info("删除->ID=" + sid);
             return sid;
         });
     }

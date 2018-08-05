@@ -2,7 +2,7 @@ package com.demo.manage.restapi.test;
 
 import com.demo.manage.domain.config.JpaConfiguration;
 import com.demo.manage.domain.entity.Department;
-import com.demo.manage.domain.entity.Operators;
+import com.demo.manage.domain.entity.Operator;
 import com.demo.manage.domain.entity.Part;
 import com.demo.manage.domain.service.DepartmentService;
 import com.demo.manage.domain.service.OperatorService;
@@ -42,28 +42,28 @@ public class BbServiceTest {
         department.setName("技术部");
         departmentService.save(department);
 
-        Operators operators = new Operators();
-        operators.setName("admin");
-        operators.setSex(1);
+        Operator operator = new Operator();
+        operator.setName("admin");
+        operator.setSex(1);
 
-        operators.setDepartment(department);
+        operator.setDepartment(department);
 
-        List<Part> partList = operators.getParts();
+        List<Part> partList = operator.getParts();
         partList.add(part);
-        operators.setParts(partList);
+        operator.setParts(partList);
 
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-        operators.setPassword(bc.encode("123456"));
+        operator.setPassword(bc.encode("123456"));
 
-        operatorService.save(operators);
-        assert operators.getId() > 0 : "create error";
+        operatorService.save(operator);
+        assert operator.getId() > 0 : "create error";
     }
 
     //@Test
     public void getData() {
-        Operators operators = operatorService.findByName("admin");
-        assert operators != null : "not find";
+        Operator operator = operatorService.findByName("admin");
+        assert operator != null : "not find";
         log.info("=================operator name={}, part name={}, department name={}",
-                operators.getName(), operators.getParts().get(0).getName(), operators.getDepartment().getName());
+                operator.getName(), operator.getParts().get(0).getName(), operator.getDepartment().getName());
     }
 }

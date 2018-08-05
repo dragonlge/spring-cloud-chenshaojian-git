@@ -4,12 +4,13 @@ package com.demo.merchant.object;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class UserQo extends PageQo implements java.io.Serializable {
+public class UserQo extends PageQo implements Serializable {
     private Long id;
     private String name;
     private String password;

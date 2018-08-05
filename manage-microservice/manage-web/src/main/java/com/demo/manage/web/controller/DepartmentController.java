@@ -3,8 +3,7 @@ package com.demo.manage.web.controller;
 import com.demo.manage.domain.entity.Department;
 import com.demo.manage.domain.service.DepartmentService;
 import com.demo.manage.object.DepartmentVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
 @RequestMapping("/department")
+@Slf4j
 public class DepartmentController {
-    private static Logger logger = LoggerFactory.getLogger(DepartmentController.class);
-
     @Autowired
     private DepartmentService departmentService;
 
@@ -59,7 +60,7 @@ public class DepartmentController {
     @ResponseBody
     public CompletableFuture<String> save(Department department) {
         return CompletableFuture.supplyAsync(() -> {
-            logger.info("新增->ID=" + department.getId());
+            log.info("新增->ID=" + department.getId());
             departmentService.save(department);
             return "1";
         });
@@ -77,7 +78,7 @@ public class DepartmentController {
     @ResponseBody
     public CompletableFuture<String> update(Department department) {
         return CompletableFuture.supplyAsync(() -> {
-            logger.info("修改->ID=" + department.getId());
+            log.info("修改->ID=" + department.getId());
             departmentService.save(department);
             return "1";
         });
@@ -87,7 +88,7 @@ public class DepartmentController {
     @ResponseBody
     public String delete(@PathVariable Long id) {
         departmentService.delete(id);
-        logger.info("删除->ID=" + id);
+        log.info("删除->ID=" + id);
         return "1";
     }
 

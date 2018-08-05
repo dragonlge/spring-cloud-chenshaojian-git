@@ -14,10 +14,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @author yangyueming
+ */
 @Slf4j
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    private Map<String, Collection<ConfigAttribute>> resourceMap = null;
+    private Map<String, Collection<ConfigAttribute>> resourceMap;
     private PathMatcher pathMatcher = new AntPathMatcher();
 
     private String urlroles;
@@ -66,8 +69,9 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
         log.debug("request url is  " + url);
 
-        if (resourceMap == null)
+        if (resourceMap == null) {
             resourceMap = loadResourceMatchAuthority();
+        }
 
         Iterator<String> ite = resourceMap.keySet().iterator();
         while (ite.hasNext()) {
@@ -79,6 +83,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         return resourceMap.get(url);
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return true;
     }

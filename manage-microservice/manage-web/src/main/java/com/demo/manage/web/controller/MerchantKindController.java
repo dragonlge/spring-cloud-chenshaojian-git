@@ -5,8 +5,7 @@ import com.demo.merchant.client.util.TreeMapConvert;
 import com.demo.merchant.object.KindQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,11 +25,13 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
 @RequestMapping("/merchantkind")
+@Slf4j
 public class MerchantKindController {
-    private static Logger logger = LoggerFactory.getLogger(MerchantKindController.class);
-
     @Autowired
     private KindFuture kindFuture;
 
@@ -80,7 +81,7 @@ public class MerchantKindController {
     @ResponseBody
     public CompletableFuture<String> save(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.create(kindQo).thenApply(sid -> {
-            logger.info("新增->ID=" + sid);
+            log.info("新增->ID=" + sid);
             return sid;
         });
     }
@@ -101,7 +102,7 @@ public class MerchantKindController {
     @ResponseBody
     public CompletableFuture<String> update(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.update(kindQo).thenApply(sid -> {
-            logger.info("修改->ID=" + sid);
+            log.info("修改->ID=" + sid);
             return sid;
         });
     }
@@ -110,7 +111,7 @@ public class MerchantKindController {
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return kindFuture.delete(id).thenApply(sid -> {
-            logger.info("删除->ID=" + sid);
+            log.info("删除->ID=" + sid);
             return sid;
         });
     }

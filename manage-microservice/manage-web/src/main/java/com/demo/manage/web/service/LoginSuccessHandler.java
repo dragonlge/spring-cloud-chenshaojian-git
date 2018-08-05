@@ -1,6 +1,6 @@
 package com.demo.manage.web.service;
 
-import com.demo.manage.domain.entity.Operators;
+import com.demo.manage.domain.entity.Operator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
@@ -11,13 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author yangyueming
+ */
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     protected Log log = LogFactory.getLog(getClass());
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        Operators userDetails = (Operators) authentication.getPrincipal();
+        Operator userDetails = (Operator) authentication.getPrincipal();
 
         log.info("成功登录user:" + userDetails.getName() + "login" + request.getContextPath());
         log.info("IP:" + getIpAddress(request));

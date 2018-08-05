@@ -1,6 +1,6 @@
 package com.demo.manage.web.service;
 
-import com.demo.manage.domain.entity.Operators;
+import com.demo.manage.domain.entity.Operator;
 import com.demo.manage.domain.entity.Part;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,11 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SecurityUser extends Operators implements UserDetails {
+/**
+ * @author yangyueming
+ */
+public class SecurityUser extends Operator implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    public SecurityUser(Operators user) {
+    public SecurityUser(Operator user) {
         if (user != null) {
             this.setId(user.getId());
             this.setName(user.getName());

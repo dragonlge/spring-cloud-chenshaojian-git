@@ -1,11 +1,11 @@
 package com.demo.manage.domain.service;
 
 import com.demo.manage.domain.config.CacheComponent;
-import com.demo.manage.domain.entity.Operators;
+import com.demo.manage.domain.entity.Operator;
 import com.demo.manage.domain.repository.OperatorRepository;
 import com.demo.manage.domain.util.CommonUtils;
 import com.demo.manage.domain.util.Constant;
-import com.demo.manage.object.OperatorsVo;
+import com.demo.manage.object.OperatorVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class OperatorService {
@@ -32,17 +35,17 @@ public class OperatorService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Operators operators) {
+    public void save(Operator operator) {
         //删除缓存
-        if (!StringUtils.isEmpty(operators.getId())) {
-            String key = operators.getId().toString();
+        if (!StringUtils.isEmpty(operator.getId())) {
+            String key = operator.getId().toString();
             cacheComponent.remove(Constant.BOSS_BACKEND_OPERATOR_ID, key);//删除原有缓存
         }
-        operatorRepository.save(operators);
+        operatorRepository.save(operator);
         //保存缓存
-        if (!StringUtils.isEmpty(operators.getId())) {
-            String key = operators.getId().toString();
-            cacheComponent.put(Constant.BOSS_BACKEND_OPERATOR_ID, key, operators, 12);//增加缓存，保存12秒
+        if (!StringUtils.isEmpty(operator.getId())) {
+            String key = operator.getId().toString();
+            cacheComponent.put(Constant.BOSS_BACKEND_OPERATOR_ID, key, operator, 12);//增加缓存，保存12秒
         }
     }
 
@@ -52,12 +55,12 @@ public class OperatorService {
         operatorRepository.deleteById(id);
     }
 
-    public List<Operators> findAll() {
+    public List<Operator> findAll() {
         return operatorRepository.findAll();
     }
 
-    public Operators findOne(Long id) {
-        Optional<Operators> operators = null;
+    public Operator findOne(Long id) {
+        Optional<Operator> operators;
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString());
         if (CommonUtils.isNull(object)) {
@@ -66,36 +69,36 @@ public class OperatorService {
                 cacheComponent.put(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString(), operators, 12);
             }
         } else {
-//            operators = (Operators) object;
+//            operators = (Operator) object;
         }
         return null;
 //        return operators;
     }
 
-    public Operators findByName(String name) {
+    public Operator findByName(String name) {
         return operatorRepository.findByName(name);
     }
 
 
-    public List<Operators> findByPartId(Long partId) {
+    public List<Operator> findByPartId(Long partId) {
         return operatorRepository.findByPartId(partId);
     }
 
 
-    public Page<Operators> findAll(OperatorsVo operatorsVo) {
+    public Page<Operator> findAll(OperatorVo operatorVo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable = new PageRequest(operatorsVo.getPage(), operatorsVo.getSize(), sort);
+        Pageable pageable = new PageRequest(operatorVo.getPage(), operatorVo.getSize(), sort);
 
-        return operatorRepository.findAll(new Specification<Operators>() {
+        return operatorRepository.findAll(new Specification<Operator>() {
             @Override
-            public Predicate toPredicate(Root<Operators> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<Operator> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if (CommonUtils.isNotNull(operatorsVo.getName())) {
-                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + operatorsVo.getName() + "%"));
+                if (CommonUtils.isNotNull(operatorVo.getName())) {
+                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + operatorVo.getName() + "%"));
                 }
-                if (CommonUtils.isNotNull(operatorsVo.getCreated())) {
-                    predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), operatorsVo.getCreated()));
+                if (CommonUtils.isNotNull(operatorVo.getCreated())) {
+                    predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), operatorVo.getCreated()));
                 }
 
                 query.where(predicatesList.toArray(new Predicate[predicatesList.size()]));

@@ -6,13 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author yangyueming
  */
 @Entity
-public class Part extends IdEntity implements java.io.Serializable {
+public class Part extends IdEntity implements Serializable {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created", columnDefinition = "timestamp default current_timestamp")

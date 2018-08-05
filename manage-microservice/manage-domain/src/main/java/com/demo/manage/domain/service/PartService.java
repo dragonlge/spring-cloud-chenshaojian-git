@@ -23,6 +23,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class PartService {
@@ -61,9 +64,10 @@ public class PartService {
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_PART_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             part = partRepository.findOneById(id);
-            if (part != null) {
-                cacheComponent.put(Constant.BOSS_BACKEND_PART_ID, id.toString(), part, 12);
+            if (part == null) {
+                return part;
             }
+            cacheComponent.put(Constant.BOSS_BACKEND_PART_ID, id.toString(), part, 12);
         } else {
             part = (Part) object;
         }

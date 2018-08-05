@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * @author yangyueming
+ */
 public class ImageCode {
 
     private static char mapTable[] = {

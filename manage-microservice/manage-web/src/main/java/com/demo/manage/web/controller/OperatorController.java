@@ -1,12 +1,12 @@
 package com.demo.manage.web.controller;
 
 import com.demo.manage.domain.entity.Department;
-import com.demo.manage.domain.entity.Operators;
+import com.demo.manage.domain.entity.Operator;
 import com.demo.manage.domain.entity.Part;
 import com.demo.manage.domain.service.DepartmentService;
 import com.demo.manage.domain.service.OperatorService;
 import com.demo.manage.domain.service.PartService;
-import com.demo.manage.object.OperatorsVo;
+import com.demo.manage.object.OperatorVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
-@RequestMapping("/operators")
+@RequestMapping("/operator")
 @Slf4j
-public class OperatorsController {
+public class OperatorController {
     @Autowired
     private OperatorService operatorService;
     @Autowired
@@ -43,9 +46,9 @@ public class OperatorsController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Page<Operators> getList(OperatorsVo operatorsVo) {
+    public Page<Operator> getList(OperatorVo operatorVo) {
         try {
-            return operatorService.findAll(operatorsVo);
+            return operatorService.findAll(operatorVo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,49 +57,49 @@ public class OperatorsController {
 
     @RequestMapping(value = "/{id}")
     public String show(ModelMap model, @PathVariable Long id) {
-        Operators operators = operatorService.findOne(id);
-        model.addAttribute("operators", operators);
+        Operator operator = operatorService.findOne(id);
+        model.addAttribute("operators", operator);
         return "operators/show";
     }
 
     @RequestMapping("/new")
-    public String create(ModelMap model, Operators operators) {
+    public String create(ModelMap model, Operator operator) {
 
         List<Part> partList = partService.findAll();
         List<Department> departmentList = departmentService.findAll();
 
         model.addAttribute("parts", partList);
         model.addAttribute("departments", departmentList);
-        model.addAttribute("operators", operators);
+        model.addAttribute("operators", operator);
         return "operators/new";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(Operators operators) {
+    public CompletableFuture<String> save(Operator operator) {
         return CompletableFuture.supplyAsync(() -> {
             BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
-            operators.setPassword(bpe.encode(operators.getPassword()));
-            log.info("新增->ID=" + operators.getId());
-            operatorService.save(operators);
+            operator.setPassword(bpe.encode(operator.getPassword()));
+            log.info("新增->ID=" + operator.getId());
+            operatorService.save(operator);
             return "1";
         });
     }
 
     @RequestMapping(value = "/edit/{id}")
     public String edit(ModelMap model, @PathVariable Long id) {
-        Operators operators = operatorService.findOne(id);
+        Operator operator = operatorService.findOne(id);
 
         List<Part> partList = partService.findAll();
 
         List<Department> departmentList = departmentService.findAll();
 
         List<Long> pids = new ArrayList<>();
-        for (Part part : operators.getParts()) {
+        for (Part part : operator.getParts()) {
             pids.add(part.getId());
         }
 
-        model.addAttribute("operators", operators);
+        model.addAttribute("operators", operator);
         model.addAttribute("parts", partList);
         model.addAttribute("pids", pids);
         model.addAttribute("departments", departmentList);
@@ -105,10 +108,10 @@ public class OperatorsController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
-    public CompletableFuture<String> update(Operators operators) {
+    public CompletableFuture<String> update(Operator operator) {
         return CompletableFuture.supplyAsync(() -> {
-            log.info("修改->ID=" + operators.getId());
-            operatorService.save(operators);
+            log.info("修改->ID=" + operator.getId());
+            operatorService.save(operator);
             return "1";
         });
     }

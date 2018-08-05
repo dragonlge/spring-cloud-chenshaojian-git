@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @Controller
 @RequestMapping("/part")
 @Slf4j
 public class PartController {
     @Autowired
     private PartService partService;
-
     @Autowired
     private OperatorService operatorService;
 

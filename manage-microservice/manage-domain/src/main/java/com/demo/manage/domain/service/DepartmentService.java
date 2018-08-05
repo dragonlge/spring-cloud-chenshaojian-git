@@ -23,6 +23,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yangyueming
+ */
 @Service
 @Transactional
 public class DepartmentService {
@@ -61,8 +64,9 @@ public class DepartmentService {
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             department = departmentRepository.findOneById(id);
-            if (department != null)
+            if (department != null) {
                 cacheComponent.put(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString(), department, 12);
+            }
         } else {
             department = (Department) object;
         }

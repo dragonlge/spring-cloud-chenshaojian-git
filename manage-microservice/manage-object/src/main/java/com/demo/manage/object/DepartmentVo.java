@@ -2,9 +2,13 @@ package com.demo.manage.object;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DepartmentVo extends PageVo implements java.io.Serializable {
+/**
+ * @author yangyueming
+ */
+public class DepartmentVo extends PageVo implements Serializable {
     private String id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
