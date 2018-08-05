@@ -44,13 +44,13 @@ public class SubsortsController {
     }
 
     @RequestMapping(value="/{id}")
-    public CompletableFuture<ModelAndView> findByName(@PathVariable Long id) throws Exception{
+    public CompletableFuture<ModelAndView> findByName(@PathVariable Long id) {
         return  subsortsFuture.findById(id).thenApply(subsorts ->
                 new ModelAndView("subsorts/show", "subsorts", new Gson().fromJson(subsorts, SubsortsQo.class)));
     }
 
     @RequestMapping(value="/list")
-    public CompletableFuture<Page<Map<String, Object>>> findAll(SubsortsQo subsortsQo) throws Exception{
+    public CompletableFuture<Page<Map<String, Object>>> findAll(SubsortsQo subsortsQo) {
         return subsortsFuture.findPage(subsortsQo.getPage(),subsortsQo.getSize(), subsortsQo.getName()).thenApply( json -> {
             Gson gson = TreeMapConvert.getGson();
 
@@ -68,14 +68,14 @@ public class SubsortsController {
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<ModelAndView> create() throws Exception{
+    public CompletableFuture<ModelAndView> create() {
         return CompletableFuture.supplyAsync(() -> {
             return new ModelAndView("subsorts/new");
         });
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(SubsortsQo subsortsQo) throws Exception{
+    public CompletableFuture<String> save(SubsortsQo subsortsQo) {
         return subsortsFuture.create(subsortsQo).thenApply( sid -> {
             logger.info("新增->ID="+sid);
             return sid;
@@ -83,7 +83,7 @@ public class SubsortsController {
     }
 
     @RequestMapping("/edit/{id}")
-    public CompletableFuture<ModelAndView> update(@PathVariable Long id, ModelMap model) throws Exception{
+    public CompletableFuture<ModelAndView> update(@PathVariable Long id, ModelMap model) {
         return CompletableFuture.supplyAsync(() -> {
             String subs = subsortsService.findById(id);
             SubsortsQo subsorts = new Gson().fromJson(subs, SubsortsQo.class);
@@ -94,7 +94,7 @@ public class SubsortsController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public CompletableFuture<String> update(SubsortsQo subsortsQo) throws Exception{
+    public CompletableFuture<String> update(SubsortsQo subsortsQo) {
         return subsortsFuture.update(subsortsQo).thenApply(sid -> {
             logger.info("修改->ID="+sid);
             return sid;
@@ -102,7 +102,7 @@ public class SubsortsController {
     }
 
     @RequestMapping(value="/delete/{id}")
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return subsortsFuture.delete(id).thenApply( sid -> {
             logger.info("删除->ID="+sid);
             return sid;

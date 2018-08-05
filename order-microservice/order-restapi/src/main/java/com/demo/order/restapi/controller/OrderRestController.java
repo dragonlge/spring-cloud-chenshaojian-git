@@ -94,7 +94,7 @@ public class OrderRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody OrderQo orderQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody OrderQo orderQo) {
         return CompletableFuture.supplyAsync(() -> {
             Order order = CopyUtil.copy(orderQo, Order.class);
 
@@ -109,7 +109,7 @@ public class OrderRestController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody OrderQo orderQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody OrderQo orderQo) {
         return CompletableFuture.supplyAsync(() -> {
             Order order = CopyUtil.copy(orderQo, Order.class);
             order.setModify(new Date());
@@ -128,7 +128,7 @@ public class OrderRestController {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             orderService.delete(id);
 

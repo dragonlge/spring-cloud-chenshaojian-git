@@ -209,7 +209,7 @@ var center_dialog = function(o){
 
     if(o.target){//传递selector
         var target = $(o.target);
-        console.log(target.length)
+        console.log(target.length);
         if(o.clone === true){//o.clone默认undefined
             c.append(target.clone(true).show());
         }else{
@@ -495,7 +495,7 @@ var pull_loading = {
                         switch(o.method){
                             case 'after':
                                 $(o.selector).after(_this.loading);
-                                console.log(_this.loading[0])
+                                console.log(_this.loading[0]);
                                 break;
                             case 'before':
                                 $(o.selector).before(_this.loading);
@@ -570,7 +570,7 @@ var push_loading = {
                         switch(o.method){
                             case 'after':
                                 $(o.selector).after(_this.loading);
-                                console.log(_this.loading[0])
+                                console.log(_this.loading[0]);
                                 break;
                             case 'before':
                                 $(o.selector).before(_this.loading);
@@ -724,7 +724,7 @@ var tips_dialog = function(options){
         },options.time)
     }
      **/
-}
+};
 /***
  * api例子:dialog_main({title: "12", content: "", edge: true,
         buttons:[{
@@ -756,13 +756,13 @@ var dialog_main = function(options){
     }
     $dialog.show().off("click").on("click",function(){
         $(this).hide()
-    })
+    });
     $dialog.find(".tips-title").html(options.title||"");
     $dialog.find(".tips-content").text(options.content||"");
 
     var closeDialog = function(){
         $dialog.hide()
-    }
+    };
 
     options.buttons = options.buttons || [{text:"确认",callback:closeDialog}];
     $dialog.find(".tips-btn").off().remove();
@@ -778,7 +778,7 @@ var dialog_main = function(options){
                 float:"left",
                 width:((options.buttons.length==1?100:92)/options.buttons.length) + '%'
             });
-            options.buttons.length==1 || btnIndex !=0?$btn.addClass("right-btn"):$btn.addClass("left-btn")
+            options.buttons.length==1 || btnIndex !=0?$btn.addClass("right-btn"):$btn.addClass("left-btn");
             $dialog.find(".btn-wrap").append($btn);
         }
     }
@@ -799,5 +799,5 @@ var dialog_main = function(options){
             $dialog.hide();
         },options.time)
     }
-}
+};
 

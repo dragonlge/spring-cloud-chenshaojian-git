@@ -20,4 +20,6 @@ public interface GoodsRepository extends JpaRepository<Goods, Long>, JpaSpecific
     Page<Goods> findByNameAndCreated(@Param("name") String name, @Param("created") Date created, Pageable pageRequest);
 
     Goods findByName(@Param("name") String name);
+
+    Goods findOneById(Long id);
 }

@@ -26,7 +26,7 @@ public class LoginController {
     }
 
     @RequestMapping("/")
-    public String index() throws Exception{
+    public String index() {
         return "redirect:/operators/index";
     }
 
@@ -50,8 +50,7 @@ public class LoginController {
 
     @RequestMapping(value = "/checkcode")
     @ResponseBody
-    public String checkcode(HttpServletRequest request, HttpSession session)
-            throws Exception {
+    public String checkcode(HttpServletRequest request, HttpSession session) {
         String checkCode = request.getParameter("checkCode");
         Object cko = session.getAttribute("simpleCaptcha") ; //验证码对象
         if(cko == null){

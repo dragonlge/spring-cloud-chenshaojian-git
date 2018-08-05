@@ -49,7 +49,7 @@ public class MerchantService {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString());
 
-        merchantRepository.delete(id);
+        merchantRepository.deleteById(id);
     }
 
     public List<Merchant> findAll(){
@@ -61,7 +61,7 @@ public class MerchantService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            merchant = merchantRepository.findOne(id);
+            merchant = merchantRepository.findOneById(id);
             if (merchant != null)
                 cacheComponent.put(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString(), merchant, 12);
         } else {

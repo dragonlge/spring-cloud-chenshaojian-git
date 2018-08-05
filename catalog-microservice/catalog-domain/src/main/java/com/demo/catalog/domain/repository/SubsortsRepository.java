@@ -18,4 +18,6 @@ public interface SubsortsRepository extends JpaRepository<Subsorts, Long>, JpaSp
 
     @Query("select t from Subsorts t where t.name like :name and t.created >= :created")
     Page<Subsorts> findByNameAndCreated(@Param("name") String name, @Param("created") Date created, Pageable pageRequest);
+
+    Subsorts findOneById(Long id);
 }

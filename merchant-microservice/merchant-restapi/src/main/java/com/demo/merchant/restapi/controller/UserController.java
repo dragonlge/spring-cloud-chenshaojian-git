@@ -89,7 +89,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody UserQo userQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody UserQo userQo) {
         return CompletableFuture.supplyAsync(() -> {
             User user = CopyUtil.copy(userQo, User.class);
 
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody UserQo userQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody UserQo userQo) {
         return CompletableFuture.supplyAsync(() -> {
             User user = CopyUtil.copy(userQo, User.class);
 
@@ -121,7 +121,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             userService.delete(id);
             logger.info("删除->ID=" + id);

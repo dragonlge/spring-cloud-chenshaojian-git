@@ -33,7 +33,7 @@ public class QRCodeEncoder {
      * 测试
      * @param args
      */
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
         //String imgPath = "D:/101.jpg";
         String imgPath = "/Users/apple/temp/2.png";
         String content = "MECARD:N:陈生;TIL:技术总临;TEL:18912345678;ORG:中国科学开发院;EMAIL:chen@shaojian.com;ADR:深圳市南山区高新南一道2001号;URL:http://www.badu.com;";
@@ -835,25 +835,16 @@ public class QRCodeEncoder {
         if (value == null) {
             return true;
         } else if(value instanceof String){
-            if(((String)value).trim().replaceAll("\\s", "").equals("")){
-                return true;
-            }
+            return ((String) value).trim().replaceAll("\\s", "").equals("");
         }else if(value instanceof Collection) {
-            if(((Collection)value).isEmpty()){
-                return true;
-            }
+            return ((Collection) value).isEmpty();
         } else if(value.getClass().isArray()) {
-            if(Array.getLength(value) == 0){
-                return true;
-            }
+            return Array.getLength(value) == 0;
         } else if(value instanceof Map) {
-            if(((Map)value).isEmpty()){
-                return true;
-            }
+            return ((Map) value).isEmpty();
         }else {
             return false;
         }
-        return false;
 
     }
 

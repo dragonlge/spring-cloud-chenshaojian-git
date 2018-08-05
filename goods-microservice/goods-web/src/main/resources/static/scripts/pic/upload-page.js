@@ -118,7 +118,7 @@ var page = {
             }
             viewCss.top = (max + 2 - viewCss.height) / 2;
             viewCss.left = (max + 2 - viewCss.width) / 2;
-            viewCss = round(viewCss)
+            viewCss = round(viewCss);
             view.css(viewCss);
             viewImg.attr({src:src}).css({display:"block"});
             view.parent().show();
@@ -131,7 +131,7 @@ var page = {
                 width : parseInt(isee.css("width")),
                 height : parseInt(isee.css("height")),
                 scale : w/h
-            }
+            };
 
             var client = {
                 start_x : 0,
@@ -139,7 +139,7 @@ var page = {
                 end_x : 0,
                 end_y : 0,
                 status : ""
-            }
+            };
 
             isee[0].onmousedown = function(event){
                 $(this).data("mousedown",true);//兼容IE7\6
@@ -177,7 +177,7 @@ var page = {
                     //作为mouseup，注销事件
                     this.attachEvent("onlosecapture",up);
                 }
-            }
+            };
 
             function up(e){
                 $(isee).data("mousedown",false);//兼容IE7\6
@@ -240,7 +240,7 @@ var page = {
                         s[2] = isee_status.top + y;
                         var t = Math.max(outerTop - outerLeft / _this.target.scale,0);
                         s[2] = s[2]<t?t:s[2];//最大值
-                        s[2] = outerTop-s[2]<isee_status.min?outerTop-isee_status.min:s[2]//最小值
+                        s[2] = outerTop-s[2]<isee_status.min?outerTop-isee_status.min:s[2];//最小值
                         s[1] = outerTop - s[2];
                         s[0] = s[1]*_this.target.scale;
                         s[3] = outerLeft - s[0];
@@ -251,7 +251,7 @@ var page = {
                         s[2] = isee_status.top + y;
                         var t = Math.max(outerTop - (w-isee_status.left)/_this.target.scale,0);
                         s[2] = s[2]<t?t:s[2];//最大值
-                        s[2] = outerTop-s[2]<isee_status.min?outerTop-isee_status.min:s[2]//最小值
+                        s[2] = outerTop-s[2]<isee_status.min?outerTop-isee_status.min:s[2];//最小值
                         s[1] = outerTop - s[2];
                         s[0] = s[1]*_this.target.scale;
                         break;
@@ -261,7 +261,7 @@ var page = {
                         s[1] = isee_status.height + y;
                         var t = Math.min(outerLeft/_this.target.scale,h-isee_status.top);
                         s[1] = s[1]>t?t:s[1];//最大值
-                        s[1] = s[1]<isee_status.min?isee_status.min:s[1]//最小值
+                        s[1] = s[1]<isee_status.min?isee_status.min:s[1];//最小值
                         s[0] = s[1]*_this.target.scale;
                         s[3] = outerLeft - s[0];
                         break;
@@ -269,7 +269,7 @@ var page = {
                         s[1] = isee_status.height - y;
                         var t = Math.min(Math.min(outerLeft+isee_status.left,(w-outerLeft)*2+isee_status.width)/_this.target.scale,outerTop);
                         s[1] = s[1]>t?t:s[1];//最大值
-                        s[1] = s[1]<isee_status.min?isee_status.min:s[1]//最小值
+                        s[1] = s[1]<isee_status.min?isee_status.min:s[1];//最小值
                         s[0] = s[1]*_this.target.scale;
                         s[2] = outerTop - s[1];
                         s[3] = (outerLeft + isee_status.left - s[0])/2;
@@ -279,7 +279,7 @@ var page = {
                         s[1] = isee_status.height + y;
                         var t = Math.min(Math.min(outerLeft+isee_status.left,(w-outerLeft)*2+isee_status.width)/_this.target.scale,h-isee_status.top);
                         s[1] = s[1]>t?t:s[1];//最大值
-                        s[1] = s[1]<isee_status.min?isee_status.min:s[1]//最小值
+                        s[1] = s[1]<isee_status.min?isee_status.min:s[1];//最小值
                         s[0] = s[1]*_this.target.scale;
                         s[3] = (outerLeft + isee_status.left - s[0])/2;
                         break;
@@ -289,7 +289,7 @@ var page = {
                         var t = Math.min(Math.min((isee_status.height+isee_status.top*2)*_this.target.scale,(isee_status.height+(h-outerTop)*2)*_this.target.scale),outerLeft);
                         s[0] = s[0]>t?t:s[0];//最大值
                         var myMin = Math.max(isee_status.minNum,isee_status.minNum * _this.target.scale);
-                        s[0] = s[0]<myMin?myMin:s[0]//最小值
+                        s[0] = s[0]<myMin?myMin:s[0];//最小值
                         s[1] = s[0]/_this.target.scale;
                         s[2] = isee_status.top - (s[1]-isee_status.height)/2;
                         s[3] = outerLeft - s[0];
@@ -300,7 +300,7 @@ var page = {
                         var t = Math.min(Math.min((isee_status.height+isee_status.top*2)*_this.target.scale,(isee_status.height+(h-outerTop)*2)*_this.target.scale),w-isee_status.left);
                         s[0] = s[0]>t?t:s[0];//最大值
                         var myMin = Math.max(isee_status.minNum,isee_status.minNum * _this.target.scale);
-                        s[0] = s[0]<myMin?myMin:s[0]//最小值
+                        s[0] = s[0]<myMin?myMin:s[0];//最小值
                         s[1] = s[0]/_this.target.scale;
                         s[2] = isee_status.top - (s[1]-isee_status.height)/2;
                         break;
@@ -339,7 +339,7 @@ var page = {
                 }
             };
 
-            var firstSize = []
+            var firstSize = [];
             if(this.target.scale<=isee_status.scale){//目标比上传图片窄
                 firstSize[0] = h*this.target.scale;
                 firstSize[1] = h;
@@ -389,7 +389,7 @@ var page = {
                 var css = {
                     width : viewCss.width  / ( o_width / w),
                     height : viewCss.height  / ( o_height / h)
-                }
+                };
                 css.top = -css.height * o_top / h;
                 css.left = -css.width * o_left / w;
                 viewImg.css(round(css));
@@ -414,7 +414,7 @@ var page = {
 
         }
     }
-}
+};
 //上传图片
 function uploadPic_submit(ob){
     this.AllowExt=".jpg,.jpeg,.png";
@@ -516,7 +516,7 @@ function getDataHtml(pageNo,pagesize) {
                     '</div>';
 
                 $list.append($(html));
-            })
+            });
             page.photos.setPosition();
             document.getElementById('pagebar').innerHTML = PageBarNumList.getPageBar(data.number+1, data.totalPages, 3, 'getDataHtml',pagesize || 8,true);
         },

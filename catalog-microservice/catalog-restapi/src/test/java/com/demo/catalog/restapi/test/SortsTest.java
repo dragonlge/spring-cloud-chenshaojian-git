@@ -64,7 +64,7 @@ public class SortsTest {
     }
 
     @Test
-    public void getPage() throws Exception{
+    public void getPage() {
         SortsQo sortsQo = new SortsQo();
         sortsQo.setName("");
         //sortsQo.setSize(2);

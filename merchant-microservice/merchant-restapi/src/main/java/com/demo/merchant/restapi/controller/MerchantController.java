@@ -85,7 +85,7 @@ public class MerchantController {
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody MerchantQo merchantQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody MerchantQo merchantQo) {
         return CompletableFuture.supplyAsync(() -> {
             Merchant merchant = CopyUtil.copy(merchantQo, Merchant.class);
 
@@ -114,7 +114,7 @@ public class MerchantController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody MerchantQo merchantQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody MerchantQo merchantQo) {
         return CompletableFuture.supplyAsync(() -> {
             Merchant merchant = CopyUtil.copy(merchantQo, Merchant.class);
 
@@ -126,7 +126,7 @@ public class MerchantController {
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             merchantService.delete(id);
             logger.info("删除->ID=" + id);

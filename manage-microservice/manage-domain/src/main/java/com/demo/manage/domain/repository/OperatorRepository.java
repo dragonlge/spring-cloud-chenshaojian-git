@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OperatorRepository extends JpaRepository<Operators, Long>, JpaSpecificationExecutor<Operators> {
@@ -19,7 +19,8 @@ public interface OperatorRepository extends JpaRepository<Operators, Long>, JpaS
     Operators findByName(@Param("name") String name);
 
     @Query("select distinct u from Operators u where u.id= :id")
-    Operators findById(@Param("id") Long id);
+//    Operators findById(@Param("id") Long id);
+    Optional<Operators> findById(@Param("id") Long id);
 
     @Query("select o from Operators o " +
             "left join o.parts p " +

@@ -12,7 +12,7 @@ import zipkin.server.EnableZipkinServer;
 @EnableZipkinServer
 public class ZipkinServerApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		new SpringApplicationBuilder(ZipkinServerApplication.class).web(true).run(args);
 	}
 

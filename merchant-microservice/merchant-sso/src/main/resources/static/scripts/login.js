@@ -76,7 +76,7 @@ function verSubmit()
     if( $("#isCheckValid").val() == "1") {
         var vilidcode = $.trim($("#checkCode").val());
         if (vilidcode == "" || vilidcode == null || vilidcode == "验证码") {
-            alert("验证码不能为空,请输入验证码!")
+            alert("验证码不能为空,请输入验证码!");
             $("#checkCode").focus();
             return false;
         }

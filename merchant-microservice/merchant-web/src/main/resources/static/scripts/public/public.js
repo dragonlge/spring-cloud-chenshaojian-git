@@ -39,7 +39,7 @@ Date.prototype.format = function (format) {
         "s+": this.getSeconds(),
         "q+": Math.floor((this.getMonth() + 3) / 3),
         "S": this.getMilliseconds()
-    }
+    };
     if (/(y+)/.test(format)) {
         format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     }
@@ -49,7 +49,7 @@ Date.prototype.format = function (format) {
         }
     }
     return format;
-}
+};
 /**
  *转换日期对象为日期字符串
  * @param date 日期对象
@@ -164,8 +164,7 @@ function trimAllText(){
 	$("input:text").each(function(){
 		$(this).val($.trim($(this).val()));
 	});
-};
-
+}
 $.fn.maxLength=function(){
 	var maxLength=$(this).attr("maxLength");
 	if(maxLength==undefined || $(this).val()==undefined){

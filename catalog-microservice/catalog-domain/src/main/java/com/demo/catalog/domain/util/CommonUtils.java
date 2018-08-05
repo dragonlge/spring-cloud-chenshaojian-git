@@ -2,12 +2,12 @@ package com.demo.catalog.domain.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
  * @author zbk
  */
 public class CommonUtils {
-    private final static Logger logger = Logger.getLogger(CommonUtils.class);
 
     // 默认日期格式
     public static final String DATE_FMT = "yyyy-MM-dd"; // 日期
@@ -126,25 +125,16 @@ public class CommonUtils {
         if (value == null) {
             return true;
         } else if (value instanceof String) {
-            if (((String) value).trim().replaceAll("\\s", "").equals("")) {
-                return true;
-            }
+            return ((String) value).trim().replaceAll("\\s", "").equals("");
         } else if (value instanceof Collection) {
-            if (((Collection) value).isEmpty()) {
-                return true;
-            }
+            return ((Collection) value).isEmpty();
         } else if (value.getClass().isArray()) {
-            if (Array.getLength(value) == 0) {
-                return true;
-            }
+            return Array.getLength(value) == 0;
         } else if (value instanceof Map) {
-            if (((Map) value).isEmpty()) {
-                return true;
-            }
+            return ((Map) value).isEmpty();
         } else {
             return false;
         }
-        return false;
 
     }
 
@@ -283,10 +273,7 @@ public class CommonUtils {
             return false;
         }
         int provinceCode = Integer.parseInt(value.substring(0, 2));
-        if (provinceCode < 11 || provinceCode > 91) {
-            return false;
-        }
-        return true;
+        return provinceCode >= 11 && provinceCode <= 91;
     }
 
     /**
@@ -554,7 +541,7 @@ public class CommonUtils {
         try {
 //            List<String> list = Lists.newArrayList();
             in = new CommonUtils().getClass().getResourceAsStream("/keyword.txt");
-            read = new InputStreamReader(in, "UTF-8");//考虑到编码格式
+            read = new InputStreamReader(in, StandardCharsets.UTF_8);//考虑到编码格式
             BufferedReader bufferedReader = new BufferedReader(read);
             String lineTxt = null;
             while ((lineTxt = bufferedReader.readLine()) != null) {
@@ -591,7 +578,7 @@ public class CommonUtils {
         try {
             BufferedReader reader = null;
             File file = new File(new CommonUtils().getClass().getResource("/").getPath() + "keyword.txt");
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
             String lineTxt = null;
             while ((lineTxt = reader.readLine()) != null) {
                 FILTER_STRINGS_LIST.add(lineTxt);

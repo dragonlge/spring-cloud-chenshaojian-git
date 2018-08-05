@@ -1316,7 +1316,7 @@ UE.plugins['table'] = function () {
                 } else {
                     rng.setStart(next, 0)
                 }
-                rng.setCursor(false, true)
+                rng.setCursor(false, true);
                 toggleDragableState(this, false, "", null);
                 if (dragButton)domUtils.remove(dragButton);
             }
@@ -2722,7 +2722,7 @@ UE.plugins['table'] = function () {
                         cell = this.cloneCell(sourceCell, true);//tableRow.insertCell(cellInfo.cellIndex);
                         this.setCellContent(cell);
                         cell.setAttribute('vAlign', cell.getAttribute('vAlign'));
-                        preCell && cell.setAttribute('width', preCell.getAttribute('width'))
+                        preCell && cell.setAttribute('width', preCell.getAttribute('width'));
                         tableRow.insertBefore(cell, preCell);
                     }
                     replaceTdToTh(rowIndex, cell, tableRow);

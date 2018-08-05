@@ -1,6 +1,7 @@
 server:
   port: 7979
 
+
 endpoints:
   restart:
     enabled: true

@@ -27,7 +27,7 @@ public class SortsService {
     private SortsRepository sortsRepository;
 
     public Sorts findOne(Long id){
-        return sortsRepository.findOne(id);
+        return sortsRepository.findOneById(id);
     }
 
     public Sorts findByName(String name){
@@ -39,7 +39,7 @@ public class SortsService {
     }
 
     public void delete(Long id){
-        sortsRepository.delete(id);
+        sortsRepository.deleteById(id);
     }
 
 

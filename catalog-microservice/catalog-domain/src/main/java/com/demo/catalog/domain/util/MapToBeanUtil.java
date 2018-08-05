@@ -75,7 +75,7 @@ public class MapToBeanUtil {
         return map;
     }
 
-    private static <T> void setValue(T bean,Class<T> clazz, Field[] fields, String fieldName, Object vlaue) throws Exception {
+    private static <T> void setValue(T bean,Class<T> clazz, Field[] fields, String fieldName, Object vlaue) {
         PropertyDescriptor pd;
         Method setMethod;
         try {

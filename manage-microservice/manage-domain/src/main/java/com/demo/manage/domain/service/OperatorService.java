@@ -22,6 +22,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -48,7 +49,7 @@ public class OperatorService {
     public void delete(Long id){
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString());
-        operatorRepository.delete(id);
+        operatorRepository.deleteById(id);
     }
 
     public List<Operators> findAll(){
@@ -56,17 +57,19 @@ public class OperatorService {
     }
 
     public Operators findOne(Long id){
-        Operators operators = null;
+        Optional<Operators> operators = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString());
         if (CommonUtils.isNull(object)) {
             operators = operatorRepository.findById(id);
-            if (operators != null)
+            if (operators != null) {
                 cacheComponent.put(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString(), operators, 12);
+            }
         } else {
-            operators = (Operators) object;
+//            operators = (Operators) object;
         }
-        return operators;
+        return null;
+//        return operators;
     }
 
     public Operators findByName(String name){

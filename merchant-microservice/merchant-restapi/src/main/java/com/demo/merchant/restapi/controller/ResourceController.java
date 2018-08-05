@@ -79,7 +79,7 @@ public class ResourceController {
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody ResourceQo resourceQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody ResourceQo resourceQo) {
         return CompletableFuture.supplyAsync(() -> {
             Resource resource = CopyUtil.copy(resourceQo, Resource.class);
 
@@ -93,7 +93,7 @@ public class ResourceController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody ResourceQo resourceQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody ResourceQo resourceQo) {
         return CompletableFuture.supplyAsync(() -> {
             Resource resource = CopyUtil.copy(resourceQo, Resource.class);
 
@@ -107,7 +107,7 @@ public class ResourceController {
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //让具有此资源的角色脱离关系
             List<Role> roleList = roleService.findByResourceId(id);

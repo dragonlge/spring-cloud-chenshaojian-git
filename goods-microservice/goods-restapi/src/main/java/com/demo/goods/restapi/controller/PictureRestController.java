@@ -70,7 +70,7 @@ public class PictureRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody PictureQo pictureQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody PictureQo pictureQo) {
         return CompletableFuture.supplyAsync(() -> {
             Picture picture = new Picture();
             BeanUtils.copyProperties(pictureQo, picture);
@@ -83,7 +83,7 @@ public class PictureRestController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody PictureQo pictureQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody PictureQo pictureQo) {
         return CompletableFuture.supplyAsync(() -> {
             Picture picture = new Picture();
             BeanUtils.copyProperties(pictureQo, picture);
@@ -97,7 +97,7 @@ public class PictureRestController {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.delete(id);
 
@@ -107,7 +107,7 @@ public class PictureRestController {
     }
 
     @RequestMapping(value="/deleteByFileName/{fileName}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> deleteByFileName(@PathVariable String fileName) throws Exception {
+    public CompletableFuture<String> deleteByFileName(@PathVariable String fileName) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.deleteByFileName(fileName);
 

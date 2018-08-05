@@ -1,5 +1,6 @@
 package com.demo.manage.web.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.ConfigAttribute;
@@ -11,8 +12,8 @@ import org.springframework.util.PathMatcher;
 
 import java.util.*;
 
+@Slf4j
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-    private static final Logger logger = LoggerFactory.getLogger(CustomSecurityMetadataSource.class);
 
     private Map<String, Collection<ConfigAttribute>> resourceMap = null;
     private PathMatcher pathMatcher = new AntPathMatcher();
@@ -48,10 +49,10 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
                 map.put(urls[0].trim(), list);
             }
         }else{
-            logger.error("'securityconfig.urlroles' must be set");
+            log.error("'securityconfig.urlroles' must be set");
         }
 
-        logger.info("Loaded UrlRoles Resources.");
+        log.info("Loaded UrlRoles Resources.");
         return map;
 
     }
@@ -61,7 +62,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
             throws IllegalArgumentException {
         String url = ((FilterInvocation) object).getRequestUrl();
 
-        logger.debug("request url is  " + url);
+        log.debug("request url is  " + url);
 
         if(resourceMap == null)
             resourceMap = loadResourceMatchAuthority();

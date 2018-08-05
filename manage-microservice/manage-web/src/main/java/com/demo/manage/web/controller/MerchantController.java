@@ -42,7 +42,7 @@ public class MerchantController{
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "merchant/index";
     }
@@ -82,7 +82,7 @@ public class MerchantController{
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(MerchantQo merchantQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(MerchantQo merchantQo, HttpServletRequest request) {
         return merchantFuture.create(merchantQo).thenApply(sid -> {
             logger.info("新增->ID=" + sid);
             return sid;
@@ -103,7 +103,7 @@ public class MerchantController{
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(MerchantQo merchantQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> update(MerchantQo merchantQo, HttpServletRequest request) {
         return merchantFuture.update(merchantQo).thenApply(sid -> {
             logger.info("修改->ID=" + sid);
             return sid;
@@ -112,7 +112,7 @@ public class MerchantController{
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return merchantFuture.delete(id).thenApply( sid -> {
             logger.info("删除->ID="+sid);
             return sid;
@@ -121,7 +121,7 @@ public class MerchantController{
 
     @RequestMapping(value="/getUserName/{name}",method = RequestMethod.GET)
     @ResponseBody
-    public CompletableFuture<String> getUserName(@PathVariable String name) throws Exception{
+    public CompletableFuture<String> getUserName(@PathVariable String name) {
         return userFuture.findByName(name).thenApply( json -> {
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
             String userName = null;

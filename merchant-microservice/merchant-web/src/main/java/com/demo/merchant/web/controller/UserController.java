@@ -55,7 +55,7 @@ public class UserController extends BaseController{
 
 
     @RequestMapping("/index")
-    public CompletableFuture<String> index(ModelMap model, Principal user, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> index(ModelMap model, Principal user, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             List<ModelQo> menus = super.getModels(user.getName(), request);
             model.addAttribute("menus", menus);
@@ -107,7 +107,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(UserQo userQo, Principal principal, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(UserQo userQo, Principal principal, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             String json = userService.findByName(principal.getName());
             UserQo loginUser = new Gson().fromJson(json, UserQo.class);
@@ -159,7 +159,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(UserQo userQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> update(UserQo userQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             String merchantid = request.getParameter("merchantid");
             if(CommonUtils.isNotNull(merchantid)) {
@@ -190,7 +190,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return userFuture.delete(id).thenApply( sid -> {
             logger.info("删除->ID="+sid);
             return "1";

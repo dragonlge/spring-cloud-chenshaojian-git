@@ -84,7 +84,7 @@ public class OrderClientTest {
     }
 
     //@Test
-    public void getPage() throws Exception{
+    public void getPage() {
         OrderQo orderQo = new OrderQo();
         String json = orderFuture.findPage(orderQo).join();
 

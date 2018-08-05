@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentRepository extends JpaRepository<Department, Long>, JpaSpecificationExecutor<Department> {
     @Query("select t from Department t where t.name like :name")
     Page<Department> findByName(@Param("name") String name, Pageable pageRequest);
+
+    Department findOneById(Long id);
 }

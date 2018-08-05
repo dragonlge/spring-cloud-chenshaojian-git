@@ -48,7 +48,7 @@ public class RoleService {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_ROLE_ID, id.toString());
 
-        roleRepository.delete(id);
+        roleRepository.deleteById(id);
     }
 
     public List<Role> findAll(){
@@ -60,7 +60,7 @@ public class RoleService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_ROLE_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            role = roleRepository.findOne(id);
+            role = roleRepository.findOneById(id);
             if (role != null)
                 cacheComponent.put(Constant.MERCHANT_CENTER_ROLE_ID, id.toString(), role, 12);
         } else {

@@ -48,7 +48,7 @@ public class KindService {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_KIND_ID, id.toString());
 
-        kindRepository.delete(id);
+        kindRepository.deleteById(id);
     }
 
     public List<Kind> findAll(){
@@ -60,9 +60,10 @@ public class KindService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_KIND_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            kind = kindRepository.findOne(id);
-            if (kind != null)
+            kind = kindRepository.findOneById(id);
+            if (kind != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_KIND_ID, id.toString(), kind, 12);
+            }
         } else {
             kind = (Kind) object;
         }

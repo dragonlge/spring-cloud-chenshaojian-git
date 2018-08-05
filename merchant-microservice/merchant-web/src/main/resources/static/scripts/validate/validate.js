@@ -105,7 +105,7 @@ $.validation.Validator=$.tool.inherit({
 $.validation.validatorMgr.reg("validator", $.Validator);
 $.validation.FormValidator = function(form, options) {
     $.extend(this, {
-        validators: new Array(),
+        validators: [],
 
         addValidator: function(validator) {
             this.validators.push(validator);
@@ -118,7 +118,7 @@ $.validation.FormValidator = function(form, options) {
         },
 
         validate: function() {
-            var errors = new Array();
+            var errors = [];
             var result = true;
 
             var formValidator = $(this).data('validator');
@@ -179,7 +179,7 @@ $.fn.formValidator = function(options) {
 };
 $.fn.performValidation = function(group, onSuccess, onFailure) {
     this.doValidate = function(validators) {
-        var errors = new Array();
+        var errors = [];
         var result = true;
 
         $.each(validators, function() {

@@ -17,4 +17,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
             "left join o.resources r " +
             "where r.id = :id")
     List<Role> findByResourceId(@Param("id") Long id);
+
+    Role findOneById(Long id);
 }

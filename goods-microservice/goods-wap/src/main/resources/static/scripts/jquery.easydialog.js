@@ -93,4 +93,4 @@ easyDialog = function(option){
                     dialogClose();
             }
         });
-}
+};

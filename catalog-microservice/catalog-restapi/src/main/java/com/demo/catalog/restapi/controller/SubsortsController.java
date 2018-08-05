@@ -93,7 +93,7 @@ public class SubsortsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody SubsortsQo subsortsQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(@RequestBody SubsortsQo subsortsQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             Subsorts subsorts = new Subsorts();
             BeanUtils.copyProperties(subsortsQo, subsorts);
@@ -106,7 +106,7 @@ public class SubsortsController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody SubsortsQo subsortsQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody SubsortsQo subsortsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Subsorts subsorts = new Subsorts();
             BeanUtils.copyProperties(subsortsQo, subsorts);
@@ -118,7 +118,7 @@ public class SubsortsController {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //如果存在父类则先删除关系
             Sorts sorts = sortsService.findBySubsortsId(id);

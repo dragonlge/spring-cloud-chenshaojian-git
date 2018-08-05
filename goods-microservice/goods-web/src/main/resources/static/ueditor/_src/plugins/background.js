@@ -30,4 +30,4 @@ UE.plugins['background'] = function(){
         html += '}</style> ';
         headHtml.push(html);
     });
-}
+};

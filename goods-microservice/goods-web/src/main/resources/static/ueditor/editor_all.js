@@ -2307,7 +2307,7 @@ var domUtils = dom.domUtils = {
         while(start !== node){
             if(start.nextSibling){
                 return 0
-            };
+            }
             start = start.parentNode;
         }
         return 1;
@@ -5726,7 +5726,7 @@ UE.plugins['background'] = function(){
         html += '}</style> ';
         headHtml.push(html);
     });
-}
+};
 ///import core
 ///import plugins\inserthtml.js
 ///commands 插入图片，操作图片的对齐方式
@@ -6565,7 +6565,7 @@ UE.plugins['blockquote'] = function(){
     var me = this;
     function getObj(editor){
         return domUtils.filterNodeList(editor.selection.getStartElementPath(),'blockquote');
-    };
+    }
     me.commands['blockquote'] = {
         execCommand : function( cmdName, attrs ) {
             var range = this.selection.getRange(),
@@ -6874,7 +6874,7 @@ UE.plugins['selectall'] = function(){
                         rng.setStart(me.body.firstChild,0).setCursor(false,true);
                         me.fireEvent('saveScene');
                         browser.ie && me._selectionChange();
-                        return;
+
                     }
                 }
             }
@@ -8640,7 +8640,7 @@ UE.plugins['list'] = function () {
                         me.fireEvent('contentchange');
                         me.fireEvent('saveScene');
                         domUtils.preventDefault(evt);
-                        return;
+
 
                     }
 
@@ -9713,7 +9713,7 @@ UE.plugins['keystrokes'] = function() {
                     }
                     if(start === parent.lastChild)
                         evt.preventDefault();
-                    return;
+
                 }
             }
         }
@@ -9932,7 +9932,7 @@ UE.plugins['autoheight'] = function () {
         bakOverflow = doc.body.style.overflowY;
         doc.body.style.overflowY = 'hidden';
         me.addListener('contentchange', adjustHeight);
-        me.addListener('afterinserthtml',adjustHeight)
+        me.addListener('afterinserthtml',adjustHeight);
         me.addListener('keyup', adjustHeight);
         me.addListener('mouseup', adjustHeight);
         //ff不给事件算得不对
@@ -10275,7 +10275,7 @@ UE.plugins['highlightcode'] = function() {
                      "       }"+
                      "   }"+
                     '},100)' +
-                    '}</script>'
+                    '}</script>';
                 break;
             }
         }
@@ -10657,7 +10657,7 @@ UE.plugins['serialize'] = function () {
             'ol':1,
             'ul':1,
             'dt':1
-        }
+        };
         function printElement( node, pasteplain ) {
             if ( node.type == 'element' && !node.children.length && (dtd.$removeEmpty[node.tag]) && node.tag != 'a' && utils.isEmptyObject(node.attributes) && autoClearEmptyNode) {// 锚点保留
                 return html;
@@ -12500,7 +12500,7 @@ UE.plugins['table'] = function () {
                 } else {
                     rng.setStart(next, 0)
                 }
-                rng.setCursor(false, true)
+                rng.setCursor(false, true);
                 toggleDragableState(this, false, "", null);
                 if (dragButton)domUtils.remove(dragButton);
             }
@@ -13906,7 +13906,7 @@ UE.plugins['table'] = function () {
                         cell = this.cloneCell(sourceCell, true);//tableRow.insertCell(cellInfo.cellIndex);
                         this.setCellContent(cell);
                         cell.setAttribute('vAlign', cell.getAttribute('vAlign'));
-                        preCell && cell.setAttribute('width', preCell.getAttribute('width'))
+                        preCell && cell.setAttribute('width', preCell.getAttribute('width'));
                         tableRow.insertBefore(cell, preCell);
                     }
                     replaceTdToTh(rowIndex, cell, tableRow);
@@ -15225,7 +15225,7 @@ UE.plugins['snapscreen'] = function(){
             return this.highlight ? -1 :0;
         }
     };
-}
+};
 
 
 ///import core
@@ -18710,7 +18710,7 @@ baidu.editor.ui = {};
 
                 var buff = [];
                 for (var i = 0, ci; ci = list[i]; i++) {
-                    buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;);">' + ci + '</span>');
+                    buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;)">' + ci + '</span>');
                 }
                 //bottom.innerHTML = '<div class="edui-editor-breadcrumb" onmousedown="return false;">' + this.editor.getLang("elementPathTip") + ': ' + buff.join(' &gt; ') + '</div>';
                 bottom.innerHTML = '<div class="edui-editor-breadcrumb" onmousedown="return false;">' + '&nbsp;</div>';

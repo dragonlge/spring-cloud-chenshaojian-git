@@ -62,7 +62,7 @@ UE.plugins['selectall'] = function(){
                         rng.setStart(me.body.firstChild,0).setCursor(false,true);
                         me.fireEvent('saveScene');
                         browser.ie && me._selectionChange();
-                        return;
+
                     }
                 }
             }

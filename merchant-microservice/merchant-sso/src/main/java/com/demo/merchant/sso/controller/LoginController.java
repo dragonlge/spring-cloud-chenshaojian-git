@@ -47,7 +47,7 @@ public class LoginController {
     }
 
     @RequestMapping("/")
-    public CompletableFuture<String> index(ModelMap model, Principal user) throws Exception{
+    public CompletableFuture<String> index(ModelMap model, Principal user) {
         return userFuture.findByName(user.getName()).thenApply(json ->{
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
             //分类列表（顶级菜单）
@@ -91,8 +91,7 @@ public class LoginController {
 
     @RequestMapping(value = "/checkcode")
     @ResponseBody
-    public String checkcode(HttpServletRequest request, HttpSession session)
-            throws Exception {
+    public String checkcode(HttpServletRequest request, HttpSession session) {
         String checkCode = request.getParameter("checkCode");
         Object simple = session.getAttribute("simpleCaptcha") ; //验证码对象
         if(simple == null){

@@ -30,9 +30,9 @@ var getOpt = function(){
         last_text:"尾页",
         hasSelect:false,
         callback: pageselectCallback //回调函数
-    }
+    };
     return opt;
-}
+};
 //分页开始
 var currentPageData = null ;
 var pageaction = function(){
@@ -42,7 +42,7 @@ var pageaction = function(){
         currentPageData = data.content;
         $(".pagination").pagination(data.totalElements, getOpt());
     });
-}
+};
 
 var pageselectCallback = function(page_index, jq, size){
     var html = "" ;
@@ -55,7 +55,7 @@ var pageselectCallback = function(page_index, jq, size){
         },function(data){
             fillData(data.content);
         });
-}
+};
 //填充分页数据
 function fillData(data){
 

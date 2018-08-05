@@ -361,7 +361,7 @@ UE.plugins['serialize'] = function () {
             'ol':1,
             'ul':1,
             'dt':1
-        }
+        };
         function printElement( node, pasteplain ) {
             if ( node.type == 'element' && !node.children.length && (dtd.$removeEmpty[node.tag]) && node.tag != 'a' && utils.isEmptyObject(node.attributes) && autoClearEmptyNode) {// 锚点保留
                 return html;

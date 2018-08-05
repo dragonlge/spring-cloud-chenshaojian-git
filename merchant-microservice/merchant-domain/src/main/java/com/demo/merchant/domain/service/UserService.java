@@ -48,7 +48,7 @@ public class UserService {
     public void delete(Long id){
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_USER_ID, id.toString());
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     public List<User> findAll(){
@@ -60,9 +60,10 @@ public class UserService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_USER_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            user = userRepository.findById(id);
-            if (user != null)
+            user = userRepository.findUserById(id);
+            if (user != null) {
                 cacheComponent.put(Constant.MERCHANT_CENTER_USER_ID, id.toString(), user, 12);
+            }
         } else {
             user = (User) object;
         }

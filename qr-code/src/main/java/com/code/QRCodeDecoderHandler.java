@@ -26,7 +26,7 @@ import java.io.IOException;
 public class QRCodeDecoderHandler {
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
 
         QRCodeDecoderHandler handler = new QRCodeDecoderHandler();
         String imgPath = "/Users/apple/temp/2.png";

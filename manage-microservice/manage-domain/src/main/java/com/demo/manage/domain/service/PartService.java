@@ -48,7 +48,7 @@ public class PartService {
     public void delete(Long id){
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_PART_ID, id.toString());
-        partRepository.delete(id);
+        partRepository.deleteById(id);
     }
 
     public List<Part> findAll(){
@@ -60,9 +60,10 @@ public class PartService {
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_PART_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            part = partRepository.findOne(id);
-            if (part != null)
+            part = partRepository.findOneById(id);
+            if (part != null) {
                 cacheComponent.put(Constant.BOSS_BACKEND_PART_ID, id.toString(), part, 12);
+            }
         } else {
             part = (Part) object;
         }

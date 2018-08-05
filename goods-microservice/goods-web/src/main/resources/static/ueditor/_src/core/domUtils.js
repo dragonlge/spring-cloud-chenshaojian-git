@@ -1258,7 +1258,7 @@ var domUtils = dom.domUtils = {
         while(start !== node){
             if(start.nextSibling){
                 return 0
-            };
+            }
             start = start.parentNode;
         }
         return 1;

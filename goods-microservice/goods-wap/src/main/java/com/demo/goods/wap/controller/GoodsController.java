@@ -36,7 +36,7 @@ public class GoodsController {
 
 
     @RequestMapping(value="/index")
-    public ModelAndView index(ModelMap model, HttpServletRequest request) throws Exception{
+    public ModelAndView index(ModelMap model, HttpServletRequest request) {
         String sortsid = request.getParameter("sortsid");
         return new ModelAndView("goods/index", "sortsid", sortsid);
     }

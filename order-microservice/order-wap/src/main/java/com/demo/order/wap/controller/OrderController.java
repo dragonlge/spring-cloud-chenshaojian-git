@@ -50,7 +50,7 @@ public class OrderController {
 
 
     @RequestMapping(value="/index")
-    public ModelAndView index(ModelMap model) throws Exception{
+    public ModelAndView index(ModelMap model) {
         return new ModelAndView("order/index");
     }
 
@@ -74,8 +74,9 @@ public class OrderController {
             Pageable pageable = new PageRequest(orderQo.getPage(), orderQo.getSize(), null);
             List<OrderQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
+            if(page != null && page.get("content") != null) {
                 list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>(){}.getType());
+            }
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -83,12 +84,12 @@ public class OrderController {
     }
 
     @RequestMapping(value="/verify")
-    public ModelAndView verify(ModelMap model) throws Exception{
+    public ModelAndView verify(ModelMap model) {
         return new ModelAndView("order/verify");
     }
 
     @RequestMapping(value="/switch")
-    public ModelAndView toswitch(ModelMap model) throws Exception{
+    public ModelAndView toswitch(ModelMap model) {
         return new ModelAndView("order/switch");
     }
 
@@ -119,7 +120,7 @@ public class OrderController {
                 orderQo.setUserid(buyone.getUserid());
                 orderQo.setMerchantid(goodsQo.getMerchantid());
                 orderQo.setAmount(sum * goodsQo.getPrice());
-                orderQo.setOrderNo(new Long((new Date()).getTime()).toString());
+                orderQo.setOrderNo(Long.toString((new Date()).getTime()));
                 orderQo.setStatus(1);//待发货
 
                 String sid = orderRestService.create(orderQo);

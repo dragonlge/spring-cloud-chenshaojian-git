@@ -55,14 +55,14 @@ pic = {
 
 			if (!obj.name) {//若不设置name标示 返回
 				if (window.console) console.error("缺少'name'标示。");
-				else alert("缺少'name'标示。")
+				else alert("缺少'name'标示。");
 				return false;
 			}
 			for (var i in pic.dialog.live) {//检测是否存在激活的同样name标示
 				if (!pic.dialog.live.hasOwnProperty(i)) continue;
 				if (i == obj.name && pic.dialog.live[i] !== undefined) {
 					if (window.console) console.error("已存在激活的相同 name : '" + obj.name + "' 标示。");
-					else alert("已存在激活的相同 name : '" + obj.name + "' 标示。")
+					else alert("已存在激活的相同 name : '" + obj.name + "' 标示。");
 					return false;
 				}
 			}
@@ -470,7 +470,7 @@ pic = {
 				before_close: obj.before_close,
 				after_close: obj.after_close,
 				frame: cur
-			}
+			};
 			pic.dialog.live[obj.name] = rt;
 			return rt;
 
@@ -485,7 +485,7 @@ pic = {
 				return pic.dialog.live[pic.dialog.cur[len - 1]].hide();
 			}
 			else {
-				return;
+
 			}
 		},
 		live: {},
@@ -499,4 +499,4 @@ pic = {
 		var m = window.location.toString().match(r);
 		return m ? decodeURI(m[1]) : "";
 	}
-}
+};

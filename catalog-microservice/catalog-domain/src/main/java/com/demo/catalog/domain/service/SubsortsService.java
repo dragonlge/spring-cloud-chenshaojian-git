@@ -31,7 +31,7 @@ public class SubsortsService {
     private SubsortsRepository subsortsRepository;
 
     public Subsorts findOne(Long id){
-        return subsortsRepository.findOne(id);
+        return subsortsRepository.findOneById(id);
     }
 
     public Subsorts findByName(String name){
@@ -43,7 +43,7 @@ public class SubsortsService {
     }
 
     public void delete(Long id){
-        subsortsRepository.delete(id);
+        subsortsRepository.deleteById(id);
     }
 
 

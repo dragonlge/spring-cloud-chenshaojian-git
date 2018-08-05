@@ -48,7 +48,7 @@ public class MerchantRoleController {
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "merchantrole/index";
     }
@@ -92,7 +92,7 @@ public class MerchantRoleController {
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(RoleQo roleQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(RoleQo roleQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             //通过资源ID指定关联对象
             String[] rids = request.getParameterValues("rids");
@@ -143,7 +143,7 @@ public class MerchantRoleController {
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(RoleQo roleQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> update(RoleQo roleQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             //通过资源ID指定关联对象
             String[] rids = request.getParameterValues("rids");
@@ -167,7 +167,7 @@ public class MerchantRoleController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return roleFuture.delete(id).thenApply( sid -> {
             logger.info("删除->ID="+sid);
             return sid;

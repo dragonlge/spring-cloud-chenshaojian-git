@@ -33,7 +33,7 @@ public class OrderController {
     private OrderFuture orderFuture;
 
     @RequestMapping(value="/index")
-    public ModelAndView index(ModelMap model) throws Exception{//, Principal user
+    public ModelAndView index(ModelMap model) {//, Principal user
         //model.addAttribute("user", user);
         return new ModelAndView("order/index");
     }

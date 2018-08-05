@@ -7,8 +7,7 @@ import com.demo.manage.domain.service.DepartmentService;
 import com.demo.manage.domain.service.OperatorService;
 import com.demo.manage.domain.service.PartService;
 import com.demo.manage.object.OperatorsVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,14 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/operators")
+@Slf4j
 public class OperatorsController{
-    private static Logger logger = LoggerFactory.getLogger(OperatorsController.class);
-
     @Autowired
     private OperatorService operatorService;
     @Autowired
@@ -39,7 +36,7 @@ public class OperatorsController{
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "operators/index";
     }
@@ -76,11 +73,11 @@ public class OperatorsController{
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(Operators operators) throws Exception{
+    public CompletableFuture<String> save(Operators operators) {
         return CompletableFuture.supplyAsync(() -> {
             BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
             operators.setPassword(bpe.encode(operators.getPassword()));
-            logger.info("新增->ID=" + operators.getId());
+            log.info("新增->ID=" + operators.getId());
             operatorService.save(operators);
             return "1";
         });
@@ -108,9 +105,9 @@ public class OperatorsController{
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(Operators operators) throws Exception{
+    public CompletableFuture<String> update(Operators operators) {
         return CompletableFuture.supplyAsync(() -> {
-            logger.info("修改->ID=" + operators.getId());
+            log.info("修改->ID=" + operators.getId());
             operatorService.save(operators);
             return "1";
         });
@@ -118,9 +115,9 @@ public class OperatorsController{
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@PathVariable Long id) throws Exception{
+    public String delete(@PathVariable Long id) {
         operatorService.delete(id);
-        logger.info("删除->ID="+id);
+        log.info("删除->ID="+id);
         return "1";
     }
 

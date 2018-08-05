@@ -14,4 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface PartRepository extends JpaRepository<Part, Long>, JpaSpecificationExecutor<Part> {
     @Query("select t from Part t where t.name like :name")
     Page<Part> findByName(@Param("name") String name, Pageable pageRequest);
+
+    Part findOneById(Long id);
 }

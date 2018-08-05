@@ -64,5 +64,5 @@ UE.plugins['snapscreen'] = function(){
             return this.highlight ? -1 :0;
         }
     };
-}
+};
 

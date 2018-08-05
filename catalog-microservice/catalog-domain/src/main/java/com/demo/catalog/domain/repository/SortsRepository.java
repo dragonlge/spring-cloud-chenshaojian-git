@@ -25,4 +25,6 @@ public interface SortsRepository extends JpaRepository<Sorts, Long>, JpaSpecific
             "left join s.subsortses b " +
             "where b.id= :id")
     Sorts findBySubsortsId(@Param("id") Long id);
+
+    Sorts findOneById(Long id);
 }

@@ -21,7 +21,7 @@ app.controller('ctrl', ['$log', '$http', '$scope', function ($log, $http, $scope
 			}).finally(function () {
 				//closeLoading();
 			});
-	}
+	};
 	$scope.Inital = function () {
 		//showLoading("正在查询");
 
@@ -38,7 +38,7 @@ app.controller('ctrl', ['$log', '$http', '$scope', function ($log, $http, $scope
 		}).finally(function () {
 
 		});
-	}
+	};
 	$scope.Inital();
 	$scope.search = function () {
 		//showLoading("正在查询");

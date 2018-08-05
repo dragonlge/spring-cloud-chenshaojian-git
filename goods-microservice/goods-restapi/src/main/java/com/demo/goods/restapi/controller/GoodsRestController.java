@@ -82,7 +82,7 @@ public class GoodsRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody GoodsQo goodsQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody GoodsQo goodsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Goods goods = new Goods();
             BeanUtils.copyProperties(goodsQo, goods);
@@ -96,7 +96,7 @@ public class GoodsRestController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody GoodsQo goodsQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody GoodsQo goodsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Goods goods = new Goods();
             BeanUtils.copyProperties(goodsQo, goods);
@@ -110,7 +110,7 @@ public class GoodsRestController {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             goodsService.delete(id);
 

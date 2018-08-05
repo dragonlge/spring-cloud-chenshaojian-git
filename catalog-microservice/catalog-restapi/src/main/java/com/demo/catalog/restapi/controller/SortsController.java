@@ -89,7 +89,7 @@ public class SortsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody SortsQo sortsQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(@RequestBody SortsQo sortsQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             Sorts sorts = new Sorts();
             BeanUtils.copyProperties(sortsQo, sorts);
@@ -108,7 +108,7 @@ public class SortsController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody SortsQo sortsQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody SortsQo sortsQo) {
         return CompletableFuture.supplyAsync(() -> {
             Sorts sorts = new Sorts();
             BeanUtils.copyProperties(sortsQo, sorts);
@@ -126,7 +126,7 @@ public class SortsController {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             sortsService.delete(id);
             logger.info("删除->ID=" + id);

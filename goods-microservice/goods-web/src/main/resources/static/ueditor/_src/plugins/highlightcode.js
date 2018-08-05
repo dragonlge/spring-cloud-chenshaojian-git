@@ -173,7 +173,7 @@ UE.plugins['highlightcode'] = function() {
                      "       }"+
                      "   }"+
                     '},100)' +
-                    '}</script>'
+                    '}</script>';
                 break;
             }
         }

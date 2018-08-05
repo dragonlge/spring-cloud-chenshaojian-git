@@ -14,7 +14,7 @@
                 //手动提交需要手动同步编辑器数据
                 UE.getEditor('myEditor').sync();
                 $('#form')[0].submit();
-            })
+            });
             //--自动切换提交地址----
             var version = UE.getEditor('myEditor').options.imageUrl||"php",
                     form=$('#form')[0];

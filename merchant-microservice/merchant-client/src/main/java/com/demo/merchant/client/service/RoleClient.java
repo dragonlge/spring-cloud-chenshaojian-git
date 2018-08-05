@@ -1,7 +1,7 @@
 package com.demo.merchant.client.service;
 
 import com.demo.merchant.object.RoleQo;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

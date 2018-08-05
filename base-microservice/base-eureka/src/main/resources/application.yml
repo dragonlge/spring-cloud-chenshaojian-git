@@ -10,4 +10,8 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:${server.port}/eureka/
 
-spring.cloud.config.discovery.enabled: true
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true

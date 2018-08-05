@@ -28,7 +28,7 @@ public class PictureService {
     private PictureRepository pictureRepository;
 
     public Picture findOne(Long id){
-        return pictureRepository.findOne(id);
+        return pictureRepository.findOneById(id);
     }
 
     public void save(Picture picture){
@@ -36,7 +36,7 @@ public class PictureService {
     }
 
     public void delete(Long id){
-        pictureRepository.delete(id);
+        pictureRepository.deleteById(id);
     }
 
     public void deleteByFileName(String fileName){

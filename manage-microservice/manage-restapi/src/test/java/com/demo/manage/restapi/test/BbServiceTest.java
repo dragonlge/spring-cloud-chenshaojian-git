@@ -8,10 +8,9 @@ import com.demo.manage.domain.service.DepartmentService;
 import com.demo.manage.domain.service.OperatorService;
 import com.demo.manage.domain.service.PartService;
 import com.demo.manage.restapi.ManageRestApiApplication;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,8 +22,8 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {JpaConfiguration.class, ManageRestApiApplication.class})
 @SpringBootTest
+@Slf4j
 public class BbServiceTest {
-    private static Logger logger = LoggerFactory.getLogger(BbServiceTest.class);
     @Autowired
     private OperatorService operatorService;
     @Autowired
@@ -64,7 +63,7 @@ public class BbServiceTest {
     public void getData(){
         Operators operators = operatorService.findByName("admin");
         assert operators !=null : "not find";
-        logger.info("=================operator name={}, part name={}, department name={}",
+        log.info("=================operator name={}, part name={}, department name={}",
                 operators.getName(), operators.getParts().get(0).getName(), operators.getDepartment().getName());
     }
 }

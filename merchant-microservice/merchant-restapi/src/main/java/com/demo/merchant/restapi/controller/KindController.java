@@ -73,7 +73,7 @@ public class KindController {
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody KindQo kindQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody KindQo kindQo) {
         return CompletableFuture.supplyAsync(() -> {
             Kind kind = CopyUtil.copy(kindQo, Kind.class);
 
@@ -85,7 +85,7 @@ public class KindController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody KindQo kindQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody KindQo kindQo) {
         return CompletableFuture.supplyAsync(() -> {
             Kind kind = CopyUtil.copy(kindQo, Kind.class);
 
@@ -97,7 +97,7 @@ public class KindController {
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             kindService.delete(id);
             logger.info("删除->ID=" + id);

@@ -36,7 +36,7 @@ public class MerchantKindController {
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "merchantkind/index";
     }
@@ -76,7 +76,7 @@ public class MerchantKindController {
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(KindQo kindQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> save(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.create(kindQo).thenApply(sid -> {
             logger.info("新增->ID=" + sid);
             return sid;
@@ -97,7 +97,7 @@ public class MerchantKindController {
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(KindQo kindQo, HttpServletRequest request) throws Exception{
+    public CompletableFuture<String> update(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.update(kindQo).thenApply(sid -> {
             logger.info("修改->ID=" + sid);
             return sid;
@@ -106,7 +106,7 @@ public class MerchantKindController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception{
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return kindFuture.delete(id).thenApply( sid -> {
             logger.info("删除->ID="+sid);
             return sid;

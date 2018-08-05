@@ -49,7 +49,7 @@ public class ModelService {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_MODEL_ID, id.toString());
 
-        modelRepository.delete(id);
+        modelRepository.deleteById(id);
     }
 
     public List<Model> findAll(){
@@ -61,7 +61,7 @@ public class ModelService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MODEL_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            model = modelRepository.findOne(id);
+            model = modelRepository.findOneById(id);
             if (model != null)
                 cacheComponent.put(Constant.MERCHANT_CENTER_MODEL_ID, id.toString(), model, 12);
         } else {

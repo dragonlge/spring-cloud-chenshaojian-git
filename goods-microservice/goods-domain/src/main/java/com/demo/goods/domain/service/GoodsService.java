@@ -28,7 +28,7 @@ public class GoodsService {
     private GoodsRepository goodsRepository;
 
     public Goods findOne(Long id){
-        return goodsRepository.findOne(id);
+        return goodsRepository.findOneById(id);
     }
 
     public void save(Goods goods){
@@ -36,7 +36,7 @@ public class GoodsService {
     }
 
     public void delete(Long id){
-        goodsRepository.delete(id);
+        goodsRepository.deleteById(id);
     }
 
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableConfigurationProperties(SecuritySettings.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -77,7 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CustomFilterSecurityInterceptor customFilter() throws Exception{
+    public CustomFilterSecurityInterceptor customFilter() {
         CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
         customFilter.setSecurityMetadataSource(securityMetadataSource());
         customFilter.setAccessDecisionManager(accessDecisionManager());

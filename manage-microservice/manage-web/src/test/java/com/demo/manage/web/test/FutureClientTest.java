@@ -2,15 +2,22 @@ package com.demo.manage.web.test;
 
 import com.demo.manage.domain.config.JpaConfiguration;
 import com.demo.manage.web.ManageWebApplication;
-import com.demo.merchant.client.service.*;
+import com.demo.merchant.client.service.KindFuture;
+import com.demo.merchant.client.service.ModelFuture;
+import com.demo.merchant.client.service.ResourceFuture;
+import com.demo.merchant.client.service.RoleFuture;
+import com.demo.merchant.client.service.UserFuture;
 import com.demo.merchant.client.util.TreeMapConvert;
-import com.demo.merchant.object.*;
+import com.demo.merchant.object.KindQo;
+import com.demo.merchant.object.ModelQo;
+import com.demo.merchant.object.ResourceQo;
+import com.demo.merchant.object.RoleQo;
+import com.demo.merchant.object.UserQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -28,8 +35,8 @@ import java.util.TreeMap;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {JpaConfiguration.class, ManageWebApplication.class})
 @SpringBootTest
+@Slf4j
 public class FutureClientTest {
-    private static Logger logger = LoggerFactory.getLogger(FutureClientTest.class);
     @Autowired
     private ModelFuture modelFuture;
 
@@ -51,11 +58,11 @@ public class FutureClientTest {
         RoleQo roleQo = new Gson().fromJson(roleFuture.findById(1L).join(), RoleQo.class);
         String sid = roleFuture.update(roleQo).join();
         assert new Integer(sid) > 0: "update error";
-        logger.info("=============== sid={}", sid);
+        log.info("=============== sid={}", sid);
     }
 
     @Test
-    public void getModelPage() throws Exception{
+    public void getModelPage() {
         ModelQo modelQo = new ModelQo();
         modelQo.setSize(4);
         modelQo.setPage(0);
@@ -77,14 +84,14 @@ public class FutureClientTest {
 
         assert newPage.getTotalElements() > 0;
         for(ModelQo model : list) {
-            logger.info("=============== name={}", model.getName());
+            log.info("=============== name={}", model.getName());
         }
-        logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
+        log.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
                 newPage.getTotalPages(), newPage.getTotalElements());
     }
 
     //@Test
-    public void getResourcePage() throws Exception{
+    public void getResourcePage() {
         ResourceQo resourceQo = new ResourceQo();
         resourceQo.setSize(4);
         resourceQo.setPage(0);
@@ -106,14 +113,14 @@ public class FutureClientTest {
 
         assert newPage.getTotalElements() > 0;
         for(ResourceQo resource : list) {
-            logger.info("=============== name={}", resource.getName());
+            log.info("=============== name={}", resource.getName());
         }
-        logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
+        log.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
                 newPage.getTotalPages(), newPage.getTotalElements());
     }
 
     //@Test
-    public void getRolePage() throws Exception{
+    public void getRolePage() {
         RoleQo roleQo = new RoleQo();
         roleQo.setSize(8);
         roleQo.setPage(0);
@@ -135,14 +142,14 @@ public class FutureClientTest {
 
         assert newPage.getTotalElements() > 0;
         for(RoleQo role : list) {
-            logger.info("=============== name={}", role.getName());
+            log.info("=============== name={}", role.getName());
         }
-        logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
+        log.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
                 newPage.getTotalPages(), newPage.getTotalElements());
     }
 
     //@Test
-    public void getUserPage() throws Exception{
+    public void getUserPage() {
         UserQo userQo = new UserQo();
         userQo.setSize(8);
         userQo.setPage(0);
@@ -164,14 +171,14 @@ public class FutureClientTest {
 
         assert newPage.getTotalElements() > 0;
         for(UserQo user : list) {
-            logger.info("=============== name={}", user.getName());
+            log.info("=============== name={}", user.getName());
         }
-        logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
+        log.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
                 newPage.getTotalPages(), newPage.getTotalElements());
     }
 
     //@Test
-    public void getKindPage() throws Exception{
+    public void getKindPage() {
         KindQo kindQo = new KindQo();
         kindQo.setSize(8);
         kindQo.setPage(0);
@@ -193,9 +200,9 @@ public class FutureClientTest {
 
         assert newPage.getTotalElements() > 0;
         for(KindQo kind : list) {
-            logger.info("=============== name={}", kind.getName());
+            log.info("=============== name={}", kind.getName());
         }
-        logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
+        log.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(),
                 newPage.getTotalPages(), newPage.getTotalElements());
     }
 }

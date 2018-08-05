@@ -29,7 +29,7 @@ public class DepartmentController{
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "department/index";
     }
@@ -59,7 +59,7 @@ public class DepartmentController{
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(Department department) throws Exception{
+    public CompletableFuture<String> save(Department department) {
         return CompletableFuture.supplyAsync(() -> {
             logger.info("新增->ID=" + department.getId());
             departmentService.save(department);
@@ -77,7 +77,7 @@ public class DepartmentController{
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(Department department) throws Exception{
+    public CompletableFuture<String> update(Department department) {
         return CompletableFuture.supplyAsync(() -> {
             logger.info("修改->ID=" + department.getId());
             departmentService.save(department);
@@ -87,7 +87,7 @@ public class DepartmentController{
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@PathVariable Long id) throws Exception{
+    public String delete(@PathVariable Long id) {
         departmentService.delete(id);
         logger.info("删除->ID="+id);
         return "1";

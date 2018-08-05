@@ -7,6 +7,7 @@
 <%@ page import="java.net.URL"%>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.net.URLConnection"%>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%
 request.setCharacterEncoding("utf-8");
 response.setCharacterEncoding("utf-8");
@@ -18,7 +19,7 @@ try {
 searchkey = URLEncoder.encode(searchkey,"utf-8");
     URL url = new URL("http://api.tudou.com/v3/gw?method=item.search&appKey=myKey&format=json&kw="+ searchkey+"&pageNo=1&pageSize=20&channelId="+videotype+"&inDays=7&media=v&sort=s");
     URLConnection conn = url.openConnection();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
     String line = "";   
     while ((line = reader.readLine()) != null) {   
         readOneLineBuff.append(line);   

@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     User findByRoleName(@Param("name") String name);
 
     @Query("select distinct u from User u where u.id= :id")
-    User findById(@Param("id") Long id);
+    User findUserById(@Param("id") Long id);
 
     @Query("select u from User u " +
             "left join u.roles r " +

@@ -4,8 +4,7 @@ import com.demo.manage.domain.entity.Part;
 import com.demo.manage.domain.service.OperatorService;
 import com.demo.manage.domain.service.PartService;
 import com.demo.manage.object.PartVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,26 +15,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/part")
+@Slf4j
 public class PartController {
-    private static Logger logger = LoggerFactory.getLogger(PartController.class);
-
     @Autowired
     private PartService partService;
-
 
     @Autowired
     private OperatorService operatorService;
 
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) {
         model.addAttribute("user", user);
         return "part/index";
     }
@@ -65,9 +59,9 @@ public class PartController {
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
     @ResponseBody
-    public CompletableFuture<String> save(Part part) throws Exception{
+    public CompletableFuture<String> save(Part part) {
         return CompletableFuture.supplyAsync(() -> {
-            logger.info("新增->ID=" + part.getId());
+            log.info("新增->ID=" + part.getId());
             partService.save(part);
             return "1";
         });
@@ -83,9 +77,9 @@ public class PartController {
 
     @RequestMapping(method = RequestMethod.POST, value="/update")
     @ResponseBody
-    public CompletableFuture<String> update(Part part) throws Exception{
+    public CompletableFuture<String> update(Part part) {
         return CompletableFuture.supplyAsync(() -> {
-            logger.info("修改->ID=" + part.getId());
+            log.info("修改->ID=" + part.getId());
             partService.save(part);
             return "1";
         });
@@ -93,9 +87,9 @@ public class PartController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@PathVariable Long id) throws Exception{
+    public String delete(@PathVariable Long id) {
         partService.delete(id);
-        logger.info("删除->ID="+id);
+        log.info("删除->ID="+id);
         return "1";
     }
 

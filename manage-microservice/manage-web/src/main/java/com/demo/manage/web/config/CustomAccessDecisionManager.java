@@ -1,6 +1,6 @@
 package com.demo.manage.web.config;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -11,8 +11,8 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 import java.util.Iterator;
 
+@Slf4j
 public class CustomAccessDecisionManager implements AccessDecisionManager {
-    private static final Logger logger = Logger.getLogger(CustomAccessDecisionManager.class);
 
     @Override
     public void decide(Authentication authentication, Object object,
@@ -35,7 +35,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
                     return;
                 }
             }
-            logger.info("need role is " + needRole);
+            log.info("need role is " + needRole);
         }
         throw new AccessDeniedException("Cannot Access!");
     }

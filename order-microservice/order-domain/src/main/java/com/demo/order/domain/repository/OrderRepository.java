@@ -26,4 +26,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
             "left join o.orderDetails d " +
             "where d.id = :id")
     Order findByOrderDetailId(@Param("id") Long id);
+
+    Order findOneById(Long id);
 }

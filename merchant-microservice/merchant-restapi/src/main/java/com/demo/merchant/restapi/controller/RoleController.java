@@ -78,7 +78,7 @@ public class RoleController {
     }
 
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody RoleQo roleQo) throws Exception{
+    public CompletableFuture<String> save(@RequestBody RoleQo roleQo) {
         return CompletableFuture.supplyAsync(() -> {
             Role role = CopyUtil.copy(roleQo, Role.class);
 
@@ -93,7 +93,7 @@ public class RoleController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public CompletableFuture<String> update(@RequestBody RoleQo roleQo) throws Exception{
+    public CompletableFuture<String> update(@RequestBody RoleQo roleQo) {
         return CompletableFuture.supplyAsync(() -> {
             Role role = CopyUtil.copy(roleQo, Role.class);
 
@@ -108,7 +108,7 @@ public class RoleController {
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
-    public CompletableFuture<String> delete(@PathVariable Long id) throws Exception {
+    public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //让具有此角色的用户脱离关系
             List<User> userList = userService.findByRoleId(id);

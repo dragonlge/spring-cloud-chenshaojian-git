@@ -48,7 +48,7 @@ public class DepartmentService {
     public void delete(Long id){
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString());
-        departmentRepository.delete(id);
+        departmentRepository.deleteById(id);
     }
 
     public List<Department> findAll(){
@@ -60,7 +60,7 @@ public class DepartmentService {
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            department = departmentRepository.findOne(id);
+            department = departmentRepository.findOneById(id);
             if (department != null)
                 cacheComponent.put(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString(), department, 12);
         } else {

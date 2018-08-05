@@ -48,7 +48,7 @@ public class ResourceService {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_RESOURCE_ID, id.toString());
 
-        resourceRepository.delete(id);
+        resourceRepository.deleteById(id);
     }
 
     public List<Resource> findAll(){
@@ -60,7 +60,7 @@ public class ResourceService {
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_RESOURCE_ID, id.toString());
         if (CommonUtils.isNull(object)) {
-            resource = resourceRepository.findOne(id);
+            resource = resourceRepository.findOneById(id);
             if (resource != null)
                 cacheComponent.put(Constant.MERCHANT_CENTER_RESOURCE_ID, id.toString(), resource, 12);
         } else {

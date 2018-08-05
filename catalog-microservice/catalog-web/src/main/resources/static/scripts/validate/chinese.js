@@ -37,7 +37,7 @@ jQuery.validator.methods.compareDate1 = function(value, element, param) {
 };
 //验证时间
 jQuery.validator.methods.compareDate2 = function(value, element,param) {
-	var strs= new Array();
+	var strs= [];
 	strs=param.split(',');
 	var startDate1 = jQuery(strs[0]).val();  
 	var startDate2 = jQuery(strs[1]).val();  
@@ -81,7 +81,7 @@ $('.error').live('mouseover',function(){
  // 判断上传图片不能为空
  jQuery.validator.addMethod("isImageEmpty", function(value, element) {
 	 $(element).parents('.uploadImg').css({'border':value==null||value==''?'2px dashed red':'2px dashed #e4e4e4'});
-	 var v=$.trim(value)
+	 var v=$.trim(value);
 	 return v.length>5;       
  }, "请上传一张图片！"); 
  
@@ -335,7 +335,7 @@ var tooltip=function(ele,txt){
 			'<div class="xb2" style="border-color: rgb(204, 153, 102); background-color: rgb(255, 204, 153);"></div>' +
 			'<div class="xb1" style="background-color: rgb(204, 153, 102);"></div>' +
 		'</div>' +
-	'</div>'
+	'</div>';
     var tip=$(tooltipString);
     $('body').append(tip);    
     $('.hi-tooltip').css({"top":pos_y,"left":pos_x});
@@ -347,6 +347,6 @@ var tooltip=function(ele,txt){
     });
     tip.close=function(){
     	tip.remove();
-    }
+    };
     return tip;
 };
