@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Data
-public class OrderQo extends PageQo{
+public class OrderQo extends PageQo {
     private Long id;
     private String orderNo;
     private Long userid;
@@ -25,7 +25,7 @@ public class OrderQo extends PageQo{
 
     private List<OrderDetailQo> orderDetails = new ArrayList<>();
 
-    public void addOrderDetail(OrderDetailQo orderDetailQo){
+    public void addOrderDetail(OrderDetailQo orderDetailQo) {
         orderDetails.add(orderDetailQo);
     }
 

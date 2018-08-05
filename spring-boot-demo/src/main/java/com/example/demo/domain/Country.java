@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "country")
 @Data
-public class Country  {
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

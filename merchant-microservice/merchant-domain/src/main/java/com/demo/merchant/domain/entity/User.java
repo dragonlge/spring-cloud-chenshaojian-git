@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_user")
-public class User implements java.io.Serializable{
+public class User implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class User implements java.io.Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @ManyToMany(cascade = {},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})

@@ -92,8 +92,8 @@ UE.plugins['undo'] = function () {
             me.document.body.innerHTML = scene.content.replace(fillchar, '');
             //处理undo后空格不展位的问题
             if (browser.ie) {
-                utils.each(domUtils.getElementsByTagName(me.document,'td th caption p'),function(node){
-                    if(domUtils.isEmptyNode(node)){
+                utils.each(domUtils.getElementsByTagName(me.document, 'td th caption p'), function (node) {
+                    if (domUtils.isEmptyNode(node)) {
                         domUtils.fillNode(me.document, node);
                     }
                 })
@@ -108,27 +108,28 @@ UE.plugins['undo'] = function () {
         this.getScene = function (notSetCursor) {
             var rng = me.selection.getRange(),
                 restoreAddress = rng.createAddress(),
-                rngAddress = rng.createAddress(false,true);
+                rngAddress = rng.createAddress(false, true);
 
             me.fireEvent('beforegetscene');
             var cont = me.body.innerHTML.replace(fillchar, '');
             browser.ie && (cont = cont.replace(/>&nbsp;</g, '><').replace(/\s*</g, '<').replace(/>\s*/g, '>'));
             me.fireEvent('aftergetscene');
-            try{
+            try {
                 !notSetCursor && rng.moveToAddress(restoreAddress).select(true);
-            }catch(e){}
+            } catch (e) {
+            }
             return {
-                address:rngAddress,
-                content:cont
+                address: rngAddress,
+                content: cont
             }
         };
-        this.save = function (notCompareRange,notSetCursor) {
+        this.save = function (notCompareRange, notSetCursor) {
             var currentScene = this.getScene(notSetCursor),
                 lastScene = this.list[this.index];
             //内容相同位置相同不存
             if (lastScene && lastScene.content == currentScene.content &&
-                ( notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address) )
-                ) {
+                (notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address))
+            ) {
                 return;
             }
             this.list = this.list.slice(0, this.index + 1);
@@ -160,6 +161,7 @@ UE.plugins['undo'] = function () {
     }
 
     me.undoManger = new UndoManager();
+
     function saveScene() {
         this.undoManger.save();
     }
@@ -177,20 +179,20 @@ UE.plugins['undo'] = function () {
         }
     });
     me.commands['redo'] = me.commands['undo'] = {
-        execCommand:function (cmdName) {
+        execCommand: function (cmdName) {
             me.undoManger[cmdName]();
         },
-        queryCommandState:function (cmdName) {
+        queryCommandState: function (cmdName) {
             return me.undoManger['has' + (cmdName.toLowerCase() == 'undo' ? 'Undo' : 'Redo')] ? 0 : -1;
         },
-        notNeedUndo:1
+        notNeedUndo: 1
     };
 
     var keys = {
             //  /*Backspace*/ 8:1, /*Delete*/ 46:1,
-            /*Shift*/ 16:1, /*Ctrl*/ 17:1, /*Alt*/ 18:1,
-            37:1, 38:1, 39:1, 40:1,
-            13:1 /*enter*/
+            /*Shift*/ 16: 1, /*Ctrl*/ 17: 1, /*Alt*/ 18: 1,
+            37: 1, 38: 1, 39: 1, 40: 1,
+            13: 1 /*enter*/
         },
         keycont = 0,
         lastKeyCode;
@@ -206,8 +208,8 @@ UE.plugins['undo'] = function () {
     });
     //快捷键
     me.addshortcutkey({
-        "Undo":"ctrl+90", //undo
-        "Redo":"ctrl+89" //redo
+        "Undo": "ctrl+90", //undo
+        "Redo": "ctrl+89" //redo
 
     });
     me.addListener('keydown', function (type, evt) {
@@ -219,7 +221,7 @@ UE.plugins['undo'] = function () {
 
                 me.fireEvent('contentchange');
 
-                me.undoManger.save(true,true);
+                me.undoManger.save(true, true);
                 lastKeyCode = keyCode;
                 return;
             }
@@ -234,12 +236,12 @@ UE.plugins['undo'] = function () {
             if (keycont >= maxInputCount || me.undoManger.mousedown) {
                 if (me.selection.getRange().collapsed)
                     me.fireEvent('contentchange');
-                me.undoManger.save(false,true);
+                me.undoManger.save(false, true);
                 me.undoManger.mousedown = false;
             }
         }
     });
-    me.addListener('mousedown',function(){
+    me.addListener('mousedown', function () {
         me.undoManger.mousedown = true;
     })
 };

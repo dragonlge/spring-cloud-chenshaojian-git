@@ -73,16 +73,16 @@ public class SortsTest {
         Page<Sorts> page = sortsService.findAll(sortsQo);
 
         Assert.notEmpty(page.getContent(), "page is empty");
-        for(Sorts sorts1 : page.getContent()){
+        for (Sorts sorts1 : page.getContent()) {
             logger.info("==== sorts ==== name:{}, operator: {}, sub nam={}",
-                    sorts1.getName(), sorts1.getOperator(),sorts1.getSubsortses().iterator().next().getName()
+                    sorts1.getName(), sorts1.getOperator(), sorts1.getSubsortses().iterator().next().getName()
             );
         }
     }
 
 
     //@Test
-    public void getList() throws Exception{
+    public void getList() throws Exception {
         SortsQo sortsQo = new SortsQo();
         sortsQo.setName("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -101,14 +101,14 @@ public class SortsTest {
         List<Sorts> sortses = query.getResultList();
 
         Assert.notEmpty(sortses, "list empty");
-        for(Sorts sorts : sortses) {
+        for (Sorts sorts : sortses) {
             logger.info("==== sorts ==== name:{}, sub name={}", sorts.getName(), sorts.getSubsortses().iterator().next().getName());
         }
     }
 
 
     //@Test
-    public void getBySubId(){
+    public void getBySubId() {
         Sorts sorts = sortsService.findBySubsortsId(1L);
         Assert.notNull(sorts.getId(), "not find");
         logger.info("======== sorts name={}, subs name={}", sorts.getName(), sorts.getSubsortses().iterator().next().getName());

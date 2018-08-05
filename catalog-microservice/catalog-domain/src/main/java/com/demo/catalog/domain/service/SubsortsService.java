@@ -30,36 +30,36 @@ public class SubsortsService {
     @Autowired
     private SubsortsRepository subsortsRepository;
 
-    public Subsorts findOne(Long id){
+    public Subsorts findOne(Long id) {
         return subsortsRepository.findOneById(id);
     }
 
-    public Subsorts findByName(String name){
+    public Subsorts findByName(String name) {
         return subsortsRepository.findByName(name);
     }
 
-    public void save(Subsorts subsorts){
+    public void save(Subsorts subsorts) {
         subsortsRepository.save(subsorts);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         subsortsRepository.deleteById(id);
     }
 
 
-    public Page<Subsorts> findAll(SubsortsQo subsortsQo){
+    public Page<Subsorts> findAll(SubsortsQo subsortsQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
         Pageable pageable = new PageRequest(subsortsQo.getPage(), subsortsQo.getSize(), sort);
 
-        return subsortsRepository.findAll(new Specification<Subsorts>(){
+        return subsortsRepository.findAll(new Specification<Subsorts>() {
             @Override
             public Predicate toPredicate(Root<Subsorts> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(subsortsQo.getName())){
-                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + subsortsQo.getName()+ "%"));
+                if (CommonUtils.isNotNull(subsortsQo.getName())) {
+                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + subsortsQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(subsortsQo.getCreated())){
+                if (CommonUtils.isNotNull(subsortsQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), subsortsQo.getCreated()));
                 }
 
@@ -70,7 +70,7 @@ public class SubsortsService {
         }, pageable);
     }
 
-    public Iterable<Subsorts> findAll(){
+    public Iterable<Subsorts> findAll() {
         return subsortsRepository.findAll();
     }
 }

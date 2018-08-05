@@ -15,8 +15,8 @@
     }
 
     EditorUI.prototype = {
-        uiName:'editor',
-        initEditorUI:function () {
+        uiName: 'editor',
+        initEditorUI: function () {
             this.editor.ui = this;
             this._dialogs = {};
             this.initUIBase();
@@ -38,13 +38,14 @@
                 //display bottom-bar label based on config
                 if (editor.options.elementPathEnabled) {
                     //editor.ui.getDom('elementpath').innerHTML = '<div class="edui-editor-breadcrumb">' + editor.getLang("elementPathTip") + ':</div>';
-                	editor.ui.getDom('elementpath').innerHTML = '<div class="edui-editor-breadcrumb">' + '&nbsp;</div>';
+                    editor.ui.getDom('elementpath').innerHTML = '<div class="edui-editor-breadcrumb">' + '&nbsp;</div>';
                 }
                 if (editor.options.wordCount) {
                     function countFn() {
-                        setCount(editor,me);
+                        setCount(editor, me);
                         domUtils.un(editor.document, "click", arguments.callee);
                     }
+
                     domUtils.on(editor.document, "click", countFn);
                     editor.ui.getDom('wordcount').innerHTML = editor.getLang("wordCountTip");
                 }
@@ -63,7 +64,7 @@
                     editor.ui.getDom('scale').style.display = "none";
                 }
 
-                if (!editor.selection.isFocus())return;
+                if (!editor.selection.isFocus()) return;
                 editor.fireEvent('selectionchange', false, true);
 
 
@@ -82,12 +83,12 @@
 
             var pastePop, isPaste = false, timer;
             editor.addListener("afterpaste", function () {
-                if(editor.queryCommandState('pasteplain'))
+                if (editor.queryCommandState('pasteplain'))
                     return;
                 pastePop = new baidu.editor.ui.Popup({
-                    content:new baidu.editor.ui.PastePicker({editor:editor}),
-                    editor:editor,
-                    className:'edui-wordpastepop'
+                    content: new baidu.editor.ui.PastePicker({editor: editor}),
+                    editor: editor,
+                    className: 'edui-wordpastepop'
                 });
                 pastePop.render();
                 isPaste = true;
@@ -98,8 +99,8 @@
                 timer = setTimeout(function () {
                     if (pastePop && (isPaste || editor.ui._isTransfer)) {
                         var span = domUtils.createElement(editor.document, 'span', {
-                                'style':"line-height:0px;",
-                                'innerHTML':'\ufeff'
+                                'style': "line-height:0px;",
+                                'innerHTML': '\ufeff'
                             }),
                             range = editor.selection.getRange();
                         range.insertNode(span);
@@ -114,25 +115,26 @@
                 baidu.editor.ui.Popup.postHide(evt);
             });
             editor.addListener('keydown', function (t, evt) {
-                if (pastePop)    pastePop.dispose(evt);
+                if (pastePop) pastePop.dispose(evt);
                 var keyCode = evt.keyCode || evt.which;
-                if(evt.altKey&&keyCode==90){
+                if (evt.altKey && keyCode == 90) {
                     UE.ui.buttons['fullscreen'].onclick();
                 }
             });
             editor.addListener('wordcount', function (type) {
-                setCount(this,me);
+                setCount(this, me);
             });
-            function setCount(editor,ui) {
+
+            function setCount(editor, ui) {
                 editor.setOpt({
-                    wordCount:true,
-                    maximumWords:10000,
-                    wordCountMsg:editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
-                    wordOverFlowMsg:editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
+                    wordCount: true,
+                    maximumWords: 10000,
+                    wordCountMsg: editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
+                    wordOverFlowMsg: editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
                 });
                 var opt = editor.options,
                     max = opt.maximumWords,
-                    msg = opt.wordCountMsg ,
+                    msg = opt.wordCountMsg,
                     errMsg = opt.wordOverFlowMsg,
                     countDom = ui.getDom('wordcount');
                 if (!opt.wordCount) {
@@ -157,24 +159,24 @@
                 }
             });
             var popup = new baidu.editor.ui.Popup({
-                editor:editor,
-                content:'',
-                className:'edui-bubble',
-                _onEditButtonClick:function () {
+                editor: editor,
+                content: '',
+                className: 'edui-bubble',
+                _onEditButtonClick: function () {
                     this.hide();
                     editor.ui._dialogs.linkDialog.open();
                 },
-                _onImgEditButtonClick:function (name) {
+                _onImgEditButtonClick: function (name) {
                     this.hide();
                     editor.ui._dialogs[name] && editor.ui._dialogs[name].open();
 
                 },
-                _onImgSetFloat:function (value) {
+                _onImgSetFloat: function (value) {
                     this.hide();
                     editor.execCommand("imagefloat", value);
 
                 },
-                _setIframeAlign:function (value) {
+                _setIframeAlign: function (value) {
                     var frame = popup.anchorEl;
                     var newFrame = frame.cloneNode(true);
                     switch (value) {
@@ -193,16 +195,16 @@
                     popup.anchorEl = newFrame;
                     popup.showAnchor(popup.anchorEl);
                 },
-                _updateIframe:function () {
+                _updateIframe: function () {
                     editor._iframe = popup.anchorEl;
                     editor.ui._dialogs.insertframeDialog.open();
                     popup.hide();
                 },
-                _onRemoveButtonClick:function (cmdName) {
+                _onRemoveButtonClick: function (cmdName) {
                     editor.execCommand(cmdName);
                     this.hide();
                 },
-                queryAutoHide:function (el) {
+                queryAutoHide: function (el) {
                     if (el && el.ownerDocument == editor.document) {
                         if (el.tagName.toLowerCase() == 'img' || domUtils.findParentByTagName(el, 'a', true)) {
                             return el !== popup.anchorEl;
@@ -219,7 +221,7 @@
                     if (editor.ui._dialogs.insertframeDialog && /iframe/ig.test(el.tagName)) {
                         var html = popup.formatHtml(
                             '<nobr>' + editor.getLang("property") + ': <span onclick=$$._setIframeAlign(-2) class="edui-clickable">' + editor.getLang("default") + '</span>&nbsp;&nbsp;<span onclick=$$._setIframeAlign(-1) class="edui-clickable">' + editor.getLang("justifyleft") + '</span>&nbsp;&nbsp;<span onclick=$$._setIframeAlign(1) class="edui-clickable">' + editor.getLang("justifyright") + '</span>&nbsp;&nbsp;' +
-                                ' <span onclick="$$._updateIframe( this);" class="edui-clickable">' + editor.getLang("modify") + '</span></nobr>');
+                            ' <span onclick="$$._updateIframe( this);" class="edui-clickable">' + editor.getLang("modify") + '</span></nobr>');
                         if (html) {
                             popup.getDom('content').innerHTML = html;
                             popup.anchorEl = el;
@@ -255,7 +257,7 @@
                             dialogName = "anchorDialog";
                             html = popup.formatHtml(
                                 '<nobr>' + editor.getLang("property") + ': <span onclick=$$._onImgEditButtonClick("anchorDialog") class="edui-clickable">' + editor.getLang("modify") + '</span>&nbsp;&nbsp;' +
-                                    '<span onclick=$$._onRemoveButtonClick(\'anchor\') class="edui-clickable">' + editor.getLang("delete") + '</span></nobr>');
+                                '<span onclick=$$._onRemoveButtonClick(\'anchor\') class="edui-clickable">' + editor.getLang("delete") + '</span></nobr>');
                         }
                         if (img.getAttribute("word_img")) {
                             //todo 放到dialog去做查询
@@ -265,11 +267,11 @@
                         if (!dialogs[dialogName]) {
                             return;
                         }
-                        str = '<nobr>' + editor.getLang("property") + ': '+
+                        str = '<nobr>' + editor.getLang("property") + ': ' +
                             '<span onclick=$$._onImgSetFloat("none") class="edui-clickable">' + editor.getLang("default") + '</span>&nbsp;&nbsp;' +
                             '<span onclick=$$._onImgSetFloat("left") class="edui-clickable">' + editor.getLang("justifyleft") + '</span>&nbsp;&nbsp;' +
                             '<span onclick=$$._onImgSetFloat("right") class="edui-clickable">' + editor.getLang("justifyright") + '</span>&nbsp;&nbsp;' +
-                            '<span onclick=$$._onImgSetFloat("center") class="edui-clickable">' + editor.getLang("justifycenter") + '</span>&nbsp;&nbsp;'+
+                            '<span onclick=$$._onImgSetFloat("center") class="edui-clickable">' + editor.getLang("justifycenter") + '</span>&nbsp;&nbsp;' +
                             '<span onclick="$$._onImgEditButtonClick(\'' + dialogName + '\');" class="edui-clickable">' + editor.getLang("modify") + '</span></nobr>';
 
                         !html && (html = popup.formatHtml(str))
@@ -288,8 +290,8 @@
                             }
                             html += popup.formatHtml(
                                 '<nobr>' + editor.getLang("anthorMsg") + ': <a target="_blank" href="' + url + '" title="' + url + '" >' + txt + '</a>' +
-                                    ' <span class="edui-clickable" onclick="$$._onEditButtonClick();">' + editor.getLang("modify") + '</span>' +
-                                    ' <span class="edui-clickable" onclick="$$._onRemoveButtonClick(\'unlink\');"> ' + editor.getLang("clear") + '</span></nobr>');
+                                ' <span class="edui-clickable" onclick="$$._onEditButtonClick();">' + editor.getLang("modify") + '</span>' +
+                                ' <span class="edui-clickable" onclick="$$._onRemoveButtonClick(\'unlink\');"> ' + editor.getLang("clear") + '</span></nobr>');
                             popup.showAnchor(link);
                         }
                     }
@@ -305,13 +307,13 @@
             }
 
         },
-        _initToolbars:function () {
+        _initToolbars: function () {
             var editor = this.editor;
             var toolbars = this.toolbars || [];
             var toolbarUis = [];
             for (var i = 0; i < toolbars.length; i++) {
                 var toolbar = toolbars[i];
-                var toolbarUi = new baidu.editor.ui.Toolbar({theme:editor.options.theme});
+                var toolbarUi = new baidu.editor.ui.Toolbar({theme: editor.options.theme});
                 for (var j = 0; j < toolbar.length; j++) {
                     var toolbarItem = toolbar[j];
                     var toolbarItemUi = null;
@@ -349,13 +351,13 @@
             }
             this.toolbars = toolbarUis;
         },
-        getHtmlTpl:function () {
+        getHtmlTpl: function () {
             return '<div id="##" class="%%">' +
                 '<div id="##_toolbarbox" class="%%-toolbarbox">' +
                 (this.toolbars.length ?
                     '<div id="##_toolbarboxouter" class="%%-toolbarboxouter"><div class="%%-toolbarboxinner">' +
-                        this.renderToolbarBoxHtml() +
-                        '</div></div>' : '') +
+                    this.renderToolbarBoxHtml() +
+                    '</div></div>' : '') +
                 '<div id="##_toolbarmsg" class="%%-toolbarmsg" style="display:none;">' +
                 '<div id = "##_upload_dialog" class="%%-toolbarmsg-upload" onclick="$$.showWordImageDialog();">' + this.editor.getLang("clickToUpload") + '</div>' +
                 '<div class="%%-toolbarmsg-close" onclick="$$.hideToolbarMsg();">x</div>' +
@@ -373,18 +375,18 @@
                 '<div id="##_scalelayer"></div>' +
                 '</div>';
         },
-        showWordImageDialog:function () {
+        showWordImageDialog: function () {
             this.editor.execCommand("wordimage", "word_img");
             this._dialogs['wordimageDialog'].open();
         },
-        renderToolbarBoxHtml:function () {
+        renderToolbarBoxHtml: function () {
             var buff = [];
             for (var i = 0; i < this.toolbars.length; i++) {
                 buff.push(this.toolbars[i].renderHtml());
             }
             return buff.join('');
         },
-        setFullScreen:function (fullscreen) {
+        setFullScreen: function (fullscreen) {
 
             var editor = this.editor,
                 container = editor.container.parentNode.parentNode;
@@ -449,16 +451,16 @@
                 this.triggerLayout();
             }
         },
-        _updateFullScreen:function () {
+        _updateFullScreen: function () {
             if (this._fullscreen) {
                 var vpRect = uiUtils.getViewportRect();
                 this.getDom().style.cssText = 'border:0;position:absolute;left:0;top:' + (this.editor.options.topOffset || 0) + 'px;width:' + vpRect.width + 'px;height:' + vpRect.height + 'px;z-index:' + (this.getDom().style.zIndex * 1 + 100);
-                uiUtils.setViewportOffset(this.getDom(), { left:0, top:this.editor.options.topOffset || 0 });
+                uiUtils.setViewportOffset(this.getDom(), {left: 0, top: this.editor.options.topOffset || 0});
                 this.editor.setHeight(vpRect.height - this.getDom('toolbarbox').offsetHeight - this.getDom('bottombar').offsetHeight - (this.editor.options.topOffset || 0));
 
             }
         },
-        _updateElementPath:function () {
+        _updateElementPath: function () {
             var bottom = this.getDom('elementpath'), list;
             if (this.elementPathEnabled && (list = this.editor.queryCommandValue('elementpath'))) {
 
@@ -473,20 +475,20 @@
                 bottom.style.display = 'none'
             }
         },
-        disableElementPath:function () {
+        disableElementPath: function () {
             var bottom = this.getDom('elementpath');
             bottom.innerHTML = '';
             bottom.style.display = 'none';
             this.elementPathEnabled = false;
 
         },
-        enableElementPath:function () {
+        enableElementPath: function () {
             var bottom = this.getDom('elementpath');
             bottom.style.display = '';
             this.elementPathEnabled = true;
             this._updateElementPath();
         },
-        _scale:function () {
+        _scale: function () {
             var doc = document,
                 editor = this.editor,
                 editorHolder = editor.container,
@@ -536,6 +538,7 @@
                     }
                 }
             });
+
             function move(event) {
                 clearSelection();
                 var e = event || window.event;
@@ -580,7 +583,7 @@
 
             this.enableScale = function () {
                 //trace:2868
-                if (editor.queryCommandState("source") == 1)    return;
+                if (editor.queryCommandState("source") == 1) return;
                 scale.style.display = "";
                 this.scaleEnabled = true;
                 domUtils.on(scale, "mousedown", down);
@@ -591,10 +594,10 @@
                 domUtils.un(scale, "mousedown", down);
             };
         },
-        isFullScreen:function () {
+        isFullScreen: function () {
             return this._fullscreen;
         },
-        postRender:function () {
+        postRender: function () {
             UIBase.prototype.postRender.call(this);
             for (var i = 0; i < this.toolbars.length; i++) {
                 this.toolbars[i].postRender();
@@ -615,7 +618,7 @@
                 clearTimeout(timerId);
             })
         },
-        showToolbarMsg:function (msg, flag) {
+        showToolbarMsg: function (msg, flag) {
             this.getDom('toolbarmsg_label').innerHTML = msg;
             this.getDom('toolbarmsg').style.display = '';
             //
@@ -624,13 +627,13 @@
                 w.style.display = 'none';
             }
         },
-        hideToolbarMsg:function () {
+        hideToolbarMsg: function () {
             this.getDom('toolbarmsg').style.display = 'none';
         },
-        mapUrl:function (url) {
+        mapUrl: function (url) {
             return url ? url.replace('~/', this.editor.options.UEDITOR_HOME_URL || '') : ''
         },
-        triggerLayout:function () {
+        triggerLayout: function () {
             var dom = this.getDom();
             if (dom.style.zoom == '1') {
                 dom.style.zoom = '100%';
@@ -649,10 +652,10 @@
         var editor = new baidu.editor.Editor(options);
         editor.options.editor = editor;
         utils.loadFile(document, {
-            href:editor.options.themePath + editor.options.theme + "/css/ueditor.css",
-            tag:"link",
-            type:"text/css",
-            rel:"stylesheet"
+            href: editor.options.themePath + editor.options.theme + "/css/ueditor.css",
+            tag: "link",
+            type: "text/css",
+            rel: "stylesheet"
         });
 
         var oldRender = editor.render;
@@ -663,16 +666,17 @@
             }
             utils.domReady(function () {
                 editor.langIsReady ? renderUI() : editor.addListener("langReady", renderUI);
+
                 function renderUI() {
                     editor.setOpt({
-                        labelMap:editor.options.labelMap || editor.getLang('labelMap')
+                        labelMap: editor.options.labelMap || editor.getLang('labelMap')
                     });
                     new EditorUI(editor.options);
                     if (holder) {
                         if (holder.constructor === String) {
                             holder = document.getElementById(holder);
                         }
-                        holder && holder.getAttribute('name') && ( editor.options.textarea = holder.getAttribute('name'));
+                        holder && holder.getAttribute('name') && (editor.options.textarea = holder.getAttribute('name'));
                         if (holder && /script|textarea/ig.test(holder.tagName)) {
                             var newDiv = document.createElement('div');
                             holder.parentNode.insertBefore(newDiv, holder);
@@ -702,7 +706,7 @@
                     //给实例添加一个编辑器的容器引用
                     editor.container = editor.ui.getDom();
                     var width = editor.options.initialFrameWidth;
-                    if (!/%/g.test(width))  width += "px";
+                    if (!/%/g.test(width)) width += "px";
                     editor.container.style.cssText = "z-index:" + editor.options.zIndex + ";width:" + width;
                     oldRender.call(editor, iframeholder);
 

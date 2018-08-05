@@ -1,27 +1,27 @@
-$(function() {
-	$(":text,:password").keyup(function(e){
-		var keyCode= e.keyCode;
-		if(keyCode!=13){
-			return false;
-		}
-		var thisName=this.name;
-		if(thisName=="username"){
-			$("[name='password']").focus();
-		}
-        if(thisName=="password"){
-            if( $("#isCheckValid").val() == "1")
+$(function () {
+    $(":text,:password").keyup(function (e) {
+        var keyCode = e.keyCode;
+        if (keyCode != 13) {
+            return false;
+        }
+        var thisName = this.name;
+        if (thisName == "username") {
+            $("[name='password']").focus();
+        }
+        if (thisName == "password") {
+            if ($("#isCheckValid").val() == "1")
                 $("[name='checkCode']").focus();
             else
                 verSubmit();
         }
-        if(thisName=="checkCode"){
+        if (thisName == "checkCode") {
             verSubmit();
         }
-	});
+    });
 
 
     $('.check-box span').click(function () {
-        var checkVal = $('#remember-me') , val = checkVal.val() , $this = $(this);
+        var checkVal = $('#remember-me'), val = checkVal.val(), $this = $(this);
         if (val == 1) {
             if ($this.hasClass('is-check')) {
                 $this.removeClass('is-check');
@@ -39,7 +39,7 @@ $(function() {
         }
     });
 
-    $('.close').click(function(){
+    $('.close').click(function () {
         $(this).parent('li').find('input').val('').focus();
     });
 
@@ -55,25 +55,22 @@ $(function() {
 });
 
 
-function verSubmit()
-{
+function verSubmit() {
     var uname = $.trim($("#username").val());
     var passwd = $.trim($("#password").val());
-    if(uname == "" || uname == null || uname == "您的用户名")
-    {
+    if (uname == "" || uname == null || uname == "您的用户名") {
 
         alert("用户名不能为空,请输入用户名!");
         document.getElementById("username").focus();
         return false;
     }
-    if(passwd == "" || passwd == null || passwd == "登录密码")
-    {
+    if (passwd == "" || passwd == null || passwd == "登录密码") {
         alert("密码不能为空,请输入密码!");
         $("#password").focus();
         return false;
     }
 
-    if( $("#isCheckValid").val() == "1") {
+    if ($("#isCheckValid").val() == "1") {
         var vilidcode = $.trim($("#checkCode").val());
         if (vilidcode == "" || vilidcode == null || vilidcode == "验证码") {
             alert("验证码不能为空,请输入验证码!");
@@ -82,26 +79,26 @@ function verSubmit()
         }
 
         checkcode(vilidcode);
-    }else{
+    } else {
         $("#loginForm").submit();
     }
 
 }
 
-function reloadImg(){
-    $("#validateImg").attr("src",$("#validateImg").attr("src").split("?")[0]+"?"+new Date().getTime())
+function reloadImg() {
+    $("#validateImg").attr("src", $("#validateImg").attr("src").split("?")[0] + "?" + new Date().getTime())
 }
 
-function tologin(){
-	window.location.href="/";
+function tologin() {
+    window.location.href = "/";
 }
 
-function checkcode(vilidcode){
-    $.get("/checkcode?t="+new Date().getTime(),{checkCode:vilidcode},function(data) {
-       if(data != 1){
-           alert(data);
-       }else{
-           $("#loginForm").submit();
-       }
+function checkcode(vilidcode) {
+    $.get("/checkcode?t=" + new Date().getTime(), {checkCode: vilidcode}, function (data) {
+        if (data != 1) {
+            alert(data);
+        } else {
+            $("#loginForm").submit();
+        }
     });
 }

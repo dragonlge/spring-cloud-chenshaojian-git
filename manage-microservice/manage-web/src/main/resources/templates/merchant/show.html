@@ -4,33 +4,38 @@
         <tr>
             <th>名称</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.name}" readonly="true" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.name}" readonly="true"/>
                 <span class="tipStar f-left">*</span>
             </td>
             <th>邮箱</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.email}" readonly="true" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.email}" readonly="true"/>
             </td>
         </tr>
         <tr>
             <th>电话</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.phone}" readonly="true" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.phone}" readonly="true"/>
                 <span class="tipStar f-left">*</span>
             </td>
             <th>地址</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.address}" readonly="true" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.address}"
+                       readonly="true"/>
             </td>
         </tr>
         <tr>
             <th>联系人</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.linkman}" readonly="true" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" th:value="${merchant.linkman}"
+                       readonly="true"/>
             </td>
             <th>日期</th>
             <td>
-                <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left" th:value="${merchant.created} ? ${#dates.format(merchant.created,'yyyy-MM-dd HH:mm:ss')} :''" readonly="true"/>
+                <input onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"
+                       class="inp-list w-200 clear-mr f-left"
+                       th:value="${merchant.created} ? ${#dates.format(merchant.created,'yyyy-MM-dd HH:mm:ss')} :''"
+                       readonly="true"/>
             </td>
         </tr>
     </table>

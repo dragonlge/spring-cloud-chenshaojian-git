@@ -36,7 +36,7 @@ spring:
   jpa:
     database: MYSQL
     show-sql: false
-  ## Hibernate ddl auto (validate|create|create-drop|update)
+    ## Hibernate ddl auto (validate|create|create-drop|update)
     hibernate:
       ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
@@ -45,16 +45,16 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
 
   redis:
-      host: 127.0.0.1
-      port: 6379
-#      password: 12345678
-      pool:
-        max-idle: 8
-        min-idle: 0
-        max-active: 8
-        max-wait: -1
+    host: 127.0.0.1
+    port: 6379
+    #      password: 12345678
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
 
-#zipkin
+  #zipkin
   zipkin:
     enabled: true
     base-url: http://localhost:9987
@@ -64,7 +64,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
-#    hostname: 192.168.1.98
+    #    hostname: 192.168.1.98
     preferIpAddress: true
 
 encrypt:
@@ -90,5 +90,5 @@ securityconfig:
   permitall: /druid/**,/bbs**
   deniedpage: /deny
   urlroles: /**/new/** = admins;
-            /**/edit/** = admins,editors;
-            /**/delete/** = admins
+    /**/edit/** = admins,editors;
+    /**/delete/** = admins

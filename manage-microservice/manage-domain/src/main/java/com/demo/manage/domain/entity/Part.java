@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_part")
-public class Part extends IdEntity implements java.io.Serializable{
+public class Part extends IdEntity implements java.io.Serializable {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created", columnDefinition = "timestamp default current_timestamp")

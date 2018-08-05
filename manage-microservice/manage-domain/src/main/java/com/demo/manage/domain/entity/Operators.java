@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_operator")
-public class Operators extends IdEntity implements java.io.Serializable{
+public class Operators extends IdEntity implements java.io.Serializable {
     private String name;
     private String email;
     private Integer sex;

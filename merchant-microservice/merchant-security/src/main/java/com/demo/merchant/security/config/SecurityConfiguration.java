@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     //开放接口禁止防跨站伪造攻击
-    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher(){
+    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher() {
         CsrfSecurityRequestMatcher csrfSecurityRequestMatcher = new CsrfSecurityRequestMatcher();
         List<String> list = new ArrayList<String>();
         list.add("/openhttp/");//完全开放

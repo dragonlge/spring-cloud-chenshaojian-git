@@ -31,31 +31,31 @@ public class PartService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Part part){
+    public void save(Part part) {
         //删除缓存
-        if(!StringUtils.isEmpty(part.getId())){
+        if (!StringUtils.isEmpty(part.getId())) {
             String key = part.getId().toString();
             cacheComponent.remove(Constant.BOSS_BACKEND_PART_ID, key);//删除原有缓存
         }
         partRepository.save(part);
         //保存缓存
-        if(!StringUtils.isEmpty(part.getId())){
+        if (!StringUtils.isEmpty(part.getId())) {
             String key = part.getId().toString();
             cacheComponent.put(Constant.BOSS_BACKEND_PART_ID, key, part, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_PART_ID, id.toString());
         partRepository.deleteById(id);
     }
 
-    public List<Part> findAll(){
+    public List<Part> findAll() {
         return partRepository.findAll();
     }
 
-    public Part findOne(Long id){
+    public Part findOne(Long id) {
         Part part = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_PART_ID, id.toString());
@@ -67,23 +67,23 @@ public class PartService {
         } else {
             part = (Part) object;
         }
-        return  part;
+        return part;
     }
 
 
-    public Page<Part> findAll(PartVo partVo){
+    public Page<Part> findAll(PartVo partVo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(partVo.getPage(), partVo.getSize(), sort);
+        Pageable pageable = new PageRequest(partVo.getPage(), partVo.getSize(), sort);
 
-        return partRepository.findAll(new Specification<Part>(){
+        return partRepository.findAll(new Specification<Part>() {
             @Override
             public Predicate toPredicate(Root<Part> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(partVo.getName())){
+                if (CommonUtils.isNotNull(partVo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + partVo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(partVo.getCreated())){
+                if (CommonUtils.isNotNull(partVo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), partVo.getCreated()));
                 }
 
@@ -93,5 +93,5 @@ public class PartService {
             }
         }, pageable);
     }
-    
+
 }

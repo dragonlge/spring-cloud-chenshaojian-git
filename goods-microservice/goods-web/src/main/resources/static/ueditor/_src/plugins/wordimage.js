@@ -5,25 +5,25 @@
 ///commandsDialog  dialogs\wordimage
 
 
-UE.plugins["wordimage"] = function(){
+UE.plugins["wordimage"] = function () {
     var me = this,
         images;
     me.commands['wordimage'] = {
-        execCommand : function() {
-            images = domUtils.getElementsByTagName(me.document.body,"img");
+        execCommand: function () {
+            images = domUtils.getElementsByTagName(me.document.body, "img");
             var urlList = [];
-            for(var i=0,ci;ci=images[i++];){
-                var url=ci.getAttribute("word_img");
+            for (var i = 0, ci; ci = images[i++];) {
+                var url = ci.getAttribute("word_img");
                 url && urlList.push(url);
             }
-            if(images.length){
+            if (images.length) {
                 this["word_img"] = urlList;
             }
         },
-        queryCommandState: function(){
-            images = domUtils.getElementsByTagName(me.document.body,"img");
-            for(var i=0,ci;ci =images[i++];){
-                if(ci.getAttribute("word_img")){
+        queryCommandState: function () {
+            images = domUtils.getElementsByTagName(me.document.body, "img");
+            for (var i = 0, ci; ci = images[i++];) {
+                if (ci.getAttribute("word_img")) {
                     return 1;
                 }
             }

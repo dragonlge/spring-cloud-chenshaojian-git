@@ -25,7 +25,7 @@ public class TestDb {
 
 
     //@Test
-    public void insertData(){
+    public void insertData() {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setGoodsname("测试商品1");
         orderDetail.setGoodsid(1L);
@@ -54,17 +54,17 @@ public class TestDb {
     }
 
     @Test
-    public void getData(){
+    public void getData() {
         List<Order> orders = orderRepository.findAll();
         Assert.notEmpty(orders, "list empty");
-        for(Order order : orders) {
+        for (Order order : orders) {
             logger.info("========order id={}, order no={}，goods name={}",
                     order.getId(), order.getOrderNo(), order.getOrderDetails().iterator().next().getGoodsname());
         }
     }
 
     //@Test
-    public void delData(){
+    public void delData() {
         orderRepository.delete(1L);
     }
 }

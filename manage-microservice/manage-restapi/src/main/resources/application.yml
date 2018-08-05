@@ -45,7 +45,7 @@ spring:
   jpa:
     database: MYSQL
     show-sql: false
-  ## Hibernate ddl auto (validate|create|create-drop|update)
+    ## Hibernate ddl auto (validate|create|create-drop|update)
     hibernate:
       ddl-auto: update
       #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
@@ -57,14 +57,14 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-#    password: 12345678
+    #    password: 12345678
     pool:
       max-idle: 8
       min-idle: 0
       max-active: 8
       max-wait: -1
 
-#zipkin
+  #zipkin
   zipkin:
     enabled: true
     base-url: http://localhost:9987

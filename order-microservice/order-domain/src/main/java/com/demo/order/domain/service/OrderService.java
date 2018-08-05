@@ -26,41 +26,41 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order findOne(Long id){
+    public Order findOne(Long id) {
         return orderRepository.findOneById(id);
     }
 
-    public void save(Order order){
+    public void save(Order order) {
         orderRepository.save(order);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         orderRepository.deleteById(id);
     }
 
 
-    public Page<Order> findAll(OrderQo orderQo){
+    public Page<Order> findAll(OrderQo orderQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
         Pageable pageable = new PageRequest(orderQo.getPage(), orderQo.getSize(), sort);
 
-        return orderRepository.findAll(new Specification<Order>(){
+        return orderRepository.findAll(new Specification<Order>() {
             @Override
             public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(orderQo.getUserid())) {
+                if (CommonUtils.isNotNull(orderQo.getUserid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("userid"), orderQo.getUserid()));
                 }
-                if(CommonUtils.isNotNull(orderQo.getMerchantid())) {
+                if (CommonUtils.isNotNull(orderQo.getMerchantid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("merchantid"), orderQo.getMerchantid()));
                 }
-                if(CommonUtils.isNotNull(orderQo.getOrderNo())) {
+                if (CommonUtils.isNotNull(orderQo.getOrderNo())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("orderNo"), orderQo.getOrderNo()));
                 }
-                if(CommonUtils.isNotNull(orderQo.getStatus())) {
+                if (CommonUtils.isNotNull(orderQo.getStatus())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("status"), orderQo.getStatus()));
                 }
-                if(CommonUtils.isNotNull(orderQo.getCreated())){
+                if (CommonUtils.isNotNull(orderQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), orderQo.getCreated()));
                 }
 

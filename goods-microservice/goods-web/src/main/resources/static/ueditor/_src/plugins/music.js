@@ -17,17 +17,17 @@ UE.plugins['music'] = function () {
      * @param toEmbed 是否以flash代替显示
      * @param addParagraph  是否需要添加P标签
      */
-    function creatInsertStr(url,width,height,align,toEmbed,addParagraph){
-        return  !toEmbed ?
-            (addParagraph? ('<p '+ (align !="none" ? ( align == "center"? ' style="text-align:center;" ':' style="float:"'+ align ) : '') + '>'): '') +
-                '<img align="'+align+'" width="'+ width +'" height="' + height + '" _url="'+url+'" class="edui-faked-music"' +
-                ' src="'+me.options.langPath+me.options.lang+'/images/music.png" />' +
-                (addParagraph?'</p>':'')
+    function creatInsertStr(url, width, height, align, toEmbed, addParagraph) {
+        return !toEmbed ?
+            (addParagraph ? ('<p ' + (align != "none" ? (align == "center" ? ' style="text-align:center;" ' : ' style="float:"' + align) : '') + '>') : '') +
+            '<img align="' + align + '" width="' + width + '" height="' + height + '" _url="' + url + '" class="edui-faked-music"' +
+            ' src="' + me.options.langPath + me.options.lang + '/images/music.png" />' +
+            (addParagraph ? '</p>' : '')
             :
             '<embed type="application/x-shockwave-flash" class="edui-faked-music" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
-                ' src="' + url + '" width="' + width  + '" height="' + height  + '" align="' + align + '"' +
-                ( align !="none" ? ' style= "'+ ( align == "center"? "display:block;":" float: "+ align )  + '"' :'' ) +
-                ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >';
+            ' src="' + url + '" width="' + width + '" height="' + height + '" align="' + align + '"' +
+            (align != "none" ? ' style= "' + (align == "center" ? "display:block;" : " float: " + align) + '"' : '') +
+            ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >';
     }
 
     function switchImgAndEmbed(img2embed) {
@@ -39,7 +39,7 @@ UE.plugins['music'] = function () {
             }
             tmpdiv = me.document.createElement("div");
             //先看float在看align,浮动有的是时候是在float上定义的
-            var align = domUtils.getComputedStyle(node,'float');
+            var align = domUtils.getComputedStyle(node, 'float');
             align = align == 'none' ? (node.getAttribute('align') || '') : align;
             tmpdiv.innerHTML = creatInsertStr(img2embed ? node.getAttribute("_url") : node.getAttribute("src"), node.width, node.height, align, img2embed);
             node.parentNode.replaceChild(tmpdiv.firstChild, node);
@@ -60,12 +60,12 @@ UE.plugins['music'] = function () {
     });
 
     me.commands["music"] = {
-        execCommand:function (cmd, musicObj) {
+        execCommand: function (cmd, musicObj) {
             var me = this,
                 str = creatInsertStr(musicObj.url, musicObj.width || 400, musicObj.height || 95, "none", false, true);
-            me.execCommand("inserthtml",str);
+            me.execCommand("inserthtml", str);
         },
-        queryCommandState:function () {
+        queryCommandState: function () {
             var me = this,
                 img = me.selection.getRange().getClosedNode(),
                 flag = img && (img.className == "edui-faked-music");

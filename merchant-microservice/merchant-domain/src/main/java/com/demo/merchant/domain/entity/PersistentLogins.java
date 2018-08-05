@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "persistent_logins")
-public class PersistentLogins implements java.io.Serializable{
+public class PersistentLogins implements java.io.Serializable {
     @Id
     @Column(name = "series", length = 64, nullable = false)
     private String series;

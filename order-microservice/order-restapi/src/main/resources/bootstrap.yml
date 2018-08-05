@@ -1,8 +1,8 @@
 spring:
   application:
     name: orderapi
-#  profiles:
-#    active: development
+  #  profiles:
+  #    active: development
   cloud:
     config:
       uri: http://localhost:8888

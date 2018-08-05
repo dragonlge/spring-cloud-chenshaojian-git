@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class UserQo extends PageQo implements java.io.Serializable{
+public class UserQo extends PageQo implements java.io.Serializable {
     private Long id;
     private String name;
     private String password;
@@ -23,7 +23,7 @@ public class UserQo extends PageQo implements java.io.Serializable{
 
     private MerchantQo merchant;
 
-    public void addRole(RoleQo roleQo){
+    public void addRole(RoleQo roleQo) {
         this.roles.add(roleQo);
     }
 

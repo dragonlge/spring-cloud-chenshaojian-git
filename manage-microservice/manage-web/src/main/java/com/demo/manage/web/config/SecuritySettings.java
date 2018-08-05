@@ -2,7 +2,7 @@ package com.demo.manage.web.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix="securityconfig")
+@ConfigurationProperties(prefix = "securityconfig")
 public class SecuritySettings {
     private String logoutsuccssurl = "/logout";
     private String permitall = "/api";

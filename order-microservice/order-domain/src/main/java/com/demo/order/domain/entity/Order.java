@@ -12,7 +12,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="order_no",length = 64)
+    @Column(name = "order_no", length = 64)
     private String orderNo;
     private Long userid;
     private Long merchantid;
@@ -38,7 +38,7 @@ public class Order {
     public Order() {
     }
 
-    public void addOrderDetails(OrderDetail orderDetail){
+    public void addOrderDetails(OrderDetail orderDetail) {
         orderDetails.add(orderDetail);
     }
 

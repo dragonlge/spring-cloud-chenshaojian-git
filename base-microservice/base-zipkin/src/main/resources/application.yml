@@ -34,7 +34,7 @@ spring:
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
-#不对本身跟踪
+  #不对本身跟踪
   sleuth.enabled: false
 
 # zipkin config

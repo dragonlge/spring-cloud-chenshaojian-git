@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class PictureQo extends PageQo{
+public class PictureQo extends PageQo {
     private Long id;
     private String pathInfo;
     private String fileName;

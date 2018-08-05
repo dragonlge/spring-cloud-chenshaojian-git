@@ -49,14 +49,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JdbcTokenRepositoryImpl tokenRepository(){
+    public JdbcTokenRepositoryImpl tokenRepository() {
         JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
         jtr.setDataSource(dataSource);
         return jtr;
     }
 
     @Bean
-    public LoginSuccessHandler loginSuccessHandler(){
+    public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
 }

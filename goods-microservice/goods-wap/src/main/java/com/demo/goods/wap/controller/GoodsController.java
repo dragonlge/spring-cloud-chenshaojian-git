@@ -37,14 +37,14 @@ public class GoodsController {
     private DiscoveryClient discoveryClient;
 
 
-    @RequestMapping(value="/index")
+    @RequestMapping(value = "/index")
     public ModelAndView index(ModelMap model, HttpServletRequest request) {
         String sortsid = request.getParameter("sortsid");
         return new ModelAndView("goods/index", "sortsid", sortsid);
     }
 
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<ModelAndView> findById(@PathVariable Long id) {
         return goodsFuture.findById(id).thenApply(json -> {
             GoodsQo goodsQo = new Gson().fromJson(json, GoodsQo.class);
@@ -58,13 +58,15 @@ public class GoodsController {
         return goodsFuture.findPage(goodsQo).thenApply(json -> {
             log.info("goods list = {}", json);
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(goodsQo.getPage(), goodsQo.getSize(), null);
             List<GoodsQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null) {
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<GoodsQo>>(){}.getType());
+            if (page != null && page.get("content") != null) {
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<GoodsQo>>() {
+                }.getType());
             }
             String count = page.get("totalelements").toString();
 
@@ -72,16 +74,16 @@ public class GoodsController {
         });
     }
 
-    @RequestMapping(value="/service/{name}")
+    @RequestMapping(value = "/service/{name}")
     public String getService(@PathVariable String name) {
         List<ServiceInstance> list = discoveryClient.getInstances(name);
         String serviceUri = "./";
-        if(list != null && list.size() > 0){
-            if(list.size() > 1) {
+        if (list != null && list.size() > 0) {
+            if (list.size() > 1) {
                 Random random = new Random();
                 ServiceInstance service = list.get(random.nextInt(list.size() - 1));
                 serviceUri = service.getUri().toString();
-            }else {
+            } else {
                 ServiceInstance service = list.get(0);
                 serviceUri = service.getUri().toString();
             }

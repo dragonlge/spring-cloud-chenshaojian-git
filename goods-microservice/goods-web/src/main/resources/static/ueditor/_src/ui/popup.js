@@ -5,19 +5,20 @@
         uiUtils = baidu.editor.ui.uiUtils,
         domUtils = baidu.editor.dom.domUtils,
         UIBase = baidu.editor.ui.UIBase,
-        Popup = baidu.editor.ui.Popup = function (options){
+        Popup = baidu.editor.ui.Popup = function (options) {
             this.initOptions(options);
             this.initPopup();
         };
 
     var allPopups = [];
-    function closeAllPopup( evt,el ){
+
+    function closeAllPopup(evt, el) {
         var newAll = [];
-        for ( var i = 0; i < allPopups.length; i++ ) {
+        for (var i = 0; i < allPopups.length; i++) {
             var pop = allPopups[i];
             if (!pop.isHidden()) {
                 if (pop.queryAutoHide(el) !== false) {
-                    if(evt&&/scroll/ig.test(evt.type)&&pop.className=="edui-wordpastepop")   return;
+                    if (evt && /scroll/ig.test(evt.type) && pop.className == "edui-wordpastepop") return;
                     pop.hide();
                 }
             }
@@ -26,8 +27,8 @@
 
     Popup.postHide = closeAllPopup;
 
-    var ANCHOR_CLASSES = ['edui-anchor-topleft','edui-anchor-topright',
-        'edui-anchor-bottomleft','edui-anchor-bottomright'];
+    var ANCHOR_CLASSES = ['edui-anchor-topleft', 'edui-anchor-topright',
+        'edui-anchor-bottomleft', 'edui-anchor-bottomright'];
     Popup.prototype = {
         SHADOW_RADIUS: 5,
         content: null,
@@ -35,11 +36,11 @@
         autoRender: true,
         canSideLeft: true,
         canSideUp: true,
-        initPopup: function (){
+        initPopup: function () {
             this.initUIBase();
-            allPopups.push( this );
+            allPopups.push(this);
         },
-        getHtmlTpl: function (){
+        getHtmlTpl: function () {
             return '<div id="##" class="edui-popup %%">' +
                 ' <div id="##_body" class="edui-popup-body">' +
                 ' <iframe style="position:absolute;z-index:-1;left:0;top:0;background-color: transparent;" frameborder="0" width="100%" height="100%" src="javascript:"></iframe>' +
@@ -50,19 +51,19 @@
                 ' </div>' +
                 '</div>';
         },
-        getContentHtmlTpl: function (){
-            if(this.content){
+        getContentHtmlTpl: function () {
+            if (this.content) {
                 if (typeof this.content == 'string') {
                     return this.content;
                 }
                 return this.content.renderHtml();
-            }else{
+            } else {
                 return ''
             }
 
         },
         _UIBase_postRender: UIBase.prototype.postRender,
-        postRender: function (){
+        postRender: function () {
             if (this.content instanceof UIBase) {
                 this.content.postRender();
             }
@@ -70,16 +71,16 @@
             this.hide(true);
             this._UIBase_postRender();
         },
-        _doAutoRender: function (){
+        _doAutoRender: function () {
             if (!this.getDom() && this.autoRender) {
                 this.render();
             }
         },
-        mesureSize: function (){
+        mesureSize: function () {
             var box = this.getDom('content');
             return uiUtils.getClientRect(box);
         },
-        fitSize: function (){
+        fitSize: function () {
             var popBodyEl = this.getDom('body');
             popBodyEl.style.width = '';
             popBodyEl.style.height = '';
@@ -88,10 +89,10 @@
             popBodyEl.style.height = size.height + 'px';
             return size;
         },
-        showAnchor: function ( element, hoz ){
-            this.showAnchorRect( uiUtils.getClientRect( element ), hoz );
+        showAnchor: function (element, hoz) {
+            this.showAnchorRect(uiUtils.getClientRect(element), hoz);
         },
-        showAnchorRect: function ( rect, hoz, adj ){
+        showAnchorRect: function (rect, hoz, adj) {
             this._doAutoRender();
             var vpRect = uiUtils.getViewportRect();
             this._show();
@@ -117,7 +118,7 @@
             });
             domUtils.removeClasses(popEl, ANCHOR_CLASSES);
             popEl.className += ' ' + ANCHOR_CLASSES[(sideUp ? 1 : 0) * 2 + (sideLeft ? 1 : 0)];
-            if(this.editor){
+            if (this.editor) {
                 popEl.style.zIndex = this.editor.container.style.zIndex * 1 + 10;
                 baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = popEl.style.zIndex - 1;
             }
@@ -136,7 +137,7 @@
             };
             this.showAnchorRect(rect, false, true);
         },
-        _show: function (){
+        _show: function () {
             if (this._hidden) {
                 var box = this.getDom();
                 box.style.display = '';
@@ -147,14 +148,14 @@
                 this.fireEvent('show');
             }
         },
-        isHidden: function (){
+        isHidden: function () {
             return this._hidden;
         },
-        show: function (){
+        show: function () {
             this._doAutoRender();
             this._show();
         },
-        hide: function (notNofity){
+        hide: function (notNofity) {
             if (!this._hidden && this.getDom()) {
 //                this.getDom().style.visibility = 'hidden';
                 this.getDom().style.display = 'none';
@@ -164,19 +165,19 @@
                 }
             }
         },
-        queryAutoHide: function (el){
+        queryAutoHide: function (el) {
             return !el || !uiUtils.contains(this.getDom(), el);
         }
     };
     utils.inherits(Popup, UIBase);
-    
-    domUtils.on( document, 'mousedown', function ( evt ) {
+
+    domUtils.on(document, 'mousedown', function (evt) {
         var el = evt.target || evt.srcElement;
-        closeAllPopup( evt,el );
-    } );
-    domUtils.on( window, 'scroll', function (evt,el) {
-        closeAllPopup( evt,el );
-    } );
+        closeAllPopup(evt, el);
+    });
+    domUtils.on(window, 'scroll', function (evt, el) {
+        closeAllPopup(evt, el);
+    });
 
 //    var lastVpRect = uiUtils.getViewportRect();
 //    domUtils.on( window, 'resize', function () {

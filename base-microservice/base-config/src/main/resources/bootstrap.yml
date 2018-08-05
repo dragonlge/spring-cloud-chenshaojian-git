@@ -11,7 +11,7 @@ spring:
           password:
 
   rabbitmq:
-        #addresses: amqp://localhost:5672
-        addresses: ${vcap.services.${PREFIX:}rabbitmq.credentials.uri:amqp://${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}}
-        username: alan
-        password: alan
+    #addresses: amqp://localhost:5672
+    addresses: ${vcap.services.${PREFIX:}rabbitmq.credentials.uri:amqp://${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}}
+    username: alan
+    password: alan

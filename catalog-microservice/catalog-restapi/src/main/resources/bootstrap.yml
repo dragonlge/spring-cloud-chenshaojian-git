@@ -1,14 +1,14 @@
 spring:
   application:
     name: catalogapi
-#  profiles:
-#    active: development
+  #  profiles:
+  #    active: development
   cloud:
     config:
       uri: http://localhost:8888
 
   rabbitmq:
-        addresses: amqp://localhost:5672
-        username: alan
-        password: alan
+    addresses: amqp://localhost:5672
+    username: alan
+    password: alan
 

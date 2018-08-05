@@ -35,7 +35,7 @@ public class OrderClientTest {
 
 
     //@Test
-    public void insertData(){
+    public void insertData() {
         OrderDetailQo orderDetail = new OrderDetailQo();
         orderDetail.setGoodsname("测试商品1");
         orderDetail.setGoodsid(1L);
@@ -66,7 +66,7 @@ public class OrderClientTest {
     }
 
     @Test
-    public void update(){
+    public void update() {
         String json = orderFuture.findById(2L).join();
         OrderQo orderQo = new Gson().fromJson(json, OrderQo.class);
         orderQo.setStatus(-1);
@@ -77,7 +77,7 @@ public class OrderClientTest {
     }
 
     //@Test
-    public void delete(){
+    public void delete() {
         String sid = orderFuture.delete(8L).join();
         logger.info("========delete sid={}", sid);
         assert new Integer(sid) > 0 : "not delete";
@@ -89,20 +89,22 @@ public class OrderClientTest {
         String json = orderFuture.findPage(orderQo).join();
 
         Gson gson = TreeMapConvert.getGson();
-        TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+        TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+        }.getType());
 
         Pageable pageable = new PageRequest(orderQo.getPage(), orderQo.getSize(), null);
 
         List<OrderQo> list = new ArrayList<>();
 
-        if(page.get("content") != null)
-            list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>(){}.getType());
+        if (page.get("content") != null)
+            list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>() {
+            }.getType());
         String count = page.get("totalelements").toString();
 
         Page<Map<String, Object>> newPage = new PageImpl(list, pageable, new Long(count));
 
         assert newPage.getTotalElements() > 0;
-        for(OrderQo orders : list) {
+        for (OrderQo orders : list) {
             logger.info("===============orderno={}, goods name={}", orders.getOrderNo(), orders.getOrderDetails().iterator().next().getGoodsname());
         }
         logger.info("===============pageno={}, total_pages={}, total_elements={}", newPage.getNumber(), newPage.getTotalPages(), newPage.getTotalElements());

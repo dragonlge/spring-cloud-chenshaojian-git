@@ -20,35 +20,35 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
     private String urlroles;
 
-    @Override
-    public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return null;
-    }
-
-    public CustomSecurityMetadataSource  (String urlroles) {
+    public CustomSecurityMetadataSource(String urlroles) {
         super();
         this.urlroles = urlroles;
         resourceMap = loadResourceMatchAuthority();
+    }
+
+    @Override
+    public Collection<ConfigAttribute> getAllConfigAttributes() {
+        return null;
     }
 
     private Map<String, Collection<ConfigAttribute>> loadResourceMatchAuthority() {
 
         Map<String, Collection<ConfigAttribute>> map = new HashMap<String, Collection<ConfigAttribute>>();
 
-        if(urlroles != null && !urlroles.isEmpty()){
+        if (urlroles != null && !urlroles.isEmpty()) {
             String[] resouces = urlroles.split(";");
-            for(String resource : resouces){
+            for (String resource : resouces) {
                 String[] urls = resource.split("=");
                 String[] roles = urls[1].split(",");
                 Collection<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
-                for(String role : roles){
+                for (String role : roles) {
                     ConfigAttribute config = new SecurityConfig(role.trim());
                     list.add(config);
                 }
                 //key：url, value：roles
                 map.put(urls[0].trim(), list);
             }
-        }else{
+        } else {
             log.error("'securityconfig.urlroles' must be set");
         }
 
@@ -64,13 +64,13 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
         log.debug("request url is  " + url);
 
-        if(resourceMap == null)
+        if (resourceMap == null)
             resourceMap = loadResourceMatchAuthority();
 
         Iterator<String> ite = resourceMap.keySet().iterator();
         while (ite.hasNext()) {
             String resURL = ite.next();
-            if (pathMatcher.match(resURL,url)) {
+            if (pathMatcher.match(resURL, url)) {
                 return resourceMap.get(resURL);
             }
         }

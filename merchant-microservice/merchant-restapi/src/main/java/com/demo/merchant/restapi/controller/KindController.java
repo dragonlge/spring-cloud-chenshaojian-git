@@ -28,7 +28,7 @@ public class KindController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> kindService.findOne(id))
-                .thenApply(resource ->{
+                .thenApply(resource -> {
                     return new Gson().toJson(resource);
                 });
     }
@@ -47,13 +47,13 @@ public class KindController {
             try {
                 KindQo kindQo = new KindQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     kindQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     kindQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     kindQo.setName(name);
                 }
 
@@ -72,7 +72,7 @@ public class KindController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody KindQo kindQo) {
         return CompletableFuture.supplyAsync(() -> {
             Kind kind = CopyUtil.copy(kindQo, Kind.class);
@@ -84,7 +84,7 @@ public class KindController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody KindQo kindQo) {
         return CompletableFuture.supplyAsync(() -> {
             Kind kind = CopyUtil.copy(kindQo, Kind.class);
@@ -96,7 +96,7 @@ public class KindController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             kindService.delete(id);

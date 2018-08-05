@@ -59,7 +59,7 @@ public class TestDb {
 
 
     //@Test
-    public void getList() throws Exception{
+    public void getList() throws Exception {
         SortsQo sortsQo = new SortsQo();
         sortsQo.setName("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -78,14 +78,14 @@ public class TestDb {
         List<Sorts> sortses = query.getResultList();
 
         Assert.notEmpty(sortses, "list empty");
-        for(Sorts sorts : sortses) {
+        for (Sorts sorts : sortses) {
             logger.info("==== sorts ==== name:{}, sub name={}", sorts.getName(), sorts.getSubsortses().iterator().next().getName());
         }
     }
 
 
     @Test
-    public void getBySubId(){
+    public void getBySubId() {
         Sorts sorts = sortsRepository.findBySubsortsId(1L);
         Assert.notNull(sorts.getId(), "not find");
         logger.info("======== sorts name={}, subs name={}", sorts.getName(), sorts.getSubsortses().iterator().next().getName());

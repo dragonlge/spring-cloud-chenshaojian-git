@@ -36,28 +36,28 @@ public class LoginController {
     private DiscoveryClient discoveryClient;
 
     @RequestMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @RequestMapping("/signout")
-    public String signout(HttpServletRequest request) throws Exception{
+    public String signout(HttpServletRequest request) throws Exception {
         request.logout();
         return "tologin";
     }
 
     @RequestMapping("/")
     public CompletableFuture<String> index(ModelMap model, Principal user) {
-        return userFuture.findByName(user.getName()).thenApply(json ->{
+        return userFuture.findByName(user.getName()).thenApply(json -> {
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
             //分类列表（顶级菜单）
             List<KindQo> kindList = new ArrayList<>();
             List<Long> kindIds = new ArrayList<>();
-            for(RoleQo roleQo : userQo.getRoles()){
-                for(ResourceQo resourceVo : roleQo.getResources()){
+            for (RoleQo roleQo : userQo.getRoles()) {
+                for (ResourceQo resourceVo : roleQo.getResources()) {
                     //去重，获取分类列表
                     Long kindId = resourceVo.getModel().getKind().getId();
-                    if(! kindIds.contains(kindId)){
+                    if (!kindIds.contains(kindId)) {
                         kindList.add(resourceVo.getModel().getKind());
                         kindIds.add(kindId);
                     }
@@ -75,11 +75,11 @@ public class LoginController {
     public String imagecode(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         OutputStream os = response.getOutputStream();
-        Map<String,Object> map = ImageCode.getImageCode(60, 20, os);
+        Map<String, Object> map = ImageCode.getImageCode(60, 20, os);
 
         String simpleCaptcha = "simpleCaptcha";
         request.getSession().setAttribute(simpleCaptcha, map.get("strEnsure").toString().toLowerCase());
-        request.getSession().setAttribute("codeTime",new Date().getTime());
+        request.getSession().setAttribute("codeTime", new Date().getTime());
 
         try {
             ImageIO.write((BufferedImage) map.get("image"), "JPEG", os);
@@ -93,39 +93,39 @@ public class LoginController {
     @ResponseBody
     public String checkcode(HttpServletRequest request, HttpSession session) {
         String checkCode = request.getParameter("checkCode");
-        Object simple = session.getAttribute("simpleCaptcha") ; //验证码对象
-        if(simple == null){
+        Object simple = session.getAttribute("simpleCaptcha"); //验证码对象
+        if (simple == null) {
             request.setAttribute("errorMsg", "验证码已失效，请重新输入！");
             return "验证码已失效，请重新输入！";
         }
 
         String captcha = simple.toString();
         Date now = new Date();
-        Long codeTime = Long.valueOf(session.getAttribute("codeTime")+"");
-        if(StringUtils.isEmpty(checkCode) || captcha == null ||  !(checkCode.equalsIgnoreCase(captcha))){
+        Long codeTime = Long.valueOf(session.getAttribute("codeTime") + "");
+        if (StringUtils.isEmpty(checkCode) || captcha == null || !(checkCode.equalsIgnoreCase(captcha))) {
             request.setAttribute("errorMsg", "验证码错误！");
             return "验证码错误！";
-        }else if ((now.getTime()-codeTime) / 1000 / 60 > 5){//验证码有效长度为5分钟
+        } else if ((now.getTime() - codeTime) / 1000 / 60 > 5) {//验证码有效长度为5分钟
             request.setAttribute("errorMsg", "验证码已失效，请重新输入！");
             return "验证码已失效，请重新输入！";
-        }else {
+        } else {
             session.removeAttribute("simpleCaptcha");
             return "1";
         }
     }
 
 
-    @RequestMapping(value="/service/{name}")
+    @RequestMapping(value = "/service/{name}")
     @ResponseBody
     public String getService(@PathVariable String name) {
         List<ServiceInstance> list = discoveryClient.getInstances(name);
         String serviceUri = "./";
-        if(list != null && list.size() > 0){
-            if(list.size() > 1) {
+        if (list != null && list.size() > 0) {
+            if (list.size() > 1) {
                 Random random = new Random();
                 ServiceInstance service = list.get(random.nextInt(list.size() - 1));
                 serviceUri = service.getUri().toString();
-            }else {
+            } else {
                 ServiceInstance service = list.get(0);
                 serviceUri = service.getUri().toString();
             }

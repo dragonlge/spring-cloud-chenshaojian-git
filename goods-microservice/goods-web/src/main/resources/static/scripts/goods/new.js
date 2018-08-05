@@ -1,22 +1,22 @@
-$(function(){
-	$('#saveForm').validate({
+$(function () {
+    $('#saveForm').validate({
         rules: {
-            name       :{required:true},
-            price      :{required:true}
-        },messages:{
-            name :{required:"必填"},
-            price :{required:"必填"}
+            name: {required: true},
+            price: {required: true}
+        }, messages: {
+            name: {required: "必填"},
+            price: {required: "必填"}
         }
- 	});
+    });
 
-    $('#sortsid').change(function(){
+    $('#sortsid').change(function () {
         var index = this.selectedIndex;
         var sortsid = this.options[index].value;
 
         var $option = $('#subsid').empty();
         var html = '<option value="" selected = true>请选择</option>';
-        $.each(sortses,function(k,v) {
-            if(v.id == sortsid) {
+        $.each(sortses, function (k, v) {
+            if (v.id == sortsid) {
                 $.each(v.subsortses, function (j, w) {
                     html += '<option value="' + w.id + '">' + w.name + '</option>';
                 });
@@ -27,9 +27,9 @@ $(function(){
     });
 });
 
-function saveNew(){
+function saveNew() {
     $("#contents").val(ME.getContent());
-    if($('#saveForm').valid()){
+    if ($('#saveForm').valid()) {
         $.ajax({
             type: "POST",
             url: "./save",
@@ -43,13 +43,13 @@ function saveNew(){
                     alert(data);
                 }
             },
-            error:function(data){
-                $.each(data,function(v){
+            error: function (data) {
+                $.each(data, function (v) {
                     alert(v);
                 });
             }
         });
-    }else{
+    } else {
         alert('数据验证失败，请检查！');
     }
 }

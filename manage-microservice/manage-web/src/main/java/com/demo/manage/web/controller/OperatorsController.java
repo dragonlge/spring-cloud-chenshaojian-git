@@ -26,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 @Controller
 @RequestMapping("/operators")
 @Slf4j
-public class OperatorsController{
+public class OperatorsController {
     @Autowired
     private OperatorService operatorService;
     @Autowired
@@ -46,21 +46,21 @@ public class OperatorsController{
     public Page<Operators> getList(OperatorsVo operatorsVo) {
         try {
             return operatorService.findAll(operatorsVo);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public String show(ModelMap model, @PathVariable Long id) {
         Operators operators = operatorService.findOne(id);
-        model.addAttribute("operators",operators);
+        model.addAttribute("operators", operators);
         return "operators/show";
     }
 
     @RequestMapping("/new")
-    public String create(ModelMap model, Operators operators){
+    public String create(ModelMap model, Operators operators) {
 
         List<Part> partList = partService.findAll();
         List<Department> departmentList = departmentService.findAll();
@@ -71,7 +71,7 @@ public class OperatorsController{
         return "operators/new";
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(Operators operators) {
         return CompletableFuture.supplyAsync(() -> {
@@ -83,8 +83,8 @@ public class OperatorsController{
         });
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public String edit(ModelMap model, @PathVariable Long id){
+    @RequestMapping(value = "/edit/{id}")
+    public String edit(ModelMap model, @PathVariable Long id) {
         Operators operators = operatorService.findOne(id);
 
         List<Part> partList = partService.findAll();
@@ -92,18 +92,18 @@ public class OperatorsController{
         List<Department> departmentList = departmentService.findAll();
 
         List<Long> pids = new ArrayList<>();
-        for(Part part : operators.getParts()){
+        for (Part part : operators.getParts()) {
             pids.add(part.getId());
         }
 
-        model.addAttribute("operators",operators);
+        model.addAttribute("operators", operators);
         model.addAttribute("parts", partList);
         model.addAttribute("pids", pids);
         model.addAttribute("departments", departmentList);
         return "operators/edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(Operators operators) {
         return CompletableFuture.supplyAsync(() -> {
@@ -113,11 +113,11 @@ public class OperatorsController{
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable Long id) {
         operatorService.delete(id);
-        log.info("删除->ID="+id);
+        log.info("删除->ID=" + id);
         return "1";
     }
 

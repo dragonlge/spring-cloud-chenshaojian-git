@@ -18,7 +18,7 @@ public class SortsQo extends PageQo {
     private List<SubsortsQo> subsortses = new ArrayList<>();
 
 
-    public void addSubsorts(SubsortsQo subsortsQo){
+    public void addSubsorts(SubsortsQo subsortsQo) {
         subsortses.add(subsortsQo);
     }
 

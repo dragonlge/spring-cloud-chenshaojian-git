@@ -11,11 +11,11 @@
         this.initCellAlignPicker();
     };
     CellAlignPicker.prototype = {
-        initCellAlignPicker:function () {
+        initCellAlignPicker: function () {
             this.initUIBase();
             this.Stateful_init();
         },
-        getHtmlTpl:function () {
+        getHtmlTpl: function () {
             return '<div id="##" class="edui-cellalignpicker %%">' +
                 '<div class="edui-cellalignpicker-body">' +
                 '<table onclick="$$._onClick(event);">' +
@@ -35,20 +35,20 @@
                 '</div>' +
                 '</div>';
         },
-        getStateDom: function (){
+        getStateDom: function () {
             return this.target;
         },
-        _onClick: function (evt){
-            var target= evt.target || evt.srcElement;
-            if(/icon/.test(target.className)){
+        _onClick: function (evt) {
+            var target = evt.target || evt.srcElement;
+            if (/icon/.test(target.className)) {
                 this.items[target.parentNode.getAttribute("index")].onclick();
                 Popup.postHide(evt);
             }
         },
-        _UIBase_render:UIBase.prototype.render
+        _UIBase_render: UIBase.prototype.render
     };
     utils.inherits(CellAlignPicker, UIBase);
-    utils.extend(CellAlignPicker.prototype, Stateful,true);
+    utils.extend(CellAlignPicker.prototype, Stateful, true);
 })();
 
 

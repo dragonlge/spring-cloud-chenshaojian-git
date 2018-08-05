@@ -12,20 +12,20 @@ public class AsyncThreadPool {
     private static AsyncThreadPool asyncThreadPool = null;
     private static ExecutorService threadPool = null;
 
-    private AsyncThreadPool(){
+    private AsyncThreadPool() {
         int processors = 2;
         logger.info("初始化:" + processors + "个异步线程池");
         threadPool = Executors.newFixedThreadPool(processors);
     }
 
-    public final static AsyncThreadPool getInstance(){
-        if(asyncThreadPool == null){
+    public final static AsyncThreadPool getInstance() {
+        if (asyncThreadPool == null) {
             asyncThreadPool = new AsyncThreadPool();
         }
         return asyncThreadPool;
     }
 
-    public void execute(Runnable thread){
+    public void execute(Runnable thread) {
         threadPool.execute(thread);
     }
 }

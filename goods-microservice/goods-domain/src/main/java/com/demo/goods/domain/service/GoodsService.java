@@ -27,41 +27,41 @@ public class GoodsService {
     @Autowired
     private GoodsRepository goodsRepository;
 
-    public Goods findOne(Long id){
+    public Goods findOne(Long id) {
         return goodsRepository.findOneById(id);
     }
 
-    public void save(Goods goods){
+    public void save(Goods goods) {
         goodsRepository.save(goods);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         goodsRepository.deleteById(id);
     }
 
 
-    public Page<Goods> findAll(GoodsQo GoodsQo){
+    public Page<Goods> findAll(GoodsQo GoodsQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
         Pageable pageable = new PageRequest(GoodsQo.getPage(), GoodsQo.getSize(), sort);
 
-        return goodsRepository.findAll(new Specification<Goods>(){
+        return goodsRepository.findAll(new Specification<Goods>() {
             @Override
             public Predicate toPredicate(Root<Goods> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(GoodsQo.getName())){
+                if (CommonUtils.isNotNull(GoodsQo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + GoodsQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(GoodsQo.getMerchantid())){
+                if (CommonUtils.isNotNull(GoodsQo.getMerchantid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("merchantid"), GoodsQo.getMerchantid()));
                 }
-                if(CommonUtils.isNotNull(GoodsQo.getSortsid())){
+                if (CommonUtils.isNotNull(GoodsQo.getSortsid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("sortsid"), GoodsQo.getSortsid()));
                 }
-                if(CommonUtils.isNotNull(GoodsQo.getSubsid())){
+                if (CommonUtils.isNotNull(GoodsQo.getSubsid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("subsid"), GoodsQo.getSubsid()));
                 }
-                if(CommonUtils.isNotNull(GoodsQo.getCreated())){
+                if (CommonUtils.isNotNull(GoodsQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), GoodsQo.getCreated()));
                 }
 

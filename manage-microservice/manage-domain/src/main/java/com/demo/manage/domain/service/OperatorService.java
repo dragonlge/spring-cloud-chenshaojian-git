@@ -32,31 +32,31 @@ public class OperatorService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Operators operators){
+    public void save(Operators operators) {
         //删除缓存
-        if(!StringUtils.isEmpty(operators.getId())){
+        if (!StringUtils.isEmpty(operators.getId())) {
             String key = operators.getId().toString();
             cacheComponent.remove(Constant.BOSS_BACKEND_OPERATOR_ID, key);//删除原有缓存
         }
         operatorRepository.save(operators);
         //保存缓存
-        if(!StringUtils.isEmpty(operators.getId())){
+        if (!StringUtils.isEmpty(operators.getId())) {
             String key = operators.getId().toString();
             cacheComponent.put(Constant.BOSS_BACKEND_OPERATOR_ID, key, operators, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString());
         operatorRepository.deleteById(id);
     }
 
-    public List<Operators> findAll(){
+    public List<Operators> findAll() {
         return operatorRepository.findAll();
     }
 
-    public Operators findOne(Long id){
+    public Operators findOne(Long id) {
         Optional<Operators> operators = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_OPERATOR_ID, id.toString());
@@ -72,29 +72,29 @@ public class OperatorService {
 //        return operators;
     }
 
-    public Operators findByName(String name){
+    public Operators findByName(String name) {
         return operatorRepository.findByName(name);
     }
 
 
-    public List<Operators> findByPartId(Long partId){
+    public List<Operators> findByPartId(Long partId) {
         return operatorRepository.findByPartId(partId);
     }
 
 
-    public Page<Operators> findAll(OperatorsVo operatorsVo){
+    public Page<Operators> findAll(OperatorsVo operatorsVo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(operatorsVo.getPage(), operatorsVo.getSize(), sort);
+        Pageable pageable = new PageRequest(operatorsVo.getPage(), operatorsVo.getSize(), sort);
 
-        return operatorRepository.findAll(new Specification<Operators>(){
+        return operatorRepository.findAll(new Specification<Operators>() {
             @Override
             public Predicate toPredicate(Root<Operators> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(operatorsVo.getName())){
+                if (CommonUtils.isNotNull(operatorsVo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + operatorsVo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(operatorsVo.getCreated())){
+                if (CommonUtils.isNotNull(operatorsVo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), operatorsVo.getCreated()));
                 }
 

@@ -43,29 +43,31 @@ public class SortsController {
     @Autowired
     private SubsortsRestService subsortsService;
 
-    @RequestMapping(value="/index")
-    public ModelAndView index(){
+    @RequestMapping(value = "/index")
+    public ModelAndView index() {
         return new ModelAndView("sorts/index");
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<ModelAndView> findById(@PathVariable Long id) {
-        return  sortsFuture.findById(id).thenApply(sorts ->
+        return sortsFuture.findById(id).thenApply(sorts ->
                 new ModelAndView("sorts/show", "sorts", new Gson().fromJson(sorts, SortsQo.class)));
     }
 
 
-    @RequestMapping(value="/list")
+    @RequestMapping(value = "/list")
     public CompletableFuture<Page<Map<String, Object>>> findAll(SortsQo sortsQo) {
-        return sortsFuture.findPage(sortsQo.getPage(), sortsQo.getSize(), sortsQo.getName()).thenApply( json -> {
+        return sortsFuture.findPage(sortsQo.getPage(), sortsQo.getSize(), sortsQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(sortsQo.getPage(), sortsQo.getSize(), null);
             List<SortsQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<SortsQo>>(){}.getType());
+            if (page != null && page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<SortsQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -76,13 +78,14 @@ public class SortsController {
     @RequestMapping("/new")
     public CompletableFuture<ModelAndView> create(HttpServletRequest request) {
         return subsortsFuture.findAll().thenApply(subs -> {
-            List<SubsortsQo> subsortses = new Gson().fromJson(subs, new TypeToken<List<SubsortsQo>>() {}.getType());
+            List<SubsortsQo> subsortses = new Gson().fromJson(subs, new TypeToken<List<SubsortsQo>>() {
+            }.getType());
             request.getSession().setAttribute("subsortses", subsortses);
             return new ModelAndView("sorts/new", "subsortses", subsortses);
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             SortsQo sortsQo = new SortsQo();
@@ -91,7 +94,7 @@ public class SortsController {
 
             String[] subs = request.getParameterValues("subsortses");
             List<SubsortsQo> subsortses = (List<SubsortsQo>) request.getSession().getAttribute("subsortses");
-            if(subs != null && subs.length > 0) {
+            if (subs != null && subs.length > 0) {
                 for (String sub : subs) {
                     for (SubsortsQo subsortsQo : subsortses) {
                         if (subsortsQo.getId().compareTo(new Long(sub)) == 0) {
@@ -114,7 +117,8 @@ public class SortsController {
                     SortsQo sorts = new Gson().fromJson(json, SortsQo.class);
 
                     String subs = subsortsService.findAll();
-                    List<SubsortsQo> subsortses = new Gson().fromJson(subs, new TypeToken<List<SubsortsQo>>() {}.getType());
+                    List<SubsortsQo> subsortses = new Gson().fromJson(subs, new TypeToken<List<SubsortsQo>>() {
+                    }.getType());
                     request.getSession().setAttribute("subsortses", subsortses);
 
                     List<Long> subids = new ArrayList<Long>();
@@ -130,7 +134,7 @@ public class SortsController {
                 }));
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CompletableFuture<String> update(SortsQo sortsQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             String[] subs = request.getParameterValues("subs");
@@ -149,10 +153,10 @@ public class SortsController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}")
+    @RequestMapping(value = "/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return sortsFuture.delete(id).thenApply( sid -> {
-            log.info("删除->ID="+sid);
+        return sortsFuture.delete(id).thenApply(sid -> {
+            log.info("删除->ID=" + sid);
             return sid;
         });
     }

@@ -33,15 +33,15 @@ public class RoleController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> roleService.findOne(id))
-                .thenApply(role ->{
+                .thenApply(role -> {
                     return new Gson().toJson(role);
                 });
     }
 
     @RequestMapping("/list")
-     public CompletableFuture<String> findList() {
+    public CompletableFuture<String> findList() {
         return CompletableFuture.supplyAsync(() -> roleService.findAll())
-                .thenApply(roles ->{
+                .thenApply(roles -> {
                     return new Gson().toJson(roles);
                 });
     }
@@ -52,13 +52,13 @@ public class RoleController {
             try {
                 RoleQo roleQo = new RoleQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     roleQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     roleQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     roleQo.setName(name);
                 }
 
@@ -77,7 +77,7 @@ public class RoleController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody RoleQo roleQo) {
         return CompletableFuture.supplyAsync(() -> {
             Role role = CopyUtil.copy(roleQo, Role.class);
@@ -92,7 +92,7 @@ public class RoleController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody RoleQo roleQo) {
         return CompletableFuture.supplyAsync(() -> {
             Role role = CopyUtil.copy(roleQo, Role.class);
@@ -107,15 +107,15 @@ public class RoleController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //让具有此角色的用户脱离关系
             List<User> userList = userService.findByRoleId(id);
-            if(userList != null && userList.size() > 0){
-                for(User user : userList){
-                    for(Role role : user.getRoles()){
-                        if(role.getId().equals(id)){
+            if (userList != null && userList.size() > 0) {
+                for (User user : userList) {
+                    for (Role role : user.getRoles()) {
+                        if (role.getId().equals(id)) {
                             user.getRoles().remove(role);
                             userService.save(user);
                             break;

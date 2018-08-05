@@ -19,13 +19,13 @@
         me.init();
     };
     editTable.prototype = {
-        init:function () {
+        init: function () {
             var colorPiker = new UE.ui.ColorPicker({
-                    editor:editor
+                    editor: editor
                 }),
                 colorPop = new UE.ui.Popup({
-                    editor:editor,
-                    content:colorPiker
+                    editor: editor,
+                    content: colorPiker
                 });
 
             title.checked = editor.queryCommandState("inserttitle") == -1;
@@ -56,7 +56,7 @@
             });
         },
 
-        createTable:function (hasTitle, hasCaption) {
+        createTable: function (hasTitle, hasCaption) {
             var arr = [];
             arr.push("<table id='J_example'>");
             if (hasCaption) {
@@ -80,9 +80,9 @@
             preview.innerHTML = arr.join("");
         },
 
-        titleHanler:function () {
+        titleHanler: function () {
             var example = $G("J_example"),
-                 frg=document.createDocumentFragment(),
+                frg = document.createDocumentFragment(),
                 color = domUtils.getComputedStyle(domUtils.getElementsByTagName(example, "td")[0], "border-color");
 
             if (title.checked) {
@@ -99,7 +99,7 @@
             }
             me.setColor(color);
         },
-        captionHanler:function () {
+        captionHanler: function () {
             var example = $G("J_example");
             if (caption.checked) {
                 var row = document.createElement('caption');
@@ -109,11 +109,11 @@
                 domUtils.remove(domUtils.getElementsByTagName(example, 'caption')[0]);
             }
         },
-        autoSizeContentHanler:function () {
+        autoSizeContentHanler: function () {
             var example = $G("J_example");
             example.removeAttribute("width");
         },
-        autoSizePageHanler:function () {
+        autoSizePageHanler: function () {
             var example = $G("J_example");
             var tds = example.getElementsByTagName(example, "td");
             utils.each(tds, function (td) {
@@ -122,14 +122,14 @@
             example.setAttribute('width', '100%');
         },
 
-        getColor:function () {
+        getColor: function () {
             var start = editor.selection.getStart(), color,
                 cell = domUtils.findParentByTagName(start, ["td", "th", "caption"], true);
             color = domUtils.getComputedStyle(cell, "border-color");
-            if (!color)  color = "#DDDDDD";
+            if (!color) color = "#DDDDDD";
             return color;
         },
-        setColor:function (color) {
+        setColor: function (color) {
             var example = $G("J_example"),
                 arr = domUtils.getElementsByTagName(example, "td").concat(
                     domUtils.getElementsByTagName(example, "th"),
@@ -142,7 +142,7 @@
             });
 
         },
-        setAutoSize:function () {
+        setAutoSize: function () {
             var me = this,
                 start = editor.selection.getStart(),
                 wt = domUtils.findParentByTagName(start, "table", true).width,
@@ -174,7 +174,7 @@
             editor.queryCommandState("deletecaption") != -1 && editor.execCommand("deletecaption");
         }
         editor.execCommand("edittable", tone.value);
-        autoSizeContent.checked ?editor.execCommand('adaptbytext') : "";
+        autoSizeContent.checked ? editor.execCommand('adaptbytext') : "";
         autoSizePage.checked ? editor.execCommand("adaptbywindow") : "";
 
         editor.__hasEnterExecCommand = false;

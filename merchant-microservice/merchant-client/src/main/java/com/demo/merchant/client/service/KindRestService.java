@@ -11,76 +11,76 @@ import java.util.Map;
 
 @Service
 public class KindRestService {
-	 @Autowired
-	 private KindClient kindClient;
+    @Autowired
+    private KindClient kindClient;
 
-	@HystrixCommand(fallbackMethod = "findByIdFallback")
-	public String findById(Long id){
-		return kindClient.findById(id);
-	}
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
+    public String findById(Long id) {
+        return kindClient.findById(id);
+    }
 
-	private String findByIdFallback(Long id){
-		KindQo kindQo = new KindQo();
-		return new Gson().toJson(kindQo);
-	}
+    private String findByIdFallback(Long id) {
+        KindQo kindQo = new KindQo();
+        return new Gson().toJson(kindQo);
+    }
 
-	@HystrixCommand(fallbackMethod = "findByNameFallback")
-	public String findByName(String name) {
-		return kindClient.findByName(name);
-	}
+    @HystrixCommand(fallbackMethod = "findByNameFallback")
+    public String findByName(String name) {
+        return kindClient.findByName(name);
+    }
 
-	private String findByNameFallback(String name) {
-		KindQo kindQo = new KindQo();
+    private String findByNameFallback(String name) {
+        KindQo kindQo = new KindQo();
 
-		return new Gson().toJson(kindQo);
-	}
+        return new Gson().toJson(kindQo);
+    }
 
-	@HystrixCommand(fallbackMethod = "findAllFallback")
-	public String  findList(){
-		return kindClient.findList();
-	}
+    @HystrixCommand(fallbackMethod = "findAllFallback")
+    public String findList() {
+        return kindClient.findList();
+    }
 
-	private String findAllFallback(){
-		return null;
-	}
+    private String findAllFallback() {
+        return null;
+    }
 
-	@HystrixCommand(fallbackMethod = "findPageFallback")
-	public String findPage(Integer index, Integer size, String name){
-		return kindClient.findPage(index, size, name);
-	}
+    @HystrixCommand(fallbackMethod = "findPageFallback")
+    public String findPage(Integer index, Integer size, String name) {
+        return kindClient.findPage(index, size, name);
+    }
 
-	private String findPageFallback(Integer index, Integer size, String name){
-		Map<String, Object> page = new HashMap<>();
-		page.put("content", null);
-		page.put("totalPages", 0);
-		page.put("totalelements", 0);
-		return new Gson().toJson(page);
-	}
+    private String findPageFallback(Integer index, Integer size, String name) {
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", null);
+        page.put("totalPages", 0);
+        page.put("totalelements", 0);
+        return new Gson().toJson(page);
+    }
 
-	@HystrixCommand(fallbackMethod = "createFallback")
-		  public String create(KindQo kindQo){
-		return kindClient.create(kindQo);
-	}
+    @HystrixCommand(fallbackMethod = "createFallback")
+    public String create(KindQo kindQo) {
+        return kindClient.create(kindQo);
+    }
 
-	private String createFallback(KindQo kindQo) {
-		return "-1";
-	}
+    private String createFallback(KindQo kindQo) {
+        return "-1";
+    }
 
-	@HystrixCommand(fallbackMethod = "updateFallback")
-	public String update(KindQo kindQo){
-		return kindClient.update(kindQo);
-	}
+    @HystrixCommand(fallbackMethod = "updateFallback")
+    public String update(KindQo kindQo) {
+        return kindClient.update(kindQo);
+    }
 
-	private String updateFallback(KindQo kindQo) {
-		return "-1";
-	}
+    private String updateFallback(KindQo kindQo) {
+        return "-1";
+    }
 
-	@HystrixCommand(fallbackMethod = "deleteFallback")
-	public String delete(Long id){
-		return kindClient.delete(id);
-	}
+    @HystrixCommand(fallbackMethod = "deleteFallback")
+    public String delete(Long id) {
+        return kindClient.delete(id);
+    }
 
-	private String deleteFallback(Long id) {
-		return "-1";
-	}
+    private String deleteFallback(Long id) {
+        return "-1";
+    }
 }

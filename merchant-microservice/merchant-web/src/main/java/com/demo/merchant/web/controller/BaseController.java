@@ -22,20 +22,20 @@ public abstract class BaseController {
     @Value("${spring.application.name}")
     private String serviceName;
 
-    public List<ModelQo> getModels(String userName, HttpServletRequest request){
+    public List<ModelQo> getModels(String userName, HttpServletRequest request) {
         //根据登录用户获取用户对象
-        String json =  userService.findByName(userName);
+        String json = userService.findByName(userName);
         UserQo user = new Gson().fromJson(json, UserQo.class);
 
         //根据匹配分类获取模块（二级菜单）列表
         List<ModelQo> modelList = new ArrayList<>();
         List<Long> modelIds = new ArrayList<>();
-        for(RoleQo role : user.getRoles()){
-            for(ResourceQo resource : role.getResources()){
+        for (RoleQo role : user.getRoles()) {
+            for (ResourceQo resource : role.getResources()) {
                 String link = resource.getModel().getKind().getLink();//分类顶级菜单链接
                 //获取模块列表，去重
-                if(! modelIds.contains(resource.getModel().getId())
-                        && pathMatcher.match(serviceName, link)){
+                if (!modelIds.contains(resource.getModel().getId())
+                        && pathMatcher.match(serviceName, link)) {
                     modelList.add(resource.getModel());
                     modelIds.add(resource.getModel().getId());
                 }
@@ -45,17 +45,17 @@ public abstract class BaseController {
         return modelList;
     }
 
-    public Long getMerchantId(String userName){
+    public Long getMerchantId(String userName) {
         Long merchantId = null;
-        String json =  userService.findByName(userName);
+        String json = userService.findByName(userName);
         UserQo user = new Gson().fromJson(json, UserQo.class);
-        if(user != null) merchantId = user.getMerchant().getId();
+        if (user != null) merchantId = user.getMerchant().getId();
         return merchantId;
     }
 
-    public MerchantQo getMerchantByUserName(String userName){
+    public MerchantQo getMerchantByUserName(String userName) {
         String merchantId = null;
-        String json =  userService.findByName(userName);
+        String json = userService.findByName(userName);
         UserQo user = new Gson().fromJson(json, UserQo.class);
         return user.getMerchant();
     }

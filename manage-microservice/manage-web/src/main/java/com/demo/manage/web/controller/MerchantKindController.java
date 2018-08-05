@@ -44,37 +44,39 @@ public class MerchantKindController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public CompletableFuture<Page<KindQo>> getList(KindQo kindQo) {
-        return kindFuture.findPage(kindQo.getPage(), kindQo.getSize(), kindQo.getName()).thenApply( json -> {
+        return kindFuture.findPage(kindQo.getPage(), kindQo.getSize(), kindQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(kindQo.getPage(), kindQo.getSize(), null);
             List<KindQo> list = new ArrayList<>();
 
-            if(page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<KindQo>>(){}.getType());
+            if (page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<KindQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
         });
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> show(ModelMap model, @PathVariable Long id) {
-        return  kindFuture.findById(id).thenApply(json -> {
+        return kindFuture.findById(id).thenApply(json -> {
             model.addAttribute("kind", new Gson().fromJson(json, KindQo.class));
             return "merchantkind/show";
         });
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request){
+    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             return "merchantkind/new";
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.create(kindQo).thenApply(sid -> {
@@ -95,7 +97,7 @@ public class MerchantKindController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(KindQo kindQo, HttpServletRequest request) {
         return kindFuture.update(kindQo).thenApply(sid -> {
@@ -104,11 +106,11 @@ public class MerchantKindController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return kindFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+        return kindFuture.delete(id).thenApply(sid -> {
+            logger.info("删除->ID=" + sid);
             return sid;
         });
     }

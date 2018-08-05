@@ -30,32 +30,32 @@ public class RoleService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Role role){
+    public void save(Role role) {
         //删除缓存
-        if(CommonUtils.isNotNull(role.getId())){
+        if (CommonUtils.isNotNull(role.getId())) {
             String key = role.getId().toString();
             cacheComponent.remove(Constant.MERCHANT_CENTER_ROLE_ID, key);//删除原有缓存
         }
         roleRepository.save(role);
         //保存缓存
-        if(CommonUtils.isNotNull(role.getId())){
+        if (CommonUtils.isNotNull(role.getId())) {
             String key = role.getId().toString();
             cacheComponent.remove(Constant.MERCHANT_CENTER_ROLE_ID, key);//删除原有缓存
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_ROLE_ID, id.toString());
 
         roleRepository.deleteById(id);
     }
 
-    public List<Role> findAll(){
+    public List<Role> findAll() {
         return roleRepository.findAll();
     }
 
-    public Role findOne(Long id){
+    public Role findOne(Long id) {
         Role role = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_ROLE_ID, id.toString());
@@ -66,26 +66,26 @@ public class RoleService {
         } else {
             role = (Role) object;
         }
-        return  role;
+        return role;
     }
 
-    public List<Role> findByResourceId(Long resourceId){
+    public List<Role> findByResourceId(Long resourceId) {
         return roleRepository.findByResourceId(resourceId);
     }
 
-    public Page<Role> findAll(RoleQo roleQo){
+    public Page<Role> findAll(RoleQo roleQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(roleQo.getPage(), roleQo.getSize(), sort);
+        Pageable pageable = new PageRequest(roleQo.getPage(), roleQo.getSize(), sort);
 
-        return roleRepository.findAll(new Specification<Role>(){
+        return roleRepository.findAll(new Specification<Role>() {
             @Override
             public Predicate toPredicate(Root<Role> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(roleQo.getName())){
+                if (CommonUtils.isNotNull(roleQo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + roleQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(roleQo.getCreated())){
+                if (CommonUtils.isNotNull(roleQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), roleQo.getCreated()));
                 }
 
@@ -95,5 +95,5 @@ public class RoleService {
             }
         }, pageable);
     }
-    
+
 }

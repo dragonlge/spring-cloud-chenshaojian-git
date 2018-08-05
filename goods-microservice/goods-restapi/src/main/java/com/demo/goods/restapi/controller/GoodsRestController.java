@@ -35,7 +35,7 @@ public class GoodsRestController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> fnidById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             Goods goods = goodsService.findOne(id);
@@ -51,25 +51,25 @@ public class GoodsRestController {
             try {
                 GoodsQo goodsQo = new GoodsQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     goodsQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     goodsQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(merchantid)){
+                if (CommonUtils.isNotNull(merchantid)) {
                     goodsQo.setMerchantid(merchantid);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     goodsQo.setName(name);
                 }
-                if(CommonUtils.isNotNull(sortsid)){
+                if (CommonUtils.isNotNull(sortsid)) {
                     goodsQo.setSortsid(sortsid);
                 }
-                if(CommonUtils.isNotNull(subsid)){
+                if (CommonUtils.isNotNull(subsid)) {
                     goodsQo.setSubsid(subsid);
                 }
-                if(CommonUtils.isNotNull(created)){
+                if (CommonUtils.isNotNull(created)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     goodsQo.setCreated(sdf.parse(created));
                 }
@@ -117,7 +117,7 @@ public class GoodsRestController {
         });
     }
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value = "/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             goodsService.delete(id);

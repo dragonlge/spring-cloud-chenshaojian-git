@@ -39,25 +39,25 @@ public class PartController {
     public Page<Part> getList(PartVo partVo) {
         try {
             return partService.findAll(partVo);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public String show(ModelMap model, @PathVariable Long id) {
         Part part = partService.findOne(id);
-        model.addAttribute("part",part);
+        model.addAttribute("part", part);
         return "part/show";
     }
 
     @RequestMapping("/new")
-    public String create(ModelMap model, Part part){
+    public String create(ModelMap model, Part part) {
         return "part/new";
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(Part part) {
         return CompletableFuture.supplyAsync(() -> {
@@ -67,15 +67,15 @@ public class PartController {
         });
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public String edit(ModelMap model, @PathVariable Long id){
+    @RequestMapping(value = "/edit/{id}")
+    public String edit(ModelMap model, @PathVariable Long id) {
         Part part = partService.findOne(id);
 
-        model.addAttribute("part",part);
+        model.addAttribute("part", part);
         return "part/edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(Part part) {
         return CompletableFuture.supplyAsync(() -> {
@@ -85,11 +85,11 @@ public class PartController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable Long id) {
         partService.delete(id);
-        log.info("删除->ID="+id);
+        log.info("删除->ID=" + id);
         return "1";
     }
 

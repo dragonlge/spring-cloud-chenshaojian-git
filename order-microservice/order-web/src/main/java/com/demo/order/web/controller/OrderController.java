@@ -32,13 +32,13 @@ public class OrderController {
     @Autowired
     private OrderFuture orderFuture;
 
-    @RequestMapping(value="/index")
+    @RequestMapping(value = "/index")
     public ModelAndView index(ModelMap model) {//, Principal user
         //model.addAttribute("user", user);
         return new ModelAndView("order/index");
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<ModelAndView> findById(@PathVariable Long id) {
         return orderFuture.findById(id).thenApply(json -> {
             OrderQo orderQo = new Gson().fromJson(json, OrderQo.class);
@@ -50,13 +50,15 @@ public class OrderController {
     public CompletableFuture<Page<Map<String, Object>>> findAll(OrderQo orderQo) {
         return orderFuture.findPage(orderQo).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(orderQo.getPage(), orderQo.getSize(), null);
             List<OrderQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>(){}.getType());
+            if (page != null && page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<OrderQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));

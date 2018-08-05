@@ -22,7 +22,7 @@ import java.util.Properties;
 public class JpaConfiguration {
 
     @Bean
-    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
@@ -49,8 +49,7 @@ public class JpaConfiguration {
         return entityManagerFactoryBean;
     }
 
-    protected Properties buildHibernateProperties()
-    {
+    protected Properties buildHibernateProperties() {
         Properties hibernateProperties = new Properties();
 
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");

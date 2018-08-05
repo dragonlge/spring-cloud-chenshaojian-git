@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = "com.**.entity")
 public class JpaConfiguration {
     @Bean
-    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 }

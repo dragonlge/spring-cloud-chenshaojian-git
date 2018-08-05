@@ -8,7 +8,7 @@
  * @date: 11-8-18
  * @time: 下午3:18
  */
-UE.ajax = function() {
+UE.ajax = function () {
     /**
      * 创建一个ajaxRequest对象
      */
@@ -34,10 +34,10 @@ UE.ajax = function() {
         var strArr = [];
         for (var i in json) {
             //忽略默认的几个参数
-            if(i=="method" || i=="timeout" || i=="async") continue;
+            if (i == "method" || i == "timeout" || i == "async") continue;
             //传递过来的对象和函数不在提交之列
             if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
-                strArr.push( encodeURIComponent(i) + "="+encodeURIComponent(json[i]) );
+                strArr.push(encodeURIComponent(i) + "=" + encodeURIComponent(json[i]));
             }
         }
         return strArr.join("&");
@@ -46,7 +46,7 @@ UE.ajax = function() {
 
 
     return {
-		/**
+        /**
          * @name request
          * @desc 发出ajax请求，ajaxOpt中默认包含method，timeout，async，data，onsuccess以及onerror等六个，支持自定义添加参数
          * @grammar UE.ajax.request(url,ajaxOpt);
@@ -68,38 +68,38 @@ UE.ajax = function() {
          *         console.log(xhr.responseText);
          *     }
          * })
-		 * @param ajaxOptions
-		 */
-		request:function(url, ajaxOptions) {
+         * @param ajaxOptions
+         */
+        request: function (url, ajaxOptions) {
             var ajaxRequest = creatAjaxRequest(),
                 //是否超时
                 timeIsOut = false,
                 //默认参数
                 defaultAjaxOptions = {
-                    method:"POST",
-                    timeout:5000,
-                    async:true,
-                    data:{},//需要传递对象的话只能覆盖
-                    onsuccess:function() {
+                    method: "POST",
+                    timeout: 5000,
+                    async: true,
+                    data: {},//需要传递对象的话只能覆盖
+                    onsuccess: function () {
                     },
-                    onerror:function() {
+                    onerror: function () {
                     }
                 };
 
-			if (typeof url === "object") {
-				ajaxOptions = url;
-				url = ajaxOptions.url;
-			}
-			if (!ajaxRequest || !url) return;
-			var ajaxOpts = ajaxOptions ? utils.extend(defaultAjaxOptions,ajaxOptions) : defaultAjaxOptions;
+            if (typeof url === "object") {
+                ajaxOptions = url;
+                url = ajaxOptions.url;
+            }
+            if (!ajaxRequest || !url) return;
+            var ajaxOpts = ajaxOptions ? utils.extend(defaultAjaxOptions, ajaxOptions) : defaultAjaxOptions;
 
-			var submitStr = json2str(ajaxOpts);  // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
-			//如果用户直接通过data参数传递json对象过来，则也要将此json对象转化为字符串
-			if (!utils.isEmptyObject(ajaxOpts.data)){
-                submitStr += (submitStr? "&":"") + json2str(ajaxOpts.data);
-			}
+            var submitStr = json2str(ajaxOpts);  // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
+            //如果用户直接通过data参数传递json对象过来，则也要将此json对象转化为字符串
+            if (!utils.isEmptyObject(ajaxOpts.data)) {
+                submitStr += (submitStr ? "&" : "") + json2str(ajaxOpts.data);
+            }
             //超时检测
-            var timerID = setTimeout(function() {
+            var timerID = setTimeout(function () {
                 if (ajaxRequest.readyState != 4) {
                     timeIsOut = true;
                     ajaxRequest.abort();
@@ -107,26 +107,26 @@ UE.ajax = function() {
                 }
             }, ajaxOpts.timeout);
 
-			var method = ajaxOpts.method.toUpperCase();
-            var str = url + (url.indexOf("?")==-1?"?":"&") + (method=="POST"?"":submitStr+ "&noCache=" + +new Date);
-			ajaxRequest.open(method, str, ajaxOpts.async);
-			ajaxRequest.onreadystatechange = function() {
-				if (ajaxRequest.readyState == 4) {
-					if (!timeIsOut && ajaxRequest.status == 200) {
-						ajaxOpts.onsuccess(ajaxRequest);
-					} else {
-						ajaxOpts.onerror(ajaxRequest);
-					}
-				}
-			};
-			if (method == "POST") {
-				ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				ajaxRequest.send(submitStr);
-			} else {
-				ajaxRequest.send(null);
-			}
-		}
-	};
+            var method = ajaxOpts.method.toUpperCase();
+            var str = url + (url.indexOf("?") == -1 ? "?" : "&") + (method == "POST" ? "" : submitStr + "&noCache=" + +new Date);
+            ajaxRequest.open(method, str, ajaxOpts.async);
+            ajaxRequest.onreadystatechange = function () {
+                if (ajaxRequest.readyState == 4) {
+                    if (!timeIsOut && ajaxRequest.status == 200) {
+                        ajaxOpts.onsuccess(ajaxRequest);
+                    } else {
+                        ajaxOpts.onerror(ajaxRequest);
+                    }
+                }
+            };
+            if (method == "POST") {
+                ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                ajaxRequest.send(submitStr);
+            } else {
+                ajaxRequest.send(null);
+            }
+        }
+    };
 
 
 }();

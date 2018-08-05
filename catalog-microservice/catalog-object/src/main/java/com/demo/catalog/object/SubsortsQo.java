@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class SubsortsQo extends PageQo{
+public class SubsortsQo extends PageQo {
 
     private Long id;
     private String name;

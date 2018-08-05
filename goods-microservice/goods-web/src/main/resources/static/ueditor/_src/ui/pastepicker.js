@@ -11,11 +11,11 @@
         this.initPastePicker();
     };
     PastePicker.prototype = {
-        initPastePicker:function () {
+        initPastePicker: function () {
             this.initUIBase();
             this.Stateful_init();
         },
-        getHtmlTpl:function () {
+        getHtmlTpl: function () {
             return '<div class="edui-pasteicon" onclick="$$._onClick(this)"></div>' +
                 '<div class="edui-pastecontainer">' +
                 '<div class="edui-title">' + this.editor.getLang("pasteOpt") + '</div>' +
@@ -30,14 +30,14 @@
                 '</div>' +
                 '</div>'
         },
-        getStateDom:function () {
+        getStateDom: function () {
             return this.target;
         },
-        format:function (param) {
+        format: function (param) {
             this.editor.ui._isTransfer = true;
             this.editor.fireEvent('pasteTransfer', param);
         },
-        _onClick:function (cur) {
+        _onClick: function (cur) {
             var node = domUtils.getNextDomNode(cur),
                 screenHt = uiUtils.getViewportRect().height,
                 subPop = uiUtils.getClientRect(node);
@@ -55,7 +55,7 @@
                 domUtils.removeClasses(cur, "edui-state-opened")
             }
         },
-        _UIBase_render:UIBase.prototype.render
+        _UIBase_render: UIBase.prototype.render
     };
     utils.inherits(PastePicker, UIBase);
     utils.extend(PastePicker.prototype, Stateful, true);

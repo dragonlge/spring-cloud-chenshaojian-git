@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class RoleQo extends PageQo implements java.io.Serializable{
+public class RoleQo extends PageQo implements java.io.Serializable {
     private Long id;
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

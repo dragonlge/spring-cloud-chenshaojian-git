@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class GoodsQo extends PageQo{
+public class GoodsQo extends PageQo {
     private Long id;
     private Long merchantid;
     private Long sortsid;

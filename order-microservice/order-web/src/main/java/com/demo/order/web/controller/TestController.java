@@ -18,13 +18,13 @@ public class TestController {
     @Autowired
     private OrderRestService orderRestService;
 
-    @RequestMapping(value="/list")
+    @RequestMapping(value = "/list")
     public CompletableFuture<String> findAll() {
         OrderQo orderQo = new OrderQo();
         return orderFuture.findPage(orderQo).thenApply(page -> page);
     }
 
-    @RequestMapping(value="/list1")
+    @RequestMapping(value = "/list1")
     public String findAll1() {
         OrderQo orderQo = new OrderQo();
         return orderRestService.findPage(orderQo);

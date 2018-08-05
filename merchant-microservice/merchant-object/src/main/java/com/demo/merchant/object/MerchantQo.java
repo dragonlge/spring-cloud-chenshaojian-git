@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class MerchantQo extends PageQo implements java.io.Serializable{
+public class MerchantQo extends PageQo implements java.io.Serializable {
     private Long id;
     private String name;
     private String email;

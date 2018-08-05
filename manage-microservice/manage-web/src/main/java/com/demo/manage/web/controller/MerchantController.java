@@ -32,7 +32,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/merchant")
-public class MerchantController{
+public class MerchantController {
     private static Logger logger = LoggerFactory.getLogger(MerchantController.class);
 
     @Autowired
@@ -50,37 +50,39 @@ public class MerchantController{
     @RequestMapping(value = "/list")
     @ResponseBody
     public CompletableFuture<Page<KindQo>> getList(MerchantQo merchantQo) {
-        return merchantFuture.findPage(merchantQo.getPage(), merchantQo.getSize(), merchantQo.getName()).thenApply( json -> {
+        return merchantFuture.findPage(merchantQo.getPage(), merchantQo.getSize(), merchantQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(merchantQo.getPage(), merchantQo.getSize(), null);
             List<MerchantQo> list = new ArrayList<>();
 
-            if(page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<MerchantQo>>(){}.getType());
+            if (page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<MerchantQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
         });
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> show(ModelMap model, @PathVariable Long id) {
-        return  merchantFuture.findById(id).thenApply(json -> {
+        return merchantFuture.findById(id).thenApply(json -> {
             model.addAttribute("merchant", new Gson().fromJson(json, MerchantQo.class));
             return "merchant/show";
         });
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request){
+    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             return "merchant/new";
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(MerchantQo merchantQo, HttpServletRequest request) {
         return merchantFuture.create(merchantQo).thenApply(sid -> {
@@ -101,7 +103,7 @@ public class MerchantController{
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(MerchantQo merchantQo, HttpServletRequest request) {
         return merchantFuture.update(merchantQo).thenApply(sid -> {
@@ -110,22 +112,22 @@ public class MerchantController{
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return merchantFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+        return merchantFuture.delete(id).thenApply(sid -> {
+            logger.info("删除->ID=" + sid);
             return sid;
         });
     }
 
-    @RequestMapping(value="/getUserName/{name}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserName/{name}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> getUserName(@PathVariable String name) {
-        return userFuture.findByName(name).thenApply( json -> {
+        return userFuture.findByName(name).thenApply(json -> {
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
             String userName = null;
-            if(userQo != null) userName = userQo.getName();
+            if (userQo != null) userName = userQo.getName();
             return userName;
         });
     }

@@ -69,26 +69,26 @@
 
                 if (appendopts.text == "首页") {
                     lnk = $("<a href='javascript:void(0)' id='page'>首页</a>");
-                }else if (appendopts.text == '上页') {
+                } else if (appendopts.text == '上页') {
                     lnk = $("<a href='javascript:void(0)' id='page'>上一页</a>");
-                }else if (appendopts.text == '下页') {
+                } else if (appendopts.text == '下页') {
                     lnk = $("<a href='javascript:void(0)' id='page'>下一页</a>");
-                }else if (appendopts.text == '尾页') {
+                } else if (appendopts.text == '尾页') {
                     lnk = $("<a href='javascript:void(0)' id='page'>尾页</a>");
-                }else
+                } else
                     lnk = $("<span class='current'>" + appendopts.text + "</span>");
             }
             else {
                 if (appendopts.text == "首页") {
                     lnk = $("<a  href='" + this.opts.link_to.replace(/__id__/, page_id) + "' id='page'>首页</a>");
-                }else if (appendopts.text == '上页') {
+                } else if (appendopts.text == '上页') {
                     lnk = $("<a  href='" + this.opts.link_to.replace(/__id__/, page_id) + "' id='page'>上一页</a>");
-                }else if (appendopts.text == '下页') {
+                } else if (appendopts.text == '下页') {
                     lnk = $("<a  href='" + this.opts.link_to.replace(/__id__/, page_id) + "' id='page'>下一页</a>");
-                }else if (appendopts.text == '尾页') {
+                } else if (appendopts.text == '尾页') {
                     lnk = $("<a  href='" + this.opts.link_to.replace(/__id__/, page_id) + "' id='page'>尾页</a>");
-                }else
-                    lnk = $("<a>" + appendopts.text + "</a>").attr('href', this.opts.link_to.replace(/__id__/,page_id));
+                } else
+                    lnk = $("<a>" + appendopts.text + "</a>").attr('href', this.opts.link_to.replace(/__id__/, page_id));
             }
 
             lnk.data('page_id', page_id);
@@ -111,7 +111,10 @@
             }
             // Generate "Previous"-Link
             if (this.opts.prev_text && (current_page > 0 || this.opts.prev_show_always)) {
-                fragment.append(this.createLink(current_page - 1, current_page, {text: this.opts.prev_text, classes: "prev"}));
+                fragment.append(this.createLink(current_page - 1, current_page, {
+                    text: this.opts.prev_text,
+                    classes: "prev"
+                }));
             }
             // Generate starting points
             if (interval.start > 0 && this.opts.num_edge_entries > 0) {
@@ -134,7 +137,10 @@
             }
             // Generate "Next"-Link
             if (this.opts.next_text && (current_page < np - 1 || this.opts.next_show_always)) {
-                fragment.append(this.createLink(current_page + 1, current_page, {text: this.opts.next_text, classes: "next"}));
+                fragment.append(this.createLink(current_page + 1, current_page, {
+                    text: this.opts.next_text,
+                    classes: "next"
+                }));
             }
             //last page
             if (this.opts.show_first_last) {
@@ -209,9 +215,9 @@
          * the callback function.
          */
         function selectPage(new_current_page) {
-	        if(new_current_page<0){
-		        new_current_page=1;
-	        }
+            if (new_current_page < 0) {
+                new_current_page = 1;
+            }
             containers.data('current_page', new_current_page);
             links = renderer.getLinks(new_current_page, paginationClickHandler);
             containers.empty();

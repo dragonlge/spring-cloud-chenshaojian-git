@@ -7,11 +7,11 @@
  * @description 处理回车
  * @author zhanyi
  */
-UE.plugins['enterkey'] = function() {
+UE.plugins['enterkey'] = function () {
     var hTag,
         me = this,
         tag = me.options.enterTag;
-    me.addListener('keyup', function(type, evt) {
+    me.addListener('keyup', function (type, evt) {
 
         var keyCode = evt.keyCode || evt.which;
         if (keyCode == 13) {
@@ -24,7 +24,7 @@ UE.plugins['enterkey'] = function() {
 
                 if (/h\d/i.test(hTag)) {
                     if (browser.gecko) {
-                        var h = domUtils.findParentByTagName(start, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6','blockquote','caption','table'], true);
+                        var h = domUtils.findParentByTagName(start, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'caption', 'table'], true);
                         if (!h) {
                             me.document.execCommand('formatBlock', false, '<p>');
                             doSave = 1;
@@ -32,7 +32,7 @@ UE.plugins['enterkey'] = function() {
                     } else {
                         //chrome remove div
                         if (start.nodeType == 1) {
-                            var tmp = me.document.createTextNode(''),div;
+                            var tmp = me.document.createTextNode(''), div;
                             range.insertNode(tmp);
                             div = domUtils.findParentByTagName(tmp, 'div', true);
                             if (div) {
@@ -55,7 +55,7 @@ UE.plugins['enterkey'] = function() {
                     }
                 }
                 //没有站位符，会出现多行的问题
-                browser.opera &&  range.select();
+                browser.opera && range.select();
             }
 //            if(browser.ie){
 //                range = me.selection.getRange();
@@ -74,14 +74,14 @@ UE.plugins['enterkey'] = function() {
 //            }
 
 
-            setTimeout(function() {
+            setTimeout(function () {
                 me.selection.getRange().scrollToView(me.autoHeightEnabled, me.autoHeightEnabled ? domUtils.getXY(me.iframe).y : 0);
             }, 50);
 
         }
     });
 
-    me.addListener('keydown', function(type, evt) {
+    me.addListener('keydown', function (type, evt) {
         var keyCode = evt.keyCode || evt.which;
         if (keyCode == 13) {//回车
             if (me.undoManger) {
@@ -99,7 +99,7 @@ UE.plugins['enterkey'] = function() {
                     startTd = domUtils.findParentByTagName(start, 'td', true),
                     endTd = domUtils.findParentByTagName(end, 'td', true);
                 if (startTd && endTd && startTd !== endTd || !startTd && endTd || startTd && !endTd) {
-                    evt.preventDefault ? evt.preventDefault() : ( evt.returnValue = false);
+                    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
                     return;
                 }
             }
@@ -108,7 +108,7 @@ UE.plugins['enterkey'] = function() {
 
                 if (!browser.ie) {
 
-                    start = domUtils.findParentByTagName(range.startContainer, ['ol','ul','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6','blockquote','caption'], true);
+                    start = domUtils.findParentByTagName(range.startContainer, ['ol', 'ul', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'caption'], true);
 
                     //opera下执行formatblock会在table的场景下有问题，回车在opera原生支持很好，所以暂时在opera去掉调用这个原生的command
                     //trace:2431
@@ -131,7 +131,7 @@ UE.plugins['enterkey'] = function() {
                 }
 
             } else {
-                evt.preventDefault ? evt.preventDefault() : ( evt.returnValue = false);
+                evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
                 if (!range.collapsed) {
                     range.deleteContents();

@@ -6,19 +6,19 @@
         };
 
     UIBase.prototype = {
-        className:'',
-        uiName:'',
-        initOptions:function (options) {
+        className: '',
+        uiName: '',
+        initOptions: function (options) {
             var me = this;
             for (var k in options) {
                 me[k] = options[k];
             }
             this.id = this.id || 'edui' + uiUtils.uid();
         },
-        initUIBase:function () {
+        initUIBase: function () {
             this._globalKey = utils.unhtml(uiUtils.setGlobal(this.id, this));
         },
-        render:function (holder) {
+        render: function (holder) {
             var html = this.renderHtml();
             var el = uiUtils.createElementByHtml(html);
 
@@ -30,9 +30,9 @@
                 domUtils.addClass(node, theme);
             }
             domUtils.addClass(el, theme);
-            if(layer){
-                layer.className="";
-                domUtils.addClass(layer,theme);
+            if (layer) {
+                layer.className = "";
+                domUtils.addClass(layer, theme);
             }
 
             var seatEl = this.getDom();
@@ -49,20 +49,20 @@
             }
             this.postRender();
         },
-        getDom:function (name) {
+        getDom: function (name) {
             if (!name) {
                 return document.getElementById(this.id);
             } else {
                 return document.getElementById(this.id + '_' + name);
             }
         },
-        postRender:function () {
+        postRender: function () {
             this.fireEvent('postrender');
         },
-        getHtmlTpl:function () {
+        getHtmlTpl: function () {
             return '';
         },
-        formatHtml:function (tpl) {
+        formatHtml: function (tpl) {
             var prefix = 'edui-' + this.uiName;
             return (tpl
                 .replace(/##/g, this.id)
@@ -70,10 +70,10 @@
                 .replace(/%%/g, (this.uiName ? prefix : '') + ' ' + this.className)
                 .replace(/\$\$/g, this._globalKey));
         },
-        renderHtml:function () {
+        renderHtml: function () {
             return this.formatHtml(this.getHtmlTpl());
         },
-        dispose:function () {
+        dispose: function () {
             var box = this.getDom();
             if (box) baidu.editor.dom.domUtils.remove(box);
             uiUtils.unsetGlobal(this.id);

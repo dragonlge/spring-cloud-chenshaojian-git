@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/merchantresource")
-public class MerchantResourceController{
+public class MerchantResourceController {
     private static Logger logger = LoggerFactory.getLogger(MerchantResourceController.class);
 
     @Autowired
@@ -56,33 +56,36 @@ public class MerchantResourceController{
     @RequestMapping(value = "/list")
     @ResponseBody
     public CompletableFuture<Page<ResourceQo>> getList(ResourceQo resourceQo) {
-        return resourceFuture.findPage(resourceQo.getPage(), resourceQo.getSize(), resourceQo.getName()).thenApply( json -> {
+        return resourceFuture.findPage(resourceQo.getPage(), resourceQo.getSize(), resourceQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(resourceQo.getPage(), resourceQo.getSize(), null);
             List<ResourceQo> list = new ArrayList<>();
 
-            if(page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<ResourceQo>>(){}.getType());
+            if (page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<ResourceQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
         });
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> show(ModelMap model, @PathVariable Long id) {
-        return  resourceFuture.findById(id).thenApply(json -> {
+        return resourceFuture.findById(id).thenApply(json -> {
             model.addAttribute("resource", new Gson().fromJson(json, ResourceQo.class));
             return "merchantresource/show";
         });
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request){
-        return  modelFuture.findList().thenApply(json -> {
-            List<ModelQo> modelList = new Gson().fromJson(json, new TypeToken<List<ModelQo>>() {}.getType());
+    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request) {
+        return modelFuture.findList().thenApply(json -> {
+            List<ModelQo> modelList = new Gson().fromJson(json, new TypeToken<List<ModelQo>>() {
+            }.getType());
             //缓存模块列表为save方法使用
             request.getSession().setAttribute("models", modelList);
             model.addAttribute("models", modelList);
@@ -90,7 +93,7 @@ public class MerchantResourceController{
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(ResourceQo resourceQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
@@ -118,7 +121,8 @@ public class MerchantResourceController{
                     ResourceQo resourceQo = new Gson().fromJson(json, ResourceQo.class);
 
                     String models = modelRestService.findList();
-                    List<ModelQo> modelQoList = new Gson().fromJson(models, new TypeToken<List<ModelQo>>() {}.getType());
+                    List<ModelQo> modelQoList = new Gson().fromJson(models, new TypeToken<List<ModelQo>>() {
+                    }.getType());
 
                     //缓存模块列表为update方法使用
                     request.getSession().setAttribute("models", modelQoList);
@@ -131,7 +135,7 @@ public class MerchantResourceController{
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(ResourceQo resourceQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
@@ -152,11 +156,11 @@ public class MerchantResourceController{
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return resourceFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+        return resourceFuture.delete(id).thenApply(sid -> {
+            logger.info("删除->ID=" + sid);
             return sid;
         });
     }

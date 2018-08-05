@@ -24,7 +24,7 @@ UE.plugins['autoheight'] = function () {
     function adjustHeight() {
         var me = this;
         clearTimeout(timer);
-        if(isFullscreen)return;
+        if (isFullscreen) return;
         timer = setTimeout(function () {
 
             if (me.queryCommandState && me.queryCommandState('source') != 1) {
@@ -37,7 +37,7 @@ UE.plugins['autoheight'] = function () {
                 tmpNode = span.cloneNode(true);
                 me.body.appendChild(tmpNode);
 
-                currentHeight = Math.max(domUtils.getXY(tmpNode).y + tmpNode.offsetHeight,Math.max(options.minFrameHeight, options.initialFrameHeight));
+                currentHeight = Math.max(domUtils.getXY(tmpNode).y + tmpNode.offsetHeight, Math.max(options.minFrameHeight, options.initialFrameHeight));
 
                 if (currentHeight != lastHeight) {
 
@@ -51,13 +51,14 @@ UE.plugins['autoheight'] = function () {
             }
         }, 50);
     }
+
     var isFullscreen;
-    me.addListener('fullscreenchanged',function(cmd,f){
+    me.addListener('fullscreenchanged', function (cmd, f) {
         isFullscreen = f
     });
     me.addListener('destroy', function () {
         me.removeListener('contentchange', adjustHeight);
-        me.removeListener('afterinserthtml',adjustHeight);
+        me.removeListener('afterinserthtml', adjustHeight);
         me.removeListener('keyup', adjustHeight);
         me.removeListener('mouseup', adjustHeight);
     });
@@ -70,7 +71,7 @@ UE.plugins['autoheight'] = function () {
         bakOverflow = doc.body.style.overflowY;
         doc.body.style.overflowY = 'hidden';
         me.addListener('contentchange', adjustHeight);
-        me.addListener('afterinserthtml',adjustHeight);
+        me.addListener('afterinserthtml', adjustHeight);
         me.addListener('keyup', adjustHeight);
         me.addListener('mouseup', adjustHeight);
         //ff不给事件算得不对

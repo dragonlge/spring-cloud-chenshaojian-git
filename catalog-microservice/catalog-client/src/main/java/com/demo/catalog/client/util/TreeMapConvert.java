@@ -9,9 +9,10 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class TreeMapConvert {
-    public static Gson getGson(){
+    public static Gson getGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(new TypeToken<TreeMap<String, Object>>() { }.getType(),
+                .registerTypeAdapter(new TypeToken<TreeMap<String, Object>>() {
+                        }.getType(),
                         new JsonDeserializer<TreeMap<String, Object>>() {
                             @Override
                             public TreeMap<String, Object> deserialize(

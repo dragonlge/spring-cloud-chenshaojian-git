@@ -5,8 +5,28 @@
     <title>文件上传</title>
 
     <style>
-        .newUpDiv{position:relative;width:130px;height:48px;border:1px solid #e3e3e3;color:#666;font-size:16px;text-align:center;line-height:48px;font-weight:bold;}
-        .newUpDiv input{opacity:0;filter:alpha(opacity=0);width:100%;height:100%;position:absolute;top:0;left:0;z-index:100}
+        .newUpDiv {
+            position: relative;
+            width: 130px;
+            height: 48px;
+            border: 1px solid #e3e3e3;
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+            line-height: 48px;
+            font-weight: bold;
+        }
+
+        .newUpDiv input {
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100
+        }
     </style>
     <script th:src="@{/scripts/pic/pic.js}"></script>
 </head>
@@ -24,7 +44,8 @@
                     <div class="up-tit">下图为您的图片展示，请注意是否清晰。</div>
                     <div class="upload-box">
                         点击上传
-                        <input id="pictureFile" name="pictureFile" type="file" class="file" onchange="uploadPic_submit(this)"/>
+                        <input id="pictureFile" name="pictureFile" type="file" class="file"
+                               onchange="uploadPic_submit(this)"/>
                     </div>
                     <div class="view-box">
                         <div class="view" id="view"><img/></div>
@@ -37,7 +58,8 @@
                     <div class="reupload">
                         <div class="l">
                             <div class="newUpDiv"><p>选择文件</p>
-                             <input id="changeFile" class="g-btn g-btn-white" name="pictureFile" type="file" onchange="uploadPic_submit(this)"/>
+                                <input id="changeFile" class="g-btn g-btn-white" name="pictureFile" type="file"
+                                       onchange="uploadPic_submit(this)"/>
                             </div>
 
                         </div>
@@ -76,7 +98,7 @@
                 <div class="clear"></div>
             </div>
 
-            <div class="upload-case"  style="display:none">
+            <div class="upload-case" style="display:none">
                 <div class="upload-list" id="upload-list">
                     <div class="clear"></div>
                 </div>

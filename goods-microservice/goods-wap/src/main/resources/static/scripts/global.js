@@ -1,5 +1,6 @@
 var colors = ['#ff6867', '#4ebd4d', '#ffa93c', '#3277de', '#329dd8', '#a489d6', '#4dd0c8', '#f680b1', '#59c895', '#f9a78e'];
 var pageSize = 10;
+
 // 判断一个值是否为空字符串
 function isEmpty(val) {
     var flag = false;
@@ -9,6 +10,7 @@ function isEmpty(val) {
     }
     return flag;
 }
+
 // 判判是否为空,传入input的id
 function checkNull(inId) {
     var flag = false;
@@ -23,63 +25,64 @@ function checkNull(inId) {
     }
     return flag;
 }
+
 var beginDay = {
     dateFmt: 'yyyy-MM-dd',
     maxDate: '#F{$dp.$D(\'endTime\')}',
-    isShowClear:false,
-    readOnly:true,
-    isShowToday:false
+    isShowClear: false,
+    readOnly: true,
+    isShowToday: false
 };
 var endDay = {
     dateFmt: 'yyyy-MM-dd',
     minDate: '#F{$dp.$D(\'beginTime\')}',
-    maxDate:'%y-%M-{%d-1}',
-    isShowClear:false,
-    readOnly:true,
-    isShowToday:false
+    maxDate: '%y-%M-{%d-1}',
+    isShowClear: false,
+    readOnly: true,
+    isShowToday: false
 };
 var beginMonth = {
     dateFmt: 'yyyy-MM',
     maxDate: '#F{$dp.$D(\'endTime\')}',
-    isShowClear:false,
-    readOnly:true
+    isShowClear: false,
+    readOnly: true
 };
 var endMonth = {
     dateFmt: 'yyyy-MM',
     minDate: '#F{$dp.$D(\'beginTime\')}',
     maxDate: '%y-%M',
-    isShowClear:false,
-    readOnly:true
+    isShowClear: false,
+    readOnly: true
 };
 var beginYear = {
     dateFmt: 'yyyy',
     maxDate: '#F{$dp.$D(\'endTime\')}',
-    isShowClear:false,
-    readOnly:true
+    isShowClear: false,
+    readOnly: true
 };
 var endYear = {
     dateFmt: 'yyyy',
     minDate: '#F{$dp.$D(\'beginTime\')}',
     maxDate: '%y',
-    isShowClear:false,
-    readOnly:true
+    isShowClear: false,
+    readOnly: true
 };
 //var defualtBeginTime = getBeforeFor6Day();
 //var defualtEndTime = getCurrDate();
 
-var defualtBeginTime = getFromNowDate(new Date(),-7);
-var defualtEndTime = getFromNowDate(new Date(),-1);
+var defualtBeginTime = getFromNowDate(new Date(), -7);
+var defualtEndTime = getFromNowDate(new Date(), -1);
 //按年按月按天查询组装
 dateType = {
     writeDateTypeContent: function (type, id) {
         var htmlContent = "";
         if (type == "day") {
             //defualtBeginTime = getBeforeFor6Day();
-           // defualtEndTime = getCurrDate();
+            // defualtEndTime = getCurrDate();
 
             var currDate = new Date();
-            defualtBeginTime = getFromNowDate(currDate,-7);
-            defualtEndTime = getFromNowDate(currDate,-1);
+            defualtBeginTime = getFromNowDate(currDate, -7);
+            defualtEndTime = getFromNowDate(currDate, -1);
 
             htmlContent = '<input type="text" class="g-input f-right w-116 g-mr-6 Wdate date2" onclick="WdatePicker(endDay)" value="' + defualtEndTime + '" readonly="" id="endTime" name="endTime"/>';
             htmlContent += '<span class="g-middleTxt f-right">到</span>';
@@ -100,6 +103,7 @@ dateType = {
         $("#" + id).html(htmlContent);
     }
 };
+
 //获取两个日期的天数
 function getDays(beginDateStr, endDateStr) {
     var endDate = new Date(endDateStr);
@@ -119,19 +123,19 @@ function getMonths(beginDateStr, endDateStr) {
 //获取距离date，num天的日期
 //num正数就是距离date未来的num天，为负数就是 距离date的过去num天
 //date 和 num都是必须传的参数
-function getFromNowDate(date,num){
-    if(date == null){
+function getFromNowDate(date, num) {
+    if (date == null) {
         date = new Date();
     }
 
-    var targetDaytime = date.getTime()+num*24*60*60*1000;
+    var targetDaytime = date.getTime() + num * 24 * 60 * 60 * 1000;
     var targetDate = new Date(targetDaytime);
 
     var year = targetDate.getFullYear();
-    var month = targetDate.getMonth()+1;
+    var month = targetDate.getMonth() + 1;
     var day = targetDate.getDate();
 
-    return year+"-"+("00"+month).substr((""+month).length)+"-"+("00"+day).substr((""+day).length);
+    return year + "-" + ("00" + month).substr(("" + month).length) + "-" + ("00" + day).substr(("" + day).length);
 }
 
 //获取6个月以前的月份
@@ -139,7 +143,7 @@ function getBeforeFor6Month(n) {
     var today = new Date().pattern('yyyy-MM');
     var d = new Date(today.replace(/[^\d]/g, "/") + "/1");
     var result = [today];
-    for (var i = 0; i < (n-1); i++) {
+    for (var i = 0; i < (n - 1); i++) {
         d.setMonth(d.getMonth() - 1);
         var m = d.getMonth() + 1;
         m = m < 10 ? "0" + m : m;
@@ -147,6 +151,7 @@ function getBeforeFor6Month(n) {
     }
     return result[result.length - 1];
 }
+
 //获取当前月份
 function getCurrMonth() {
     var today = new Date();
@@ -157,6 +162,7 @@ function getCurrMonth() {
     }
     return strYear + "-" + strMonth;
 }
+
 //获取当前月份
 function getCurrYear() {
     var today = new Date();

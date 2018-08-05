@@ -16,7 +16,7 @@ public class ImageCode {
             '8', '9'};
 
     public static Map<String, Object> getImageCode(int width, int height, OutputStream os) {
-        Map<String,Object> returnMap = new HashMap<String, Object>();
+        Map<String, Object> returnMap = new HashMap<String, Object>();
         if (width <= 0) width = 60;
         if (height <= 0) height = 20;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -52,8 +52,8 @@ public class ImageCode {
 
         // 释放图形上下文
         g.dispose();
-        returnMap.put("image",image);
-        returnMap.put("strEnsure",strEnsure);
+        returnMap.put("image", image);
+        returnMap.put("strEnsure", strEnsure);
         return returnMap;
     }
 

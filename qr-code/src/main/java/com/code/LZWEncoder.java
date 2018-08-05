@@ -9,13 +9,12 @@ import java.io.OutputStream;
 
 class LZWEncoder {
 
+    static final int BITS = 12;
+    static final int HSIZE = 5003; // 80% occupancy
     private static final int EOF = -1;
-
-    private int imgW, imgH;
-    private byte[] pixAry;
-    private int initCodeSize;
-    private int remaining;
-    private int curPixel;
+    int n_bits; // number of bits/code
+    int maxbits = BITS; // user settable max # bits/code
+    int maxcode; // maximum code, given n_bits
 
     // GIFCOMPR.C       - GIF Image compression routines
     //
@@ -23,10 +22,8 @@ class LZWEncoder {
     // David Rowley (mgardi@watdcsu.waterloo.edu)
 
     // General DEFINEs
-
-    static final int BITS = 12;
-
-    static final int HSIZE = 5003; // 80% occupancy
+    int maxmaxcode = 1 << BITS; // should NEVER generate this code
+    int[] htab = new int[HSIZE];
 
     // GIF Image compression - modified 'compress'
     //
@@ -38,22 +35,17 @@ class LZWEncoder {
     //              Ken Turkowski          (decvax!decwrl!turtlevax!ken)
     //              James A. Woods         (decvax!ihnp4!ames!jaw)
     //              Joe Orost              (decvax!vax135!petsd!joe)
-
-    int n_bits; // number of bits/code
-    int maxbits = BITS; // user settable max # bits/code
-    int maxcode; // maximum code, given n_bits
-    int maxmaxcode = 1 << BITS; // should NEVER generate this code
-
-    int[] htab = new int[HSIZE];
     int[] codetab = new int[HSIZE];
-
     int hsize = HSIZE; // for dynamic table sizing
-
     int free_ent = 0; // first unused entry
-
     // block compression parameters -- after all codes are used up,
     // and compression rate changes, start over.
     boolean clear_flg = false;
+    int g_init_bits;
+    int ClearCode;
+    int EOFCode;
+    int cur_accum = 0;
+    int cur_bits = 0;
 
     // Algorithm:  use open addressing double hashing (no chaining) on the
     // prefix code / next character combination.  We do a variant of Knuth's
@@ -66,30 +58,6 @@ class LZWEncoder {
     // for the decompressor.  Late addition:  construct the table according to
     // file size for noticeable speed improvement on small files.  Please direct
     // questions about this implementation to ames!jaw.
-
-    int g_init_bits;
-
-    int ClearCode;
-    int EOFCode;
-
-    // output
-    //
-    // Output the given code.
-    // Inputs:
-    //      code:   A n_bits-bit integer.  If == -1, then EOF.  This assumes
-    //              that n_bits =< wordsize - 1.
-    // Outputs:
-    //      Outputs code to the file.
-    // Assumptions:
-    //      Chars are 8 bits long.
-    // Algorithm:
-    //      Maintain a BITS character long buffer (so that 8 codes will
-    // fit in it exactly).  Use the VAX insv instruction to insert each
-    // code in turn.  When the buffer fills up empty it and start over.
-
-    int cur_accum = 0;
-    int cur_bits = 0;
-
     int masks[] =
             {
                     0x0000,
@@ -108,13 +76,31 @@ class LZWEncoder {
                     0x1FFF,
                     0x3FFF,
                     0x7FFF,
-                    0xFFFF };
-
+                    0xFFFF};
     // Number of characters so far in this 'packet'
     int a_count;
-
     // Define the storage for the packet accumulator
     byte[] accum = new byte[256];
+
+    // output
+    //
+    // Output the given code.
+    // Inputs:
+    //      code:   A n_bits-bit integer.  If == -1, then EOF.  This assumes
+    //              that n_bits =< wordsize - 1.
+    // Outputs:
+    //      Outputs code to the file.
+    // Assumptions:
+    //      Chars are 8 bits long.
+    // Algorithm:
+    //      Maintain a BITS character long buffer (so that 8 codes will
+    // fit in it exactly).  Use the VAX insv instruction to insert each
+    // code in turn.  When the buffer fills up empty it and start over.
+    private int imgW, imgH;
+    private byte[] pixAry;
+    private int initCodeSize;
+    private int remaining;
+    private int curPixel;
 
     //----------------------------------------------------------------------------
     LZWEncoder(int width, int height, byte[] pixels, int color_depth) {
@@ -184,7 +170,8 @@ class LZWEncoder {
 
         output(ClearCode, outs);
 
-        outer_loop : while ((c = nextPixel()) != EOF) {
+        outer_loop:
+        while ((c = nextPixel()) != EOF) {
             fcode = (c << maxbits) + ent;
             i = (c << hshift) ^ ent; // xor hashing
 

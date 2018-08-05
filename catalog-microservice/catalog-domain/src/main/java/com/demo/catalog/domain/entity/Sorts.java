@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_sorts")
-public class Sorts implements java.io.Serializable{
+public class Sorts implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +32,7 @@ public class Sorts implements java.io.Serializable{
     public Sorts() {
     }
 
-    public void addSubsorts(Subsorts subsorts){
+    public void addSubsorts(Subsorts subsorts) {
         subsortses.add(subsorts);
     }
 

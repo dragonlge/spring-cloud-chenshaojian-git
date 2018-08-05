@@ -31,7 +31,7 @@ public class SortsController {
     @Autowired
     private SortsService sortsService;
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> fnidById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             Sorts sorts = sortsService.findOne(id);
@@ -39,7 +39,7 @@ public class SortsController {
         });
     }
 
-    @RequestMapping(value="/names/{name}")
+    @RequestMapping(value = "/names/{name}")
     public CompletableFuture<String> findByName(@PathVariable String name) {
         return CompletableFuture.supplyAsync(() -> {
             Sorts sorts = sortsService.findByName(name);
@@ -52,13 +52,13 @@ public class SortsController {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 SortsQo sortsQo = new SortsQo();
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     sortsQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     sortsQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     sortsQo.setName(name);
                 }
 
@@ -97,7 +97,7 @@ public class SortsController {
             BeanUtils.copyProperties(sortsQo, sorts);
             sorts.setCreated(new Date());
 
-            for(SubsortsQo subsortsQo : sortsQo.getSubsortses()){
+            for (SubsortsQo subsortsQo : sortsQo.getSubsortses()) {
                 Subsorts subsorts = new Subsorts();
                 BeanUtils.copyProperties(subsortsQo, subsorts);
                 sorts.addSubsorts(subsorts);
@@ -115,7 +115,7 @@ public class SortsController {
             Sorts sorts = new Sorts();
             BeanUtils.copyProperties(sortsQo, sorts);
 
-            for(SubsortsQo subsortsQo : sortsQo.getSubsortses()){
+            for (SubsortsQo subsortsQo : sortsQo.getSubsortses()) {
                 Subsorts subsorts = new Subsorts();
                 BeanUtils.copyProperties(subsortsQo, subsorts);
                 sorts.addSubsorts(subsorts);
@@ -127,7 +127,7 @@ public class SortsController {
         });
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             sortsService.delete(id);

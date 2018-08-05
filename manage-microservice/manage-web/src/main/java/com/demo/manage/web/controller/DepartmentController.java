@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/department")
-public class DepartmentController{
+public class DepartmentController {
     private static Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
     @Autowired
@@ -39,25 +39,25 @@ public class DepartmentController{
     public Page<Department> getList(DepartmentVo departmentVo) {
         try {
             return departmentService.findAll(departmentVo);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public String show(ModelMap model, @PathVariable Long id) {
         Department department = departmentService.findOne(id);
-        model.addAttribute("department",department);
+        model.addAttribute("department", department);
         return "department/show";
     }
 
     @RequestMapping("/new")
-    public String create(){
+    public String create() {
         return "department/new";
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(Department department) {
         return CompletableFuture.supplyAsync(() -> {
@@ -67,15 +67,15 @@ public class DepartmentController{
         });
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public String edit(ModelMap model, @PathVariable Long id){
+    @RequestMapping(value = "/edit/{id}")
+    public String edit(ModelMap model, @PathVariable Long id) {
         Department department = departmentService.findOne(id);
 
         model.addAttribute("department", department);
         return "department/edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(Department department) {
         return CompletableFuture.supplyAsync(() -> {
@@ -85,11 +85,11 @@ public class DepartmentController{
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String delete(@PathVariable Long id) {
         departmentService.delete(id);
-        logger.info("删除->ID="+id);
+        logger.info("删除->ID=" + id);
         return "1";
     }
 

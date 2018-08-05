@@ -31,32 +31,32 @@ public class ModelService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Model model){
+    public void save(Model model) {
         //删除缓存
-        if(!StringUtils.isEmpty(model.getId())){
+        if (!StringUtils.isEmpty(model.getId())) {
             String key = model.getId().toString();
             cacheComponent.remove(Constant.MERCHANT_CENTER_MODEL_ID, key);//删除原有缓存
         }
         modelRepository.save(model);
         //保存缓存
-        if(!StringUtils.isEmpty(model.getId())){
+        if (!StringUtils.isEmpty(model.getId())) {
             String key = model.getId().toString();
             cacheComponent.put(Constant.MERCHANT_CENTER_MODEL_ID, key, model, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_MODEL_ID, id.toString());
 
         modelRepository.deleteById(id);
     }
 
-    public List<Model> findAll(){
+    public List<Model> findAll() {
         return modelRepository.findAll();
     }
 
-    public  Model findOne(Long id){
+    public Model findOne(Long id) {
         Model model = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MODEL_ID, id.toString());
@@ -67,23 +67,23 @@ public class ModelService {
         } else {
             model = (Model) object;
         }
-        return  model;
+        return model;
     }
-    
 
-    public Page<Model> findAll(ModelQo modelQo){
+
+    public Page<Model> findAll(ModelQo modelQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(modelQo.getPage(), modelQo.getSize(), sort);
+        Pageable pageable = new PageRequest(modelQo.getPage(), modelQo.getSize(), sort);
 
-        return modelRepository.findAll(new Specification<Model>(){
+        return modelRepository.findAll(new Specification<Model>() {
             @Override
             public Predicate toPredicate(Root<Model> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(modelQo.getName())){
+                if (CommonUtils.isNotNull(modelQo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + modelQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(modelQo.getCreated())){
+                if (CommonUtils.isNotNull(modelQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), modelQo.getCreated()));
                 }
 
@@ -93,5 +93,5 @@ public class ModelService {
             }
         }, pageable);
     }
-    
+
 }

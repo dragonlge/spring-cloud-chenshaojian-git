@@ -39,29 +39,31 @@ public class SubsortsController {
     @Autowired
     private SubsortsRestService subsortsService;
 
-    @RequestMapping(value="/index")
-    public ModelAndView index(){
+    @RequestMapping(value = "/index")
+    public ModelAndView index() {
         return new ModelAndView("/subsorts/index");
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<ModelAndView> findByName(@PathVariable Long id) {
-        return  subsortsFuture.findById(id).thenApply(subsorts ->
+        return subsortsFuture.findById(id).thenApply(subsorts ->
                 new ModelAndView("subsorts/show", "subsorts", new Gson().fromJson(subsorts, SubsortsQo.class)));
     }
 
-    @RequestMapping(value="/list")
+    @RequestMapping(value = "/list")
     public CompletableFuture<Page<Map<String, Object>>> findAll(SubsortsQo subsortsQo) {
-        return subsortsFuture.findPage(subsortsQo.getPage(),subsortsQo.getSize(), subsortsQo.getName()).thenApply( json -> {
+        return subsortsFuture.findPage(subsortsQo.getPage(), subsortsQo.getSize(), subsortsQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
 
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(subsortsQo.getPage(), subsortsQo.getSize(), null);
             List<SubsortsQo> list = new ArrayList<>();
 
-            if(page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<SubsortsQo>>(){}.getType());
+            if (page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<SubsortsQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -75,10 +77,10 @@ public class SubsortsController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(SubsortsQo subsortsQo) {
-        return subsortsFuture.create(subsortsQo).thenApply( sid -> {
-            log.info("新增->ID="+sid);
+        return subsortsFuture.create(subsortsQo).thenApply(sid -> {
+            log.info("新增->ID=" + sid);
             return sid;
         });
     }
@@ -94,18 +96,18 @@ public class SubsortsController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CompletableFuture<String> update(SubsortsQo subsortsQo) {
         return subsortsFuture.update(subsortsQo).thenApply(sid -> {
-            log.info("修改->ID="+sid);
+            log.info("修改->ID=" + sid);
             return sid;
         });
     }
 
-    @RequestMapping(value="/delete/{id}")
+    @RequestMapping(value = "/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return subsortsFuture.delete(id).thenApply( sid -> {
-            log.info("删除->ID="+sid);
+        return subsortsFuture.delete(id).thenApply(sid -> {
+            log.info("删除->ID=" + sid);
             return sid;
         });
     }

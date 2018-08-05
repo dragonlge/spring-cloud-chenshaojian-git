@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
-public class OperatorsVo extends PageVo implements java.io.Serializable{
+public class OperatorsVo extends PageVo implements java.io.Serializable {
     private String id;
     private String name;
     private String email;

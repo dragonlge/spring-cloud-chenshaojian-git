@@ -4,12 +4,12 @@
         <tr>
             <th>名称</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" name="name" id="name" maxlength="32" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" name="name" id="name" maxlength="32"/>
                 <span class="tipStar f-left">*</span>
             </td>
             <th>邮箱</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" name="email" id="email" maxlength="64" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" name="email" id="email" maxlength="64"/>
                 <span class="tipStar f-left">*</span>
             </td>
         </tr>
@@ -17,22 +17,23 @@
         <tr>
             <th>角色</th>
             <td width="240">
-                <div >
+                <div>
                     <select name="parts" id="parts" multiple="multiple">
                         <option th:each="part:${parts}" th:value="${part.id}"
                                 th:text="${#strings.length(part.name)>20?#strings.substring(part.name,0,20)+'...':part.name}"
-                                ></option>
+                        ></option>
                     </select>
                 </div>
             </td>
             <th>密码</th>
-            <td width="240"><input class="inp-list w-200 clear-mr f-left" type="password" id="password" name="password" maxlength="16" /></td>
+            <td width="240"><input class="inp-list w-200 clear-mr f-left" type="password" id="password" name="password"
+                                   maxlength="16"/></td>
         </tr>
         <tr>
             <th>性别</th>
             <td>
                 <div class="selectDownMode f-left w-206">
-                    <input type="text"  value="请选择"/>
+                    <input type="text" value="请选择"/>
                     <select class="selectMode" name="sex">
                         <option value="">请选择</option>
                         <option value="0">男</option>
@@ -42,11 +43,11 @@
             </td>
             <th>部门</th>
             <td width="240">
-                <div >
+                <div>
                     <select name="department" id="department">
                         <option th:each="department:${departments}" th:value="${department.id}"
                                 th:text="${#strings.length(department.name)>20?#strings.substring(department.name,0,20)+'...':department.name}"
-                                ></option>
+                        ></option>
                     </select>
                 </div>
             </td>

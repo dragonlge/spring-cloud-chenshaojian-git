@@ -31,32 +31,32 @@ public class MerchantService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Merchant merchant){
+    public void save(Merchant merchant) {
         //删除缓存
-        if(!StringUtils.isEmpty(merchant.getId())){
+        if (!StringUtils.isEmpty(merchant.getId())) {
             String key = merchant.getId().toString();
             cacheComponent.remove(Constant.MERCHANT_CENTER_MERCHANT_ID, key);//删除原有缓存
         }
         merchantRepository.save(merchant);
         //保存缓存
-        if(!StringUtils.isEmpty(merchant.getId())){
+        if (!StringUtils.isEmpty(merchant.getId())) {
             String key = merchant.getId().toString();
             cacheComponent.put(Constant.MERCHANT_CENTER_MERCHANT_ID, key, merchant, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString());
 
         merchantRepository.deleteById(id);
     }
 
-    public List<Merchant> findAll(){
+    public List<Merchant> findAll() {
         return merchantRepository.findAll();
     }
 
-    public  Merchant findOne(Long id){
+    public Merchant findOne(Long id) {
         Merchant merchant = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_MERCHANT_ID, id.toString());
@@ -67,23 +67,23 @@ public class MerchantService {
         } else {
             merchant = (Merchant) object;
         }
-        return  merchant;
+        return merchant;
     }
-    
 
-    public Page<Merchant> findAll(MerchantQo merchantQo){
+
+    public Page<Merchant> findAll(MerchantQo merchantQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(merchantQo.getPage(), merchantQo.getSize(), sort);
+        Pageable pageable = new PageRequest(merchantQo.getPage(), merchantQo.getSize(), sort);
 
-        return merchantRepository.findAll(new Specification<Merchant>(){
+        return merchantRepository.findAll(new Specification<Merchant>() {
             @Override
             public Predicate toPredicate(Root<Merchant> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(merchantQo.getName())){
+                if (CommonUtils.isNotNull(merchantQo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + merchantQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(merchantQo.getCreated())){
+                if (CommonUtils.isNotNull(merchantQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), merchantQo.getCreated()));
                 }
 
@@ -93,5 +93,5 @@ public class MerchantService {
             }
         }, pageable);
     }
-    
+
 }

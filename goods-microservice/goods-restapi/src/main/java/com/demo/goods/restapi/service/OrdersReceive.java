@@ -23,15 +23,15 @@ public class OrdersReceive {
     @ServiceActivator(inputChannel = InputSource.ORDERSCHANNEL, outputChannel = InputSource.REPLYCHANNEL)
     public CompletableFuture<String> accept(OrderQo orderQo) {
         return CompletableFuture.supplyAsync(() -> {
-            if(orderQo != null) {
+            if (orderQo != null) {
                 logger.info("接收到订单更新消息，订单编号=" + orderQo.getOrderNo());
 
                 if (orderQo.getStatus() != null && orderQo.getStatus() < 0) {
                     List<OrderDetailQo> list = orderQo.getOrderDetails();
                     for (OrderDetailQo orderDetailQo : list) {
                         Goods goods = goodsService.findOne(orderDetailQo.getGoodsid());
-                        if(goods != null){
-                            Integer num  = goods.getBuynum() != null && goods.getBuynum() >0?
+                        if (goods != null) {
+                            Integer num = goods.getBuynum() != null && goods.getBuynum() > 0 ?
                                     goods.getBuynum() - 1 : 0;
                             goods.setBuynum(num);
                             goodsService.save(goods);

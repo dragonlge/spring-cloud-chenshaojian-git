@@ -23,7 +23,7 @@ public class PictureTest {
     private PictureService pictureService;
 
     @Test
-    public void insertData(){
+    public void insertData() {
         Picture picture = new Picture();
         picture.setFileName("images/demo1.png");
         picture.setPathInfo("http://localhost:8092/");
@@ -32,7 +32,7 @@ public class PictureTest {
         picture.setMerchantid(1L);
 
         pictureService.save(picture);
-        
+
         Assert.notNull(picture.getId(), "not insert");
     }
 }

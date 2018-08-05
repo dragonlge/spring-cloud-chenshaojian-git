@@ -4,16 +4,16 @@
         <tr>
             <th>名称</th>
             <td width="240">
-                <input class="inp-list w-200 clear-mr f-left" type="text" name="name" id="name" maxlength="32" />
+                <input class="inp-list w-200 clear-mr f-left" type="text" name="name" id="name" maxlength="32"/>
                 <span class="tipStar f-left">*</span>
             </td>
             <th>资源</th>
             <td width="240">
-                <div >
+                <div>
                     <select name="rids" id="rids" multiple="multiple">
                         <option th:each="resource:${resources}" th:value="${resource.id}"
                                 th:text="${#strings.length(resource.name)>20?#strings.substring(resource.name,0,20)+'...':resource.name}"
-                                ></option>
+                        ></option>
                     </select>
                 </div>
             </td>
@@ -21,7 +21,8 @@
         <tr>
             <th>日期</th>
             <td>
-                <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left" id="created" name="created"/>
+                <input onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text"
+                       class="inp-list w-200 clear-mr f-left" id="created" name="created"/>
             </td>
         </tr>
     </table>

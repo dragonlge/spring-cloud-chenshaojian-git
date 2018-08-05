@@ -46,30 +46,30 @@ public class GoodsController {
     @Autowired
     private SortsRestService sortsService;
 
-    @RequestMapping(value="/index")
-    public ModelAndView index(){
+    @RequestMapping(value = "/index")
+    public ModelAndView index() {
         return new ModelAndView("/goods/index");
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<ModelAndView> findById(@PathVariable Long id, ModelMap model) {
         return CompletableFuture.supplyAsync(() -> goodsService.findById(id))
                 .thenCompose(goods -> CompletableFuture.supplyAsync(() -> {
-                                    GoodsQo goodsQo = new Gson().fromJson(goods, GoodsQo.class);
-                                    String sorts = sortsService.findById(goodsQo.getSortsid());
-                                    SortsQo sortsQo = new Gson().fromJson(sorts, SortsQo.class);
-                                    String subsname = "";
-                                    for (SubsortsQo subsortsQo : sortsQo.getSubsortses()) {
-                                        if (goodsQo.getSubsid().compareTo(subsortsQo.getId()) == 0) {
-                                            subsname = subsortsQo.getName();
-                                            break;
-                                        }
-                                    }
-                                    model.addAttribute("goods", goodsQo);
-                                    model.addAttribute("sortsname", sortsQo.getName());
-                                    model.addAttribute("subsname", subsname);
-                                    return new ModelAndView("goods/show");
+                            GoodsQo goodsQo = new Gson().fromJson(goods, GoodsQo.class);
+                            String sorts = sortsService.findById(goodsQo.getSortsid());
+                            SortsQo sortsQo = new Gson().fromJson(sorts, SortsQo.class);
+                            String subsname = "";
+                            for (SubsortsQo subsortsQo : sortsQo.getSubsortses()) {
+                                if (goodsQo.getSubsid().compareTo(subsortsQo.getId()) == 0) {
+                                    subsname = subsortsQo.getName();
+                                    break;
                                 }
+                            }
+                            model.addAttribute("goods", goodsQo);
+                            model.addAttribute("sortsname", sortsQo.getName());
+                            model.addAttribute("subsname", subsname);
+                            return new ModelAndView("goods/show");
+                        }
                         )
                 );
 
@@ -77,15 +77,17 @@ public class GoodsController {
 
     @RequestMapping(value = "/list")
     public CompletableFuture<Page<Map<String, Object>>> findAll(GoodsQo goodsQo) {
-        return goodsFuture.findPage(goodsQo).thenApply( json -> {
+        return goodsFuture.findPage(goodsQo).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(goodsQo.getPage(), goodsQo.getSize(), null);
             List<GoodsQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<GoodsQo>>(){}.getType());
+            if (page != null && page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<GoodsQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -94,17 +96,18 @@ public class GoodsController {
 
     @RequestMapping("/new")
     public CompletableFuture<ModelAndView> create(HttpServletRequest request) {
-        return sortsFuture.findList().thenApply(sortses ->{
-            List<SortsQo> list = new Gson().fromJson(sortses, new TypeToken<List<SortsQo>>() {}.getType());
+        return sortsFuture.findList().thenApply(sortses -> {
+            List<SortsQo> list = new Gson().fromJson(sortses, new TypeToken<List<SortsQo>>() {
+            }.getType());
             return new ModelAndView("goods/new", "sortses", list);
         });
     }
 
 
-    @PostMapping(value="/save")
+    @PostMapping(value = "/save")
     public CompletableFuture<String> save(GoodsQo goodsQo) {
-        return goodsFuture.create(goodsQo).thenApply(sid ->{
-            log.info("新增->ID="+sid);
+        return goodsFuture.create(goodsQo).thenApply(sid -> {
+            log.info("新增->ID=" + sid);
             return sid;
         });
     }
@@ -112,41 +115,42 @@ public class GoodsController {
     @RequestMapping("/edit/{id}")
     public CompletableFuture<ModelAndView> update(@PathVariable Long id, ModelMap model) {
         return goodsFuture.findById(id).thenCompose(goods -> CompletableFuture.supplyAsync(() -> {
-                            Gson gson = TreeMapConvert.getGson();
-                            GoodsQo goodsQo = gson.fromJson(goods, GoodsQo.class);
+                    Gson gson = TreeMapConvert.getGson();
+                    GoodsQo goodsQo = gson.fromJson(goods, GoodsQo.class);
 
-                            String sortses = sortsService.findList();
-                            List<SortsQo> list = new Gson().fromJson(sortses, new TypeToken<List<SortsQo>>() {}.getType());
+                    String sortses = sortsService.findList();
+                    List<SortsQo> list = new Gson().fromJson(sortses, new TypeToken<List<SortsQo>>() {
+                    }.getType());
 
-                            List<SubsortsQo> subs = new ArrayList<SubsortsQo>();
-                            for (SortsQo sorts : list) {
-                                if (goodsQo.getSortsid().compareTo(sorts.getId()) == 0) {
-                                    subs = sorts.getSubsortses();
-                                    break;
-                                }
-                            }
-
-                            model.addAttribute("goods", goodsQo);
-                            model.addAttribute("sortses", list);
-                            model.addAttribute("subs", subs);
-                            return new ModelAndView("goods/edit");
+                    List<SubsortsQo> subs = new ArrayList<SubsortsQo>();
+                    for (SortsQo sorts : list) {
+                        if (goodsQo.getSortsid().compareTo(sorts.getId()) == 0) {
+                            subs = sorts.getSubsortses();
+                            break;
                         }
+                    }
+
+                    model.addAttribute("goods", goodsQo);
+                    model.addAttribute("sortses", list);
+                    model.addAttribute("subs", subs);
+                    return new ModelAndView("goods/edit");
+                }
                 )
         );
     }
 
-    @PostMapping(value="/update")
+    @PostMapping(value = "/update")
     public CompletableFuture<String> update(GoodsQo goodsQo) {
         return goodsFuture.update(goodsQo).thenApply(sid -> {
-            log.info("修改->ID="+sid);
+            log.info("修改->ID=" + sid);
             return sid;
         });
     }
 
-    @RequestMapping(value="/delete/{id}")
+    @RequestMapping(value = "/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return goodsFuture.delete(id).thenApply(sid ->{
-            log.info("删除->ID="+sid);
+        return goodsFuture.delete(id).thenApply(sid -> {
+            log.info("删除->ID=" + sid);
             return sid;
         });
     }

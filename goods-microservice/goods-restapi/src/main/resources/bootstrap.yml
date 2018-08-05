@@ -8,7 +8,7 @@ spring:
       uri: http://localhost:8888
 
   rabbitmq:
-        addresses: amqp://localhost:5672
-        username: alan
-        password: alan
+    addresses: amqp://localhost:5672
+    username: alan
+    password: alan
 

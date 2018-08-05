@@ -31,7 +31,7 @@ public class OrderTest {
     private OrderService ordersService;
 
     //@Test
-    public void insertData(){
+    public void insertData() {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setGoodsname("测试商品1");
         orderDetail.setGoodsid(1L);
@@ -60,34 +60,33 @@ public class OrderTest {
     }
 
     //@Test
-    public void getData(){
+    public void getData() {
         Order order = ordersService.findOne(1L);
-        logger.info("===============id="+ order.getId());
+        logger.info("===============id=" + order.getId());
         Assert.notNull(order, "order null");
     }
 
     //@Test
-    public void delData(){
+    public void delData() {
         ordersService.delete(1L);
         //Assert.notNull(order, "not delete");
     }
 
 
-
     //@Test
-    public void updateData(){
+    public void updateData() {
         Order order = ordersService.findOne(2L);
         Assert.notNull(order, "order null");
 
         order.setStatus(1);
         ordersService.save(order);
 
-        logger.info("=========update order id="+ order.getId());
+        logger.info("=========update order id=" + order.getId());
     }
 
 
     @Test
-    public void findAll() throws Exception{
+    public void findAll() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse("2017-01-01 00:00:00");
         OrderQo orderQo = new OrderQo();
@@ -98,7 +97,7 @@ public class OrderTest {
 
         Assert.notEmpty(page.getContent(), "list is empty");
 
-        for(Order order : page.getContent()) {
+        for (Order order : page.getContent()) {
             logger.info("=========order id={}, order userid={}, detail goods name = {}",
                     order.getId(), order.getUserid(), order.getOrderDetails().iterator().next().getGoodsname());
         }

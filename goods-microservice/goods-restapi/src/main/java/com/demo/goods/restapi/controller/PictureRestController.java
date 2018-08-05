@@ -33,7 +33,7 @@ public class PictureRestController {
     @Autowired
     private PictureService pictureService;
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> fnidById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             Picture picture = pictureService.findOne(id);
@@ -48,16 +48,16 @@ public class PictureRestController {
             try {
                 PictureQo pictureQo = new PictureQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     pictureQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     pictureQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(merchantid)){
+                if (CommonUtils.isNotNull(merchantid)) {
                     pictureQo.setMerchantid(merchantid);
                 }
-                if(CommonUtils.isNotNull(created)){
+                if (CommonUtils.isNotNull(created)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     pictureQo.setCreated(sdf.parse(created));
                 }
@@ -104,7 +104,7 @@ public class PictureRestController {
         });
     }
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value = "/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.delete(id);
@@ -114,7 +114,7 @@ public class PictureRestController {
         });
     }
 
-    @DeleteMapping(value="/deleteByFileName/{fileName}")
+    @DeleteMapping(value = "/deleteByFileName/{fileName}")
     public CompletableFuture<String> deleteByFileName(@PathVariable String fileName) {
         return CompletableFuture.supplyAsync(() -> {
             pictureService.deleteByFileName(fileName);

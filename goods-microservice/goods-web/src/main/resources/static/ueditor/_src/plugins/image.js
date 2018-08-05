@@ -11,7 +11,7 @@
  */
 
 UE.commands['imagefloat'] = {
-    execCommand:function (cmd, align) {
+    execCommand: function (cmd, align) {
         var me = this,
             range = me.selection.getRange();
         if (!range.collapsed) {
@@ -49,8 +49,8 @@ UE.commands['imagefloat'] = {
                             range.selectNode(img).select();
                         }
                         domUtils.setStyle(img, 'float', align == 'none' ? '' : align);
-                        if(align == 'none'){
-                            domUtils.removeAttributes(img,'align');
+                        if (align == 'none') {
+                            domUtils.removeAttributes(img, 'align');
                         }
 
                         break;
@@ -58,12 +58,12 @@ UE.commands['imagefloat'] = {
                         if (me.queryCommandValue('imagefloat') != 'center') {
                             pN = img.parentNode;
                             domUtils.setStyle(img, 'float', '');
-                            domUtils.removeAttributes(img,'align');
+                            domUtils.removeAttributes(img, 'align');
                             tmpNode = img;
                             while (pN && domUtils.getChildCount(pN, function (node) {
                                 return !domUtils.isBr(node) && !domUtils.isWhitespace(node);
                             }) == 1
-                                && (dtd.$inline[pN.tagName] || pN.tagName == 'A')) {
+                            && (dtd.$inline[pN.tagName] || pN.tagName == 'A')) {
                                 tmpNode = pN;
                                 pN = pN.parentNode;
                             }
@@ -92,7 +92,7 @@ UE.commands['imagefloat'] = {
             }
         }
     },
-    queryCommandValue:function () {
+    queryCommandValue: function () {
         var range = this.selection.getRange(),
             startNode, floatStyle;
         if (range.collapsed) {
@@ -100,25 +100,25 @@ UE.commands['imagefloat'] = {
         }
         startNode = range.getClosedNode();
         if (startNode && startNode.nodeType == 1 && startNode.tagName == 'IMG') {
-            floatStyle = startNode.getAttribute('align')||domUtils.getComputedStyle(startNode, 'float');
+            floatStyle = startNode.getAttribute('align') || domUtils.getComputedStyle(startNode, 'float');
             if (floatStyle == 'none') {
                 floatStyle = domUtils.getComputedStyle(startNode.parentNode, 'text-align') == 'center' ? 'center' : floatStyle;
             }
             return {
-                left:1,
-                right:1,
-                center:1
+                left: 1,
+                right: 1,
+                center: 1
             }[floatStyle] ? floatStyle : 'none';
         }
         return 'none';
 
 
     },
-    queryCommandState:function () {
+    queryCommandState: function () {
         var range = this.selection.getRange(),
             startNode;
 
-        if (range.collapsed)  return -1;
+        if (range.collapsed) return -1;
 
         startNode = range.getClosedNode();
         if (startNode && startNode.nodeType == 1 && startNode.tagName == 'IMG') {
@@ -129,7 +129,7 @@ UE.commands['imagefloat'] = {
 };
 
 UE.commands['insertimage'] = {
-    execCommand:function (cmd, opt) {
+    execCommand: function (cmd, opt) {
 
         opt = utils.isArray(opt) ? opt : [opt];
         if (!opt.length) {

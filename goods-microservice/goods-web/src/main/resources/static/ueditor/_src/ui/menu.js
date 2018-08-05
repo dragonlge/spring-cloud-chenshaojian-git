@@ -16,24 +16,24 @@
         };
 
     var menuSeparator = {
-        renderHtml:function () {
+        renderHtml: function () {
             return '<div class="edui-menuitem edui-menuseparator"><div class="edui-menuseparator-inner"></div></div>';
         },
-        postRender:function () {
+        postRender: function () {
         },
-        queryAutoHide:function () {
+        queryAutoHide: function () {
             return true;
         }
     };
     Menu.prototype = {
-        items:null,
-        uiName:'menu',
-        initMenu:function () {
+        items: null,
+        uiName: 'menu',
+        initMenu: function () {
             this.items = this.items || [];
             this.initPopup();
             this.initItems();
         },
-        initItems:function () {
+        initItems: function () {
             for (var i = 0; i < this.items.length; i++) {
                 var item = this.items[i];
                 if (item == '-') {
@@ -45,14 +45,14 @@
                 }
             }
         },
-        getSeparator:function () {
+        getSeparator: function () {
             return menuSeparator;
         },
-        createItem:function (item) {
+        createItem: function (item) {
             return new MenuItem(item);
         },
-        _Popup_getContentHtmlTpl:Popup.prototype.getContentHtmlTpl,
-        getContentHtmlTpl:function () {
+        _Popup_getContentHtmlTpl: Popup.prototype.getContentHtmlTpl,
+        getContentHtmlTpl: function () {
             if (this.items.length == 0) {
                 return this._Popup_getContentHtmlTpl();
             }
@@ -63,8 +63,8 @@
             }
             return ('<div class="%%-body">' + buff.join('') + '</div>');
         },
-        _Popup_postRender:Popup.prototype.postRender,
-        postRender:function () {
+        _Popup_postRender: Popup.prototype.postRender,
+        postRender: function () {
             var me = this;
             for (var i = 0; i < this.items.length; i++) {
                 var item = this.items[i];
@@ -81,7 +81,7 @@
             });
             this._Popup_postRender();
         },
-        queryAutoHide:function (el) {
+        queryAutoHide: function (el) {
             if (el) {
                 if (uiUtils.contains(this.getDom(), el)) {
                     return false;
@@ -94,7 +94,7 @@
                 }
             }
         },
-        clearItems:function () {
+        clearItems: function () {
             for (var i = 0; i < this.items.length; i++) {
                 var item = this.items[i];
                 clearTimeout(item._showingTimer);
@@ -105,13 +105,13 @@
             }
             this.items = [];
         },
-        destroy:function () {
+        destroy: function () {
             if (this.getDom()) {
                 domUtils.remove(this.getDom());
             }
             this.clearItems();
         },
-        dispose:function () {
+        dispose: function () {
             this.destroy();
         }
     };
@@ -125,10 +125,10 @@
             if (options.className && options.className.indexOf("aligntd") != -1) {
                 var me = this;
                 this.subMenu = new Popup({
-                    content:new CellAlignPicker(this.subMenu),
-                    parentMenu:me,
-                    editor:me.editor,
-                    destroy:function () {
+                    content: new CellAlignPicker(this.subMenu),
+                    parentMenu: me,
+                    editor: me.editor,
+                    destroy: function () {
                         if (this.getDom()) {
                             domUtils.remove(this.getDom());
                         }
@@ -145,19 +145,19 @@
         }
     };
     MenuItem.prototype = {
-        label:'',
-        subMenu:null,
-        ownerMenu:null,
-        uiName:'menuitem',
-        alwalysHoverable:true,
-        getHtmlTpl:function () {
+        label: '',
+        subMenu: null,
+        ownerMenu: null,
+        uiName: 'menuitem',
+        alwalysHoverable: true,
+        getHtmlTpl: function () {
             return '<div id="##" class="%%" stateful onclick="$$._onClick(event, this);">' +
                 '<div class="%%-body">' +
                 this.renderLabelHtml() +
                 '</div>' +
                 '</div>';
         },
-        postRender:function () {
+        postRender: function () {
             var me = this;
             this.addListener('over', function () {
                 me.ownerMenu.fireEvent('submenuover', me);
@@ -196,7 +196,7 @@
             uiUtils.makeUnselectable(this.getDom());
             this.Stateful_postRender();
         },
-        delayShowSubMenu:function () {
+        delayShowSubMenu: function () {
             var me = this;
             if (!me.isDisabled()) {
                 me.addState('opened');
@@ -208,7 +208,7 @@
                 }, 250);
             }
         },
-        delayHideSubMenu:function () {
+        delayHideSubMenu: function () {
             var me = this;
             if (!me.isDisabled()) {
                 me.removeState('opened');
@@ -223,20 +223,20 @@
                 }
             }
         },
-        renderLabelHtml:function () {
+        renderLabelHtml: function () {
             return '<div class="edui-arrow"></div>' +
                 '<div class="edui-box edui-icon"></div>' +
                 '<div class="edui-box edui-label %%-label">' + (this.label || '') + '</div>';
         },
-        getStateDom:function () {
+        getStateDom: function () {
             return this.getDom();
         },
-        queryAutoHide:function (el) {
+        queryAutoHide: function (el) {
             if (this.subMenu && this.hasState('opened')) {
                 return this.subMenu.queryAutoHide(el);
             }
         },
-        _onClick:function (event, this_) {
+        _onClick: function (event, this_) {
             if (this.hasState('disabled')) return;
             if (this.fireEvent('click', event, this_) !== false) {
                 if (this.subMenu) {
@@ -246,7 +246,7 @@
                 }
             }
         },
-        showSubMenu:function () {
+        showSubMenu: function () {
             var rect = uiUtils.getClientRect(this.getDom());
             rect.right -= 5;
             rect.left += 2;
@@ -256,7 +256,7 @@
             rect.height += 8;
             this.subMenu.showAnchorRect(rect, true, true);
         },
-        hideSubMenu:function () {
+        hideSubMenu: function () {
             this.subMenu.hide();
         }
     };

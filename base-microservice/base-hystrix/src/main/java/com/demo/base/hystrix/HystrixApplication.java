@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @EnableHystrixDashboard
 public class HystrixApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(HystrixApplication.class, args);
+    }
+
     @RequestMapping("/")
     public String home() {
         return "forward:/hystrix";
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(HystrixApplication.class, args);
     }
 }

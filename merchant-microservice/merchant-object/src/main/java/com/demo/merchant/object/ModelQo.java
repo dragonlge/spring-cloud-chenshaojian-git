@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ModelQo extends PageQo implements java.io.Serializable{
+public class ModelQo extends PageQo implements java.io.Serializable {
     private Long id;
     private String name;
     private String host;

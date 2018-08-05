@@ -3,9 +3,10 @@
 <body>
 <div th:fragment="nav">
     <div class="columnLeftMenu">
-        <h6 ><span class="f-right"></span>商品管理</h6>
-        <ul >
-            <li><a th:classappend="${page == 'goods/index' ? 'currentPageNav' : ''}" th:href="@{/goods/index}">商品列表</a></li>
+        <h6><span class="f-right"></span>商品管理</h6>
+        <ul>
+            <li><a th:classappend="${page == 'goods/index' ? 'currentPageNav' : ''}" th:href="@{/goods/index}">商品列表</a>
+            </li>
 
         </ul>
     </div>

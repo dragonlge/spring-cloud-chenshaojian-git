@@ -34,7 +34,7 @@ public class ResourceController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> resourceService.findOne(id))
-                .thenApply(resource ->{
+                .thenApply(resource -> {
                     return new Gson().toJson(resource);
                 });
     }
@@ -53,13 +53,13 @@ public class ResourceController {
             try {
                 ResourceQo resourceQo = new ResourceQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     resourceQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     resourceQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     resourceQo.setName(name);
                 }
 
@@ -78,7 +78,7 @@ public class ResourceController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody ResourceQo resourceQo) {
         return CompletableFuture.supplyAsync(() -> {
             Resource resource = CopyUtil.copy(resourceQo, Resource.class);
@@ -92,7 +92,7 @@ public class ResourceController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody ResourceQo resourceQo) {
         return CompletableFuture.supplyAsync(() -> {
             Resource resource = CopyUtil.copy(resourceQo, Resource.class);
@@ -106,15 +106,15 @@ public class ResourceController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //让具有此资源的角色脱离关系
             List<Role> roleList = roleService.findByResourceId(id);
-            if(roleList != null && roleList.size() > 0){
-                for(Role role : roleList){
-                    for(Resource resource : role.getResources()){
-                        if(resource.getId().equals(id)){
+            if (roleList != null && roleList.size() > 0) {
+                for (Role role : roleList) {
+                    for (Resource resource : role.getResources()) {
+                        if (resource.getId().equals(id)) {
                             role.getResources().remove(resource);
                             roleService.save(role);
                             break;

@@ -9,13 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SecurityUser extends Operators implements UserDetails
-{
+public class SecurityUser extends Operators implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+
     public SecurityUser(Operators user) {
-        if(user != null)
-        {
+        if (user != null) {
             this.setId(user.getId());
             this.setName(user.getName());
             this.setEmail(user.getEmail());
@@ -29,7 +28,7 @@ public class SecurityUser extends Operators implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for(Part role : this.getParts()){
+        for (Part role : this.getParts()) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
             authorities.add(authority);
         }

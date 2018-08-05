@@ -27,37 +27,37 @@ public class PictureService {
     @Autowired
     private PictureRepository pictureRepository;
 
-    public Picture findOne(Long id){
+    public Picture findOne(Long id) {
         return pictureRepository.findOneById(id);
     }
 
-    public void save(Picture picture){
+    public void save(Picture picture) {
         pictureRepository.save(picture);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         pictureRepository.deleteById(id);
     }
 
-    public void deleteByFileName(String fileName){
+    public void deleteByFileName(String fileName) {
         Picture picture = pictureRepository.findByFileName(fileName);
-        if(picture != null) pictureRepository.delete(picture);
+        if (picture != null) pictureRepository.delete(picture);
     }
 
 
-    public Page<Picture> findAll(PictureQo pictureQo){
+    public Page<Picture> findAll(PictureQo pictureQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
         Pageable pageable = new PageRequest(pictureQo.getPage(), pictureQo.getSize(), sort);
 
-        return pictureRepository.findAll(new Specification<Picture>(){
+        return pictureRepository.findAll(new Specification<Picture>() {
             @Override
             public Predicate toPredicate(Root<Picture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(pictureQo.getMerchantid())){
+                if (CommonUtils.isNotNull(pictureQo.getMerchantid())) {
                     predicatesList.add(criteriaBuilder.equal(root.get("merchantid"), pictureQo.getMerchantid()));
                 }
-                if(CommonUtils.isNotNull(pictureQo.getCreated())){
+                if (CommonUtils.isNotNull(pictureQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), pictureQo.getCreated()));
                 }
 

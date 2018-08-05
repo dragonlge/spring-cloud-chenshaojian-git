@@ -73,6 +73,7 @@ public class PicUtilController {
 
     /**
      * 上传图片
+     *
      * @return
      */
     @PostMapping(value = "/uploadPic")
@@ -85,7 +86,7 @@ public class PicUtilController {
                 @Override
                 public void run() {
                     try {
-                        savePic(multipartFile, filename ,shopid);
+                        savePic(multipartFile, filename, shopid);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -95,17 +96,17 @@ public class PicUtilController {
             BufferedImage image = ImageIO.read(multipartFile.getInputStream());
 
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("pathInfo", pathHead+filename);
+            data.put("pathInfo", pathHead + filename);
             data.put("width", image.getWidth());
             data.put("height", image.getHeight());
 
             ObjectMapper mapper = new ObjectMapper();
-            String ret =  mapper.writeValueAsString(data);
+            String ret = mapper.writeValueAsString(data);
 
             response.setContentType("text/html;charset=utf8");
             response.getOutputStream().write(ret.getBytes());
             response.flushBuffer();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -114,6 +115,7 @@ public class PicUtilController {
 
     /**
      * 剪切图片
+     *
      * @return
      */
     @PostMapping(value = "/cutPic")
@@ -166,7 +168,7 @@ public class PicUtilController {
 
         response.setContentType("text/html;charset=utf8");
         ObjectMapper mapper = new ObjectMapper();
-        String ret =  mapper.writeValueAsString(data);
+        String ret = mapper.writeValueAsString(data);
 
         response.getOutputStream().write(ret.getBytes());
         response.flushBuffer();
@@ -176,6 +178,7 @@ public class PicUtilController {
 
     /**
      * 切图
+     *
      * @param src
      * @param x
      * @param y
@@ -196,6 +199,7 @@ public class PicUtilController {
 
     /**
      * 获取图片类型
+     *
      * @param url
      * @return
      */
@@ -207,8 +211,8 @@ public class PicUtilController {
     }
 
     //ueditor 图片上传
-    @PostMapping(value = "/uploadimg", produces="text/html;charset=UTF-8")
-    public void uploadimg(@RequestParam("upfile") MultipartFile upfile, HttpServletRequest request, HttpServletResponse response){
+    @PostMapping(value = "/uploadimg", produces = "text/html;charset=UTF-8")
+    public void uploadimg(@RequestParam("upfile") MultipartFile upfile, HttpServletRequest request, HttpServletResponse response) {
         try {
             String filename = fastefsClient.uploFile(upfile);
 
@@ -218,7 +222,7 @@ public class PicUtilController {
                 @Override
                 public void run() {
                     try {
-                        savePic(upfile, filename ,shopid);
+                        savePic(upfile, filename, shopid);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -227,17 +231,17 @@ public class PicUtilController {
 
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("original", upfile.getOriginalFilename());
-            data.put("url", pathHead+filename);
+            data.put("url", pathHead + filename);
             data.put("title", "");
             data.put("state", "SUCCESS");
 
             ObjectMapper mapper = new ObjectMapper();
-            String ret =  mapper.writeValueAsString(data);
+            String ret = mapper.writeValueAsString(data);
 
             response.setContentType("text/html;charset=utf8");
             response.getOutputStream().write(ret.getBytes());
             response.flushBuffer();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -247,7 +251,7 @@ public class PicUtilController {
     public String deletePic(HttpServletRequest request) {
         try {
             String fullfile = request.getParameter("filename");
-            if(!StringUtils.isEmpty(fullfile)) {
+            if (!StringUtils.isEmpty(fullfile)) {
                 String filename = fullfile.replace(pathHead, "");
                 fastefsClient.deleteFile(filename);
                 AsyncThreadPool.getInstance().execute(new Runnable() {
@@ -261,7 +265,7 @@ public class PicUtilController {
                     }
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "1";
@@ -269,28 +273,30 @@ public class PicUtilController {
 
     @PostMapping(value = "/listPic")
     @ResponseBody
-    public CompletableFuture<Page<Map<String, Object>>> listPic(PictureQo pictureQo){
-        return pictureFuture.findPage(pictureQo).thenApply( json -> {
+    public CompletableFuture<Page<Map<String, Object>>> listPic(PictureQo pictureQo) {
+        return pictureFuture.findPage(pictureQo).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(pictureQo.getPage(), pictureQo.getSize(), null);
             java.util.List<GoodsQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<java.util.List<PictureQo>>(){}.getType());
+            if (page != null && page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<java.util.List<PictureQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
             return new PageImpl(list, pageable, new Long(count));
         });
     }
 
-    private CompletableFuture<String> delPic(String filename){
-        return pictureFuture.deleteByFileName(filename).thenApply(sid ->{
+    private CompletableFuture<String> delPic(String filename) {
+        return pictureFuture.deleteByFileName(filename).thenApply(sid -> {
             return sid;
         });
     }
 
-    private CompletableFuture<String> savePic(MultipartFile multipartFile, String filename, Long shopid) throws Exception{
+    private CompletableFuture<String> savePic(MultipartFile multipartFile, String filename, Long shopid) throws Exception {
         BufferedImage image = ImageIO.read(multipartFile.getInputStream());
 
         PictureQo picture = new PictureQo();
@@ -300,12 +306,12 @@ public class PicUtilController {
         picture.setPathInfo(pathHead);
         picture.setMerchantid(shopid);
 
-        return pictureFuture.create(picture).thenApply(sid ->{
+        return pictureFuture.create(picture).thenApply(sid -> {
             return sid;
         });
     }
 
-    private CompletableFuture<String> updatePic(BufferedImage image, Long shopid, String filename, String oldfile){
+    private CompletableFuture<String> updatePic(BufferedImage image, Long shopid, String filename, String oldfile) {
         return CompletableFuture.supplyAsync(() -> {
             pictureRestService.deleteByFileName(oldfile);
 

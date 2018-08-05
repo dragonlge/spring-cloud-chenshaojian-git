@@ -40,7 +40,7 @@ public class MerchantController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> merchantService.findOne(id))
-                .thenApply(merchant ->{
+                .thenApply(merchant -> {
                     return new Gson().toJson(merchant);
                 });
     }
@@ -59,13 +59,13 @@ public class MerchantController {
             try {
                 MerchantQo merchantQo = new MerchantQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     merchantQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     merchantQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     merchantQo.setName(name);
                 }
 
@@ -84,7 +84,7 @@ public class MerchantController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody MerchantQo merchantQo) {
         return CompletableFuture.supplyAsync(() -> {
             Merchant merchant = CopyUtil.copy(merchantQo, Merchant.class);
@@ -113,7 +113,7 @@ public class MerchantController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody MerchantQo merchantQo) {
         return CompletableFuture.supplyAsync(() -> {
             Merchant merchant = CopyUtil.copy(merchantQo, Merchant.class);
@@ -125,7 +125,7 @@ public class MerchantController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             merchantService.delete(id);

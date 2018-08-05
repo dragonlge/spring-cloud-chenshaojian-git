@@ -34,7 +34,7 @@ public class SubsortsController {
     @Autowired
     private SortsService sortsService;
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> fnidById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             Subsorts subsorts = subsortsService.findOne(id);
@@ -42,7 +42,7 @@ public class SubsortsController {
         });
     }
 
-    @RequestMapping(value="/names/{name}")
+    @RequestMapping(value = "/names/{name}")
     public CompletableFuture<String> findByName(@PathVariable String name) {
         return CompletableFuture.supplyAsync(() -> {
             Subsorts subsorts = subsortsService.findByName(name);
@@ -53,16 +53,16 @@ public class SubsortsController {
     @RequestMapping(method = RequestMethod.GET)
     public CompletableFuture<String> findAll(Integer index, Integer size, String name) {
         return CompletableFuture.supplyAsync(() -> {
-            try{
+            try {
                 SubsortsQo subsortsQo = new SubsortsQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     subsortsQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     subsortsQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     subsortsQo.setName(name);
                 }
 
@@ -74,7 +74,7 @@ public class SubsortsController {
                 page.put("totalelements", subsortses.getTotalElements());
 
                 return new Gson().toJson(page);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -119,14 +119,14 @@ public class SubsortsController {
         });
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             //如果存在父类则先删除关系
             Sorts sorts = sortsService.findBySubsortsId(id);
-            if(sorts != null){
-                for(Subsorts subsorts : sorts.getSubsortses()){
-                    if(subsorts.getId().compareTo(id) == 0){
+            if (sorts != null) {
+                for (Subsorts subsorts : sorts.getSubsortses()) {
+                    if (subsorts.getId().compareTo(id) == 0) {
                         sorts.getSubsortses().remove(subsorts);
                         sortsService.save(sorts);
                         break;

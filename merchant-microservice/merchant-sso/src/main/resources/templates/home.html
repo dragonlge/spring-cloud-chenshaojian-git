@@ -2,17 +2,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
     <meta http-equiv="Cache-Control" content="no-store"/>
-    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Expires" content="0"/>
 
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-    <title >首页</title>
-    <link th:href="@{/styles/global.css}"  rel="stylesheet" type="text/css"/>
-    <link th:href="@{/styles/home.css}" rel="stylesheet"  type="text/css"/>
+    <title>首页</title>
+    <link th:href="@{/styles/global.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/styles/home.css}" rel="stylesheet" type="text/css"/>
 
     <script th:src="@{/scripts/jquery.min.js}"></script>
     <script th:src="@{/scripts/common.js}"></script>
@@ -44,20 +44,25 @@
                     <div id="focus">
                         <ul>
                             <li>
-                                <div class="icon-box" >
+                                <div class="icon-box">
                                     <div class="new-icon" th:each="kind:${kinds}">
                                         <div class="icon-pic">
-                                            <p><a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}" class="linka"  ><img src="/images/home/BigIconFirm.png" /></a></p>
+                                            <p>
+                                                <a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}"
+                                                   class="linka"><img src="/images/home/BigIconFirm.png"/></a></p>
                                         </div>
 
                                         <div class="icon-txt">
                                             <dl>
                                                 <dt>
-                                                <p><a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}" class="linka" th:text="${kind.name}"></a></p>
-                                                <span><img src="/images/home/FourStar.jpg" /></span>
+                                                    <p>
+                                                        <a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}"
+                                                           class="linka" th:text="${kind.name}"></a></p>
+                                                    <span><img src="/images/home/FourStar.jpg"/></span>
                                                 </dt>
                                                 <dd>
-                                                    <a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}" class="linka" th:text="${kind.name}"></a>
+                                                    <a th:href="${'javascript:gotoService(&quot;'+kind.link+'&quot;, &quot; &quot;);'}"
+                                                       class="linka" th:text="${kind.name}"></a>
                                                 </dd>
                                             </dl>
                                         </div>
@@ -83,10 +88,10 @@
         });
     });
 
-    function gotoService(name, follow){
-        $.get("./service/" + name,{ts:new Date().getTime()},function(data){
+    function gotoService(name, follow) {
+        $.get("./service/" + name, {ts: new Date().getTime()}, function (data) {
             var url = data;
-            if(follow) url += follow;
+            if (follow) url += follow;
             window.open(url, "_top");
         });
     }

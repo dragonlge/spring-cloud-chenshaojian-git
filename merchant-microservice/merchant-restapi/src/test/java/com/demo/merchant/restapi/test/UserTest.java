@@ -43,7 +43,7 @@ public class UserTest {
     private MerchantService merchantService;
 
     //@Test
-    public void insertData(){
+    public void insertData() {
         Kind kind = new Kind();
         kind.setName("商家系统");
         kind.setLink("merchantweb");
@@ -91,7 +91,7 @@ public class UserTest {
     }
 
     //@Test
-    public void update(){
+    public void update() {
         User user = userService.findByName("user");
         Assert.notNull(user, "user not find");
         Merchant merchant = merchantService.findOne(1L);
@@ -102,20 +102,20 @@ public class UserTest {
     }
 
     //@Test
-    public void getData(){
+    public void getData() {
         User user = userService.findOne(1L);
         Assert.notNull(user, "not find");
         logger.info("===============name={},role name ={}", user.getName(), user.getRoles().get(0).getName());
     }
 
     //@Test
-    public void delData(){
+    public void delData() {
         userService.delete(2L);
         //Assert.notNull(orders, "");
     }
 
     @Test
-    public void findAll() throws Exception{
+    public void findAll() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse("2017-01-01 00:00:00");
         UserQo userQo = new UserQo();
@@ -129,7 +129,7 @@ public class UserTest {
 
         Assert.notEmpty(page.getContent(), "list is empty");
         List<User> list = page.getContent();
-        for(User user : list){
+        for (User user : list) {
             logger.info("============user name={},role name={},resource name={},model name={}",
                     user.getName(), user.getRoles().get(0).getName(),
                     user.getRoles().get(0).getResources().get(0).getName(),

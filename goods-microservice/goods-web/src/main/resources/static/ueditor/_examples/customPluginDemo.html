@@ -19,6 +19,7 @@
 <script type="text/plain" id="myEditor">
     <p><img src="http://ueditor.baidu.com/website/images/banner-dl.png" alt=""></p>
     <p>插件描述：选中图片，在其上单击，会改变图片的边框！</p>
+
 </script>
 <script type="text/javascript">
 
@@ -28,26 +29,26 @@
         var me = this;
         //创建一个改变图片边框的命令
         me.commands["addborder"] = {
-            execCommand:function () {
+            execCommand: function () {
                 //获取当前选区
                 var range = me.selection.getRange();
                 //选区没闭合的情况下操作
-                if ( !range.collapsed ) {
+                if (!range.collapsed) {
                     //图片判断
                     var img = range.getClosedNode();
-                    if ( img && img.tagName == "IMG" ) {
+                    if (img && img.tagName == "IMG") {
                         //点击切换图片边框
-                        img.style.border = img.style.borderWidth == "5px"?"1px":"5px solid red";
+                        img.style.border = img.style.borderWidth == "5px" ? "1px" : "5px solid red";
                     }
                 }
             }
         };
         //注册一个触发命令的事件，同学们可以在任意地放绑定触发此命令的事件
-        me.addListener( 'click', function () {
-            me.execCommand( "addborder" );
-        } );
+        me.addListener('click', function () {
+            me.execCommand("addborder");
+        });
     };
-    var editor_a = UE.getEditor('myEditor' );
+    var editor_a = UE.getEditor('myEditor');
 </script>
 
 </body>

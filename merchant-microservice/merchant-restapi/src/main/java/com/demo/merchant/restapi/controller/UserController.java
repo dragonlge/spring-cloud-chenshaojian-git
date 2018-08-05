@@ -31,7 +31,7 @@ public class UserController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> userService.findOne(id))
-                .thenApply(user ->{
+                .thenApply(user -> {
                     return new Gson().toJson(user);
                 });
     }
@@ -39,7 +39,7 @@ public class UserController {
     @RequestMapping("/names/{name}")
     public CompletableFuture<String> findByName(@PathVariable String name) {
         return CompletableFuture.supplyAsync(() -> userService.findByName(name))
-                .thenApply(user ->{
+                .thenApply(user -> {
                     return new Gson().toJson(user);
                 });
     }
@@ -47,7 +47,7 @@ public class UserController {
     @RequestMapping("/list")
     public CompletableFuture<String> findList() {
         return CompletableFuture.supplyAsync(() -> userService.findAll())
-                .thenApply(users ->{
+                .thenApply(users -> {
                     return new Gson().toJson(users);
                 });
     }
@@ -58,16 +58,16 @@ public class UserController {
             try {
                 UserQo userQo = new UserQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     userQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     userQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     userQo.setName(name);
                 }
-                if(CommonUtils.isNotNull(merchantId)){
+                if (CommonUtils.isNotNull(merchantId)) {
                     MerchantQo merchantQo = new MerchantQo();
                     merchantQo.setId(merchantId);
                     userQo.setMerchant(merchantQo);
@@ -88,7 +88,7 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody UserQo userQo) {
         return CompletableFuture.supplyAsync(() -> {
             User user = CopyUtil.copy(userQo, User.class);
@@ -104,7 +104,7 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody UserQo userQo) {
         return CompletableFuture.supplyAsync(() -> {
             User user = CopyUtil.copy(userQo, User.class);
@@ -120,7 +120,7 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             userService.delete(id);

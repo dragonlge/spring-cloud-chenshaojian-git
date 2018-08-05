@@ -12,66 +12,66 @@ import java.util.Map;
 
 @Service
 public class SortsRestService {
-	 @Autowired
-	 private SortsClient sortsClient;
+    @Autowired
+    private SortsClient sortsClient;
 
-	@HystrixCommand(fallbackMethod = "findByIdFallback")
-	public String findById(Long id){
-		return sortsClient.findById(id);
-	}
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
+    public String findById(Long id) {
+        return sortsClient.findById(id);
+    }
 
-	private String findByIdFallback(Long id){
-		SortsQo sortsQo = new SortsQo();
-		return new Gson().toJson(sortsQo);
-	}
+    private String findByIdFallback(Long id) {
+        SortsQo sortsQo = new SortsQo();
+        return new Gson().toJson(sortsQo);
+    }
 
 
-	@HystrixCommand(fallbackMethod = "findPageFallback")
-	public String findPage(Integer index, Integer size, String name){
-		return sortsClient.findPage(index, size, name);
-	}
+    @HystrixCommand(fallbackMethod = "findPageFallback")
+    public String findPage(Integer index, Integer size, String name) {
+        return sortsClient.findPage(index, size, name);
+    }
 
-	private String findPageFallback(Integer index, Integer size, String name){
-		Map<String, Object> page = new HashMap<>();
-		page.put("content", null);
-		page.put("totalPages", 0);
-		page.put("totalelements", 0);
-		return new Gson().toJson(page);
-	}
+    private String findPageFallback(Integer index, Integer size, String name) {
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", null);
+        page.put("totalPages", 0);
+        page.put("totalelements", 0);
+        return new Gson().toJson(page);
+    }
 
-	@HystrixCommand(fallbackMethod = "findListFallback")
-	public String  findList() {
-		return sortsClient.findList();
-	}
+    @HystrixCommand(fallbackMethod = "findListFallback")
+    public String findList() {
+        return sortsClient.findList();
+    }
 
-	private String findListFallback(){
-		return null;
-	}
+    private String findListFallback() {
+        return null;
+    }
 
-	@HystrixCommand(fallbackMethod = "createFallback")
-	public String create(SortsQo sortsQo){
-		return sortsClient.create(sortsQo);
-	}
+    @HystrixCommand(fallbackMethod = "createFallback")
+    public String create(SortsQo sortsQo) {
+        return sortsClient.create(sortsQo);
+    }
 
-	private String createFallback(SortsQo sortsQo) {
-		return "-1";
-	}
+    private String createFallback(SortsQo sortsQo) {
+        return "-1";
+    }
 
-	@HystrixCommand(fallbackMethod = "updateFallback")
-	public String update(SortsQo sortsQo){
-		return sortsClient.update(sortsQo);
-	}
+    @HystrixCommand(fallbackMethod = "updateFallback")
+    public String update(SortsQo sortsQo) {
+        return sortsClient.update(sortsQo);
+    }
 
-	private String updateFallback(SortsQo sortsQo) {
-		return "-1";
-	}
+    private String updateFallback(SortsQo sortsQo) {
+        return "-1";
+    }
 
-	@HystrixCommand(fallbackMethod = "deleteFallback")
-	public String delete(Long id){
-		return sortsClient.delete(id);
-	}
+    @HystrixCommand(fallbackMethod = "deleteFallback")
+    public String delete(Long id) {
+        return sortsClient.delete(id);
+    }
 
-	private String deleteFallback(Long id) {
-		return "-1";
-	}
+    private String deleteFallback(Long id) {
+        return "-1";
+    }
 }

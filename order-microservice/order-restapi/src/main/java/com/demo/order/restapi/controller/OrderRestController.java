@@ -36,7 +36,7 @@ public class OrderRestController {
     private MessageChannel ordersChannel;
 
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> fnidById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             Order order = orderService.findOne(id);
@@ -45,7 +45,7 @@ public class OrderRestController {
     }
 
     //test: local call
-    @RequestMapping(value="/test/{id}")
+    @RequestMapping(value = "/test/{id}")
     public String test(@PathVariable Long id) {
         Order order = orderService.findOne(id);
         return new Gson().toJson(order);
@@ -58,22 +58,22 @@ public class OrderRestController {
             try {
                 OrderQo orderQo = new OrderQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     orderQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     orderQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(userid)){
+                if (CommonUtils.isNotNull(userid)) {
                     orderQo.setUserid(userid);
                 }
-                if(CommonUtils.isNotNull(merchantid)){
+                if (CommonUtils.isNotNull(merchantid)) {
                     orderQo.setMerchantid(merchantid);
                 }
-                if(CommonUtils.isNotNull(status)){
+                if (CommonUtils.isNotNull(status)) {
                     orderQo.setStatus(status);
                 }
-                if(CommonUtils.isNotNull(created)){
+                if (CommonUtils.isNotNull(created)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     orderQo.setCreated(sdf.parse(created));
                 }
@@ -127,7 +127,7 @@ public class OrderRestController {
         });
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             orderService.delete(id);

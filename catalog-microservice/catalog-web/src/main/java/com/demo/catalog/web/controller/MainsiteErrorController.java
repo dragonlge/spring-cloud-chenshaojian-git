@@ -12,8 +12,8 @@ public class MainsiteErrorController implements ErrorController {
 
     private static final String ERROR_PATH = "/error";
 
-    @RequestMapping(value=ERROR_PATH)
-    public String handleError(){
+    @RequestMapping(value = ERROR_PATH)
+    public String handleError() {
         return "403";
     }
 
@@ -23,8 +23,8 @@ public class MainsiteErrorController implements ErrorController {
         return ERROR_PATH;
     }
 
-    @RequestMapping(value="/deny")
-    public String handleDeny(){
+    @RequestMapping(value = "/deny")
+    public String handleDeny() {
         return "deny";
     }
 

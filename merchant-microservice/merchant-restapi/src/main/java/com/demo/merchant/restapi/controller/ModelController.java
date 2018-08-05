@@ -29,7 +29,7 @@ public class ModelController {
     @RequestMapping("/{id}")
     public CompletableFuture<String> findById(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> modelService.findOne(id))
-                .thenApply(resource ->{
+                .thenApply(resource -> {
                     return new Gson().toJson(resource);
                 });
     }
@@ -48,13 +48,13 @@ public class ModelController {
             try {
                 ModelQo modelQo = new ModelQo();
 
-                if(CommonUtils.isNotNull(index)){
+                if (CommonUtils.isNotNull(index)) {
                     modelQo.setPage(index);
                 }
-                if(CommonUtils.isNotNull(size)){
+                if (CommonUtils.isNotNull(size)) {
                     modelQo.setSize(size);
                 }
-                if(CommonUtils.isNotNull(name)){
+                if (CommonUtils.isNotNull(name)) {
                     modelQo.setName(name);
                 }
 
@@ -73,7 +73,7 @@ public class ModelController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody ModelQo modelQo) {
         return CompletableFuture.supplyAsync(() -> {
             Model model = CopyUtil.copy(modelQo, Model.class);
@@ -87,7 +87,7 @@ public class ModelController {
         });
     }
 
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public CompletableFuture<String> update(@RequestBody ModelQo modelQo) {
         return CompletableFuture.supplyAsync(() -> {
             Model model = CopyUtil.copy(modelQo, Model.class);
@@ -101,7 +101,7 @@ public class ModelController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             modelService.delete(id);

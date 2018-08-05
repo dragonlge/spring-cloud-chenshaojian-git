@@ -9,9 +9,9 @@
  * @author zhanyi
  */
 UE.commands['print'] = {
-    execCommand : function(){
+    execCommand: function () {
         this.window.print();
     },
-    notNeedUndo : 1
+    notNeedUndo: 1
 };
 

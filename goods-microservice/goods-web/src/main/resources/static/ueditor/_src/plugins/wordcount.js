@@ -10,17 +10,17 @@
  * To change this template use File | Settings | File Templates.
  */
 
-UE.plugins['wordcount'] = function(){
+UE.plugins['wordcount'] = function () {
     var me = this;
-    me.addListener('contentchange',function(){
+    me.addListener('contentchange', function () {
         me.fireEvent('wordcount')
     });
     var timer;
-    me.addListener('keyup',function(){
+    me.addListener('keyup', function () {
         clearTimeout(timer);
         var me = this;
-        timer = setTimeout(function(){
+        timer = setTimeout(function () {
             me.fireEvent('wordcount')
-        },200)
+        }, 200)
     });
 };

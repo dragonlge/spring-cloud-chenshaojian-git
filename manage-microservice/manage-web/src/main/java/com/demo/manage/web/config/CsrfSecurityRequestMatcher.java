@@ -23,7 +23,7 @@ public class CsrfSecurityRequestMatcher implements RequestMatcher {
             String servletPath = request.getServletPath();
             for (String url : execludeUrls) {
                 if (servletPath.contains(url)) {
-                    log.info("++++"+servletPath);
+                    log.info("++++" + servletPath);
                     return false;
                 }
             }

@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JdbcTokenRepositoryImpl tokenRepository(){
+    public JdbcTokenRepositoryImpl tokenRepository() {
         JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
         jtr.setDataSource(dataSource);
         return jtr;
@@ -72,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public LoginSuccessHandler loginSuccessHandler(){
+    public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
 
@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new CustomSecurityMetadataSource(settings.getUrlroles());
     }
 
-    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher(){
+    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher() {
         CsrfSecurityRequestMatcher csrfSecurityRequestMatcher = new CsrfSecurityRequestMatcher();
         List<String> list = new ArrayList<String>();
         list.add("/rest/");

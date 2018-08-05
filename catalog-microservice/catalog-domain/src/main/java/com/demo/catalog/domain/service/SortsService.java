@@ -26,36 +26,36 @@ public class SortsService {
     @Autowired
     private SortsRepository sortsRepository;
 
-    public Sorts findOne(Long id){
+    public Sorts findOne(Long id) {
         return sortsRepository.findOneById(id);
     }
 
-    public Sorts findByName(String name){
+    public Sorts findByName(String name) {
         return sortsRepository.findByName(name);
     }
 
-    public void save(Sorts sorts){
+    public void save(Sorts sorts) {
         sortsRepository.save(sorts);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         sortsRepository.deleteById(id);
     }
 
 
-    public Page<Sorts> findAll(SortsQo sortsQo){
+    public Page<Sorts> findAll(SortsQo sortsQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
         Pageable pageable = new PageRequest(sortsQo.getPage(), sortsQo.getSize(), sort);
 
-        return sortsRepository.findAll(new Specification<Sorts>(){
+        return sortsRepository.findAll(new Specification<Sorts>() {
             @Override
             public Predicate toPredicate(Root<Sorts> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(sortsQo.getName())){
-                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + sortsQo.getName()+ "%"));
+                if (CommonUtils.isNotNull(sortsQo.getName())) {
+                    predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + sortsQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(sortsQo.getCreated())){
+                if (CommonUtils.isNotNull(sortsQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), sortsQo.getCreated()));
                 }
 
@@ -66,11 +66,11 @@ public class SortsService {
         }, pageable);
     }
 
-    public Iterable<Sorts> findAll(){
+    public Iterable<Sorts> findAll() {
         return sortsRepository.findAll();
     }
 
-    public Sorts findBySubsortsId(Long subid){
+    public Sorts findBySubsortsId(Long subid) {
         return sortsRepository.findBySubsortsId(subid);
     }
 }

@@ -31,7 +31,7 @@ public class GoodsTest {
 
 
     //@Test
-    public void insertData(){
+    public void insertData() {
         Goods goods = new Goods();
         goods.setMerchantid(1L);
         goods.setSortsid(1L);
@@ -42,24 +42,24 @@ public class GoodsTest {
         goods.setContents("商品介绍");
 
         goodsService.save(goods);
-        
+
         Assert.notNull(goods.getId(), "not insert");
     }
 
     //@Test
-    public void getData(){
+    public void getData() {
         Goods goods = goodsService.findOne(1L);
-        logger.info("===============id="+ goods.getId());
+        logger.info("===============id=" + goods.getId());
         Assert.notNull(goods, "get null");
     }
 
     //@Test
-    public void delData(){
+    public void delData() {
         goodsService.delete(2L);
     }
 
     //@Test
-    public void updateData(){
+    public void updateData() {
         Goods goods = goodsService.findOne(1L);
         Assert.notNull(goods, "get null");
         goods.setName("测试商品");
@@ -68,7 +68,7 @@ public class GoodsTest {
 
 
     @Test
-    public void findAll() throws Exception{
+    public void findAll() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = sdf.parse("2017-01-01 00:00:00");
 
@@ -82,7 +82,7 @@ public class GoodsTest {
 
         Assert.notEmpty(list, "list is empty");
 
-        for(Goods goods : list) {
+        for (Goods goods : list) {
             logger.info("===============goods merchantid={}, goods name = {}",
                     goods.getMerchantid(), goods.getName());
         }

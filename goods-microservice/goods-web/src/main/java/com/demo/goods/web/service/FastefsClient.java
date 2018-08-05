@@ -18,36 +18,36 @@ public class FastefsClient {
     @Autowired
     protected FastFileStorageClient storageClient;
 
-    public String uploFile(MultipartFile file){
+    public String uploFile(MultipartFile file) {
         String fileType = FilenameUtils.getExtension(file.getOriginalFilename()).toLowerCase();
         StorePath path = null;
         try {
             path = storageClient.uploadFile(file.getInputStream(), file.getSize(), fileType, null);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        if(path != null) {
+        if (path != null) {
             return path.getFullPath();
         } else {
             return null;
         }
     }
 
-    public String uploFile(InputStream inputStream, Long size, String type){
+    public String uploFile(InputStream inputStream, Long size, String type) {
         StorePath path = null;
         try {
             path = storageClient.uploadFile(inputStream, size, type, null);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(path != null) {
+        if (path != null) {
             return path.getFullPath();
         } else {
             return null;
         }
     }
 
-    public void deleteFile(String fullPath){
+    public void deleteFile(String fullPath) {
         storageClient.deleteFile(fullPath);
     }
 

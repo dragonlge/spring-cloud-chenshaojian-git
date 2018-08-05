@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_role")
-public class Role implements java.io.Serializable{
+public class Role implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

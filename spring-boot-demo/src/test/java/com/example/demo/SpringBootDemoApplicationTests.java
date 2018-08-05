@@ -20,26 +20,26 @@ import java.util.List;
 @SpringBootTest
 @ContextConfiguration(classes = {JpaConfiguration.class, SpringBootDemoApplication.class})
 public class SpringBootDemoApplicationTests {
-	private static Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
-	@Autowired
-	private CountryRepository countryRepository;
+    private static Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
+    @Autowired
+    private CountryRepository countryRepository;
 
-	@Before
-	public void createCountry(){
-		Country country = new Country();
-		country.setCountrycode("86");
-		country.setCountryname("中国");
-		countryRepository.save(country);
-		assert country.getId() > 0 : "create error";
-	}
+    @Before
+    public void createCountry() {
+        Country country = new Country();
+        country.setCountrycode("86");
+        country.setCountryname("中国");
+        countryRepository.save(country);
+        assert country.getId() > 0 : "create error";
+    }
 
-	@Test
-	public void getData() {
-		List<Country> countryList = countryRepository.findAll();
-		assert countryList != null : "get data is null";
-		for(Country country : countryList) {
-			logger.info("==== country name = {}", country.getCountryname());
-		}
-	}
+    @Test
+    public void getData() {
+        List<Country> countryList = countryRepository.findAll();
+        assert countryList != null : "get data is null";
+        for (Country country : countryList) {
+            logger.info("==== country name = {}", country.getCountryname());
+        }
+    }
 
 }

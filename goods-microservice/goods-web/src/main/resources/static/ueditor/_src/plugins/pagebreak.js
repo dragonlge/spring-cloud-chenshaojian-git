@@ -10,33 +10,36 @@ UE.plugins['pagebreak'] = function () {
     var me = this,
         notBreakTags = ['td'];
 
-    function fillNode(node){
-        if(domUtils.isEmptyBlock(node)){
-            var firstChild = node.firstChild,tmpNode;
+    function fillNode(node) {
+        if (domUtils.isEmptyBlock(node)) {
+            var firstChild = node.firstChild, tmpNode;
 
-            while(firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)){
+            while (firstChild && firstChild.nodeType == 1 && domUtils.isEmptyBlock(firstChild)) {
                 tmpNode = firstChild;
                 firstChild = firstChild.firstChild;
             }
             !tmpNode && (tmpNode = node);
-            domUtils.fillNode(me.document,tmpNode);
+            domUtils.fillNode(me.document, tmpNode);
         }
     }
+
     //分页符样式添加
 
-    me.ready(function(){
-        utils.cssRule('pagebreak','.pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}',me.document);
+    me.ready(function () {
+        utils.cssRule('pagebreak', '.pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}', me.document);
     });
-    function isHr(node){
+
+    function isHr(node) {
         return node && node.nodeType == 1 && node.tagName == 'HR' && node.className == 'pagebreak';
     }
+
     me.commands['pagebreak'] = {
-        execCommand:function () {
-            var range = me.selection.getRange(),hr = me.document.createElement('hr');
-            domUtils.setAttributes(hr,{
-                'class' : 'pagebreak',
-                noshade:"noshade",
-                size:"5"
+        execCommand: function () {
+            var range = me.selection.getRange(), hr = me.document.createElement('hr');
+            domUtils.setAttributes(hr, {
+                'class': 'pagebreak',
+                noshade: "noshade",
+                size: "5"
             });
             domUtils.unSelectable(hr);
             //table单独处理
@@ -70,7 +73,7 @@ UE.plugins['pagebreak'] = function () {
 
                         }
                         //table要重写绑定一下拖拽
-                        me.fireEvent('afteradjusttable',me.document);
+                        me.fireEvent('afteradjusttable', me.document);
                 }
 
             } else {
@@ -78,7 +81,7 @@ UE.plugins['pagebreak'] = function () {
                 if (!range.collapsed) {
                     range.deleteContents();
                     var start = range.startContainer;
-                    while ( !domUtils.isBody(start) && domUtils.isBlockElm(start) && domUtils.isEmptyNode(start)) {
+                    while (!domUtils.isBody(start) && domUtils.isBlockElm(start) && domUtils.isEmptyNode(start)) {
                         range.setStartBefore(start).collapse(true);
                         domUtils.remove(start);
                         start = range.startContainer;
@@ -98,22 +101,22 @@ UE.plugins['pagebreak'] = function () {
                 }
                 nextNode = hr.nextSibling;
                 var pre = hr.previousSibling;
-                if(isHr(pre)){
+                if (isHr(pre)) {
                     domUtils.remove(pre);
-                }else{
+                } else {
                     pre && fillNode(pre);
                 }
 
-                if(!nextNode){
+                if (!nextNode) {
                     var p = me.document.createElement('p');
 
                     hr.parentNode.appendChild(p);
-                    domUtils.fillNode(me.document,p);
-                    range.setStart(p,0).collapse(true);
-                }else{
-                    if(isHr(nextNode)){
+                    domUtils.fillNode(me.document, p);
+                    range.setStart(p, 0).collapse(true);
+                } else {
+                    if (isHr(nextNode)) {
                         domUtils.remove(nextNode);
-                    }else{
+                    } else {
                         fillNode(nextNode);
                     }
                     range.setEndAfter(hr).collapse(false);

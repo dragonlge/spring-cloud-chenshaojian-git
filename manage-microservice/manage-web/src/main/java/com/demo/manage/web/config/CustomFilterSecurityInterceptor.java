@@ -22,7 +22,7 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        log.debug("===="+fi.getRequestUrl());
+        log.debug("====" + fi.getRequestUrl());
         invoke(fi);
     }
 
@@ -41,6 +41,11 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         return this.securityMetadataSource;
     }
 
+    public void setSecurityMetadataSource(
+            FilterInvocationSecurityMetadataSource smSource) {
+        this.securityMetadataSource = smSource;
+    }
+
     @Override
     public Class<? extends Object> getSecureObjectClass() {
         return FilterInvocation.class;
@@ -49,11 +54,6 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
         return this.securityMetadataSource;
-    }
-
-    public void setSecurityMetadataSource(
-            FilterInvocationSecurityMetadataSource smSource) {
-        this.securityMetadataSource = smSource;
     }
 
     public void destroy() {

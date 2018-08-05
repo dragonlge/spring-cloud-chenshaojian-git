@@ -5,22 +5,22 @@ var me = editor,
     bkbodyStyle = "",
     bkcolor = "";
 var popup = new UE.ui.Popup({
-    content:new UE.ui.ColorPicker({
-        noColorText:me.getLang("clearColor"),
-        editor:me,
-        onpickcolor:function (t, color) {
+    content: new UE.ui.ColorPicker({
+        noColorText: me.getLang("clearColor"),
+        editor: me,
+        onpickcolor: function (t, color) {
             domUtils.setStyle(cp, "background-color", color);
             bkcolor = color;
             UE.ui.Popup.postHide();
         },
-        onpicknocolor:function (t, color) {
+        onpicknocolor: function (t, color) {
             domUtils.setStyle(cp, "background-color", "transparent");
             bkcolor = "";
             UE.ui.Popup.postHide();
         }
     }),
-    editor:me,
-    onhide:function () {
+    editor: me,
+    onhide: function () {
         setBody();
     }
 });
@@ -48,9 +48,9 @@ var bindClick = function () {
             toggleBody(bodyid);
             if (bodyid == "imgManager") {
                 ajax.request(editor.options.imageManagerUrl, {
-                    timeout:100000,
-                    action:"get",
-                    onsuccess:function (xhr) {
+                    timeout: 100000,
+                    action: "get",
+                    onsuccess: function (xhr) {
                         var tmp = utils.trim(xhr.responseText),
                             imageUrls = !tmp ? [] : tmp.split("ue_separate_ue"),
                             length = imageUrls.length,
@@ -81,7 +81,7 @@ var bindClick = function () {
 
                         }
                     },
-                    onerror:function () {
+                    onerror: function () {
                         $G("imageList").innerHTML = lang.imageLoadError;
                     }
                 });
@@ -97,6 +97,7 @@ var bindClick = function () {
         }
     }
 };
+
 /**
  * 改变o的选中状态
  * @param o
@@ -111,6 +112,7 @@ function changeSelected(o) {
     }
     $G("url").value = o.getAttribute("src")
 }
+
 /**
  * 图片缩放
  * @param img
@@ -134,6 +136,7 @@ function scale(img, max, oWidth, oHeight) {
         }
     }
 }
+
 //切换body
 var toggleBody = function (id) {
     var bodys = ["normal", "imgManager"];
@@ -164,7 +167,7 @@ var getCheckedTab = function () {
 var init = function () {
     bindClick();
     var el = getHead()[0],
-            bodyid = el.getAttribute("tabsrc");
+        bodyid = el.getAttribute("tabsrc");
     toggleHead(el);
     toggleBody(bodyid);
     $G("alignment").style.display = "none";
@@ -181,6 +184,7 @@ var init = function () {
     initSelfPos();
     initAlign();
 };
+
 //初始化自定义位置
 function initSelfPos() {
     var x, y;
@@ -197,6 +201,7 @@ function initSelfPos() {
     $G("x").value = x || 0;
     $G("y").value = y || 0;
 }
+
 //初始化图片地址
 function initImgUrl() {
     var su = domUtils.getComputedStyle(doc.body, "background-image"),
@@ -211,6 +216,7 @@ function initImgUrl() {
     }
     $G("url").value = url;
 }
+
 //初始化定位
 function initAlign() {
     var align = domUtils.getComputedStyle(doc.body, "background-repeat"),
@@ -226,8 +232,8 @@ function initAlign() {
         alignType.value = align;
     }
 }
-    init();
 
+init();
 
 
 //获得选中的类型
@@ -239,6 +245,7 @@ function getCheckIpt() {
         }
     }
 }
+
 var net = function (obj) {
     var align = $G("alignment"),
         url = $G("url"),
@@ -273,6 +280,7 @@ var bindSelfPos = function () {
     domUtils.on(y, ["propertychange", "input", "keydown"], function (evt) {
         bindkeydown(evt, this);
     });
+
     function bindkeydown(evt, obj) {
         evt = evt || event;
         if (evt.keyCode == 38 || evt.keyCode == 40) {
@@ -301,8 +309,8 @@ var setBody = function () {
         bgimg = $G("url").value,
         align = $G("repeatType").value,
         alignObj = {
-            "background-repeat":"no-repeat",
-            "background-position":"center center"
+            "background-repeat": "no-repeat",
+            "background-position": "center center"
         },
         outstr = [];
     if (color)
@@ -329,20 +337,19 @@ var setBody = function () {
         }
     }
     if (getCheckIpt() != "none") {
-        utils.cssRule('body','body{' + outstr.join(";") + '}',doc);
+        utils.cssRule('body', 'body{' + outstr.join(";") + '}', doc);
 
     } else {
 
-        utils.cssRule('body','',doc)
+        utils.cssRule('body', '', doc)
     }
 };
-
 
 
 dialog.onok = function () {
     setBody();
 };
 dialog.oncancel = function () {
-    utils.cssRule('body',bkbodyStyle,doc)
+    utils.cssRule('body', bkbodyStyle, doc)
 };
-bkbodyStyle = utils.cssRule('body',undefined,doc);
+bkbodyStyle = utils.cssRule('body', undefined, doc);

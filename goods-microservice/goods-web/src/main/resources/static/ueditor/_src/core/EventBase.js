@@ -6,7 +6,8 @@
  * @desc UE采用的事件基类，继承此类的对应类将获取addListener,removeListener,fireEvent方法。
  * 在UE中，Editor以及所有ui实例都继承了该类，故可以在对应的ui对象以及editor对象上使用上述方法。
  */
-var EventBase = UE.EventBase = function () {};
+var EventBase = UE.EventBase = function () {
+};
 
 EventBase.prototype = {
     /**
@@ -26,7 +27,7 @@ EventBase.prototype = {
      *         console.log(this.getContent) // this是注册的事件的编辑器实例
      * })
      */
-    addListener:function (types, listener) {
+    addListener: function (types, listener) {
         types = utils.trim(types).split(' ');
         for (var i = 0, ti; ti = types[i++];) {
             getListener(this, ti, true).push(listener);
@@ -40,7 +41,7 @@ EventBase.prototype = {
      * //changeCallback为方法体
      * editor.removeListener("selectionchange",changeCallback);
      */
-    removeListener:function (types, listener) {
+    removeListener: function (types, listener) {
         types = utils.trim(types).split(' ');
         for (var i = 0, ti; ti = types[i++];) {
             utils.removeItem(getListener(this, ti) || [], listener);
@@ -53,7 +54,7 @@ EventBase.prototype = {
      * @example
      * editor.fireEvent("selectionchange");
      */
-    fireEvent:function (types) {
+    fireEvent: function (types) {
         types = utils.trim(types).split(' ');
         for (var i = 0, ti; ti = types[i++];) {
             var listeners = getListener(this, ti),
@@ -61,9 +62,9 @@ EventBase.prototype = {
             if (listeners) {
                 k = listeners.length;
                 while (k--) {
-                    if(!listeners[k])continue;
+                    if (!listeners[k]) continue;
                     t = listeners[k].apply(this, arguments);
-                    if(t === true){
+                    if (t === true) {
                         return t;
                     }
                     if (t !== undefined) {
@@ -78,6 +79,7 @@ EventBase.prototype = {
         return r;
     }
 };
+
 /**
  * 获得对象所拥有监听类型的所有监听器
  * @public
@@ -90,7 +92,7 @@ EventBase.prototype = {
 function getListener(obj, type, force) {
     var allListeners;
     type = type.toLowerCase();
-    return ( ( allListeners = ( obj.__allListeners || force && ( obj.__allListeners = {} ) ) )
-        && ( allListeners[type] || force && ( allListeners[type] = [] ) ) );
+    return ((allListeners = (obj.__allListeners || force && (obj.__allListeners = {})))
+        && (allListeners[type] || force && (allListeners[type] = [])));
 }
 

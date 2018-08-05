@@ -30,32 +30,32 @@ public class KindService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Kind kind){
+    public void save(Kind kind) {
         //删除缓存
-        if(CommonUtils.isNotNull(kind.getId())){
+        if (CommonUtils.isNotNull(kind.getId())) {
             String key = kind.getId().toString();
             cacheComponent.remove(Constant.MERCHANT_CENTER_KIND_ID, key);//删除原有缓存
         }
         kindRepository.save(kind);
         //保存缓存
-        if(CommonUtils.isNotNull(kind.getId())){
+        if (CommonUtils.isNotNull(kind.getId())) {
             String key = kind.getId().toString();
             cacheComponent.put(Constant.MERCHANT_CENTER_KIND_ID, key, kind, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.MERCHANT_CENTER_KIND_ID, id.toString());
 
         kindRepository.deleteById(id);
     }
 
-    public List<Kind> findAll(){
+    public List<Kind> findAll() {
         return kindRepository.findAll();
     }
 
-    public  Kind findOne(Long id){
+    public Kind findOne(Long id) {
         Kind kind = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.MERCHANT_CENTER_KIND_ID, id.toString());
@@ -67,23 +67,23 @@ public class KindService {
         } else {
             kind = (Kind) object;
         }
-        return  kind;
+        return kind;
     }
-    
 
-    public Page<Kind> findAll(KindQo kindQo){
+
+    public Page<Kind> findAll(KindQo kindQo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(kindQo.getPage(), kindQo.getSize(), sort);
+        Pageable pageable = new PageRequest(kindQo.getPage(), kindQo.getSize(), sort);
 
-        return kindRepository.findAll(new Specification<Kind>(){
+        return kindRepository.findAll(new Specification<Kind>() {
             @Override
             public Predicate toPredicate(Root<Kind> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(kindQo.getName())){
+                if (CommonUtils.isNotNull(kindQo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + kindQo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(kindQo.getCreated())){
+                if (CommonUtils.isNotNull(kindQo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), kindQo.getCreated()));
                 }
 
@@ -93,5 +93,5 @@ public class KindService {
             }
         }, pageable);
     }
-    
+
 }

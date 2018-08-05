@@ -35,7 +35,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController{
+public class UserController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
@@ -65,7 +65,7 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> show(ModelMap model, @PathVariable Long id) {
         return userFuture.findById(id).thenApply(json -> {
             UserQo user = new Gson().fromJson(json, UserQo.class);
@@ -74,20 +74,22 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(value="/list")
+    @RequestMapping(value = "/list")
     @ResponseBody
     public CompletableFuture<Page<Map<String, Object>>> findAll(UserQo userQo, Principal user) {//, Principal user
         MerchantQo merchant = super.getMerchantByUserName(user.getName());
         userQo.setMerchant(merchant);
-        return userFuture.findPage(userQo).thenApply( json -> {
+        return userFuture.findPage(userQo).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(userQo.getPage(), userQo.getSize(), null);
             List<UserQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<UserQo>>(){}.getType());
+            if (page != null && page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<UserQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -95,9 +97,10 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<String> create(ModelMap model, UserQo user, HttpServletRequest request){
-        return roleFuture.findList().thenApply( json -> {
-            List<RoleQo> roles = new Gson().fromJson(json, new TypeToken<List<RoleQo>>() {}.getType());
+    public CompletableFuture<String> create(ModelMap model, UserQo user, HttpServletRequest request) {
+        return roleFuture.findList().thenApply(json -> {
+            List<RoleQo> roles = new Gson().fromJson(json, new TypeToken<List<RoleQo>>() {
+            }.getType());
             request.getSession().setAttribute("roles", roles);
             model.addAttribute("roles", roles);
             model.addAttribute("user", user);
@@ -105,7 +108,7 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(UserQo userQo, Principal principal, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
@@ -118,7 +121,7 @@ public class UserController extends BaseController{
 
             String[] rls = request.getParameterValues("rls");
             List<RoleQo> roleQos = (List<RoleQo>) request.getSession().getAttribute("roles");
-            if(rls != null && rls.length > 0) {
+            if (rls != null && rls.length > 0) {
                 for (String rl : rls) {
                     for (RoleQo roleQo : roleQos) {
                         if (roleQo.getId().compareTo(new Long(rl)) == 0) {
@@ -135,14 +138,15 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public CompletableFuture<String> edit(ModelMap model, @PathVariable Long id, HttpServletRequest request){
+    @RequestMapping(value = "/edit/{id}")
+    public CompletableFuture<String> edit(ModelMap model, @PathVariable Long id, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             String json = userService.findById(id);
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
 
             String rolestr = roleService.findList();
-            List<RoleQo> roleQos = new Gson().fromJson(rolestr, new TypeToken<List<RoleQo>>() {}.getType());
+            List<RoleQo> roleQos = new Gson().fromJson(rolestr, new TypeToken<List<RoleQo>>() {
+            }.getType());
             request.getSession().setAttribute("roles", roleQos);
 
             List<Long> rids = new ArrayList<>();
@@ -157,21 +161,21 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(UserQo userQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             String merchantid = request.getParameter("merchantid");
-            if(CommonUtils.isNotNull(merchantid)) {
+            if (CommonUtils.isNotNull(merchantid)) {
                 String json = merchantRestService.findById(new Long(merchantid));
                 MerchantQo merchantQo = new Gson().fromJson(json, MerchantQo.class);
-                if(merchantQo != null)
+                if (merchantQo != null)
                     userQo.setMerchant(merchantQo);
             }
 
             String[] rls = request.getParameterValues("rls");
             List<RoleQo> roleQos = (List<RoleQo>) request.getSession().getAttribute("roles");
-            if(rls != null && rls.length > 0) {
+            if (rls != null && rls.length > 0) {
                 for (String rl : rls) {
                     for (RoleQo roleQo : roleQos) {
                         if (roleQo.getId().compareTo(new Long(rl)) == 0) {
@@ -188,11 +192,11 @@ public class UserController extends BaseController{
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return userFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+        return userFuture.delete(id).thenApply(sid -> {
+            logger.info("删除->ID=" + sid);
             return "1";
         });
     }

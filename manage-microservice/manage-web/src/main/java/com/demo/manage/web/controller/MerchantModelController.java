@@ -56,33 +56,36 @@ public class MerchantModelController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public CompletableFuture<Page<ModelQo>> getList(ModelQo modelQo) {
-        return modelFuture.findPage(modelQo.getPage(), modelQo.getSize(), modelQo.getName()).thenApply( json -> {
+        return modelFuture.findPage(modelQo.getPage(), modelQo.getSize(), modelQo.getName()).thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
+            TreeMap<String, Object> page = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+            }.getType());
 
             Pageable pageable = new PageRequest(modelQo.getPage(), modelQo.getSize(), null);
             List<ModelQo> list = new ArrayList<>();
 
-            if(page.get("content") != null)
-                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<ModelQo>>(){}.getType());
+            if (page.get("content") != null)
+                list = gson.fromJson(page.get("content").toString(), new TypeToken<List<ModelQo>>() {
+                }.getType());
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
         });
     }
 
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public CompletableFuture<String> show(ModelMap model, @PathVariable Long id) {
-        return  modelFuture.findById(id).thenApply(json -> {
+        return modelFuture.findById(id).thenApply(json -> {
             model.addAttribute("model", new Gson().fromJson(json, ModelQo.class));
             return "merchantmodel/show";
         });
     }
 
     @RequestMapping("/new")
-    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request){
-        return  kindFuture.findList().thenApply(json -> {
-            List<KindQo> kindQos = new Gson().fromJson(json, new TypeToken<List<KindQo>>() {}.getType());
+    public CompletableFuture<String> create(ModelMap model, HttpServletRequest request) {
+        return kindFuture.findList().thenApply(json -> {
+            List<KindQo> kindQos = new Gson().fromJson(json, new TypeToken<List<KindQo>>() {
+            }.getType());
             //缓存模块列表为save方法使用
             request.getSession().setAttribute("kinds", kindQos);
             model.addAttribute("kinds", kindQos);
@@ -90,7 +93,7 @@ public class MerchantModelController {
         });
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public CompletableFuture<String> save(ModelQo modelQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
@@ -118,7 +121,8 @@ public class MerchantModelController {
                     ModelQo modelQo = new Gson().fromJson(json, ModelQo.class);
 
                     String kinks = kindRestService.findList();
-                    List<KindQo> kindQoList = new Gson().fromJson(kinks, new TypeToken<List<KindQo>>() {}.getType());
+                    List<KindQo> kindQoList = new Gson().fromJson(kinks, new TypeToken<List<KindQo>>() {
+                    }.getType());
 
                     //缓存模块列表为update方法使用
                     request.getSession().setAttribute("kinds", kindQoList);
@@ -131,7 +135,7 @@ public class MerchantModelController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
     public CompletableFuture<String> update(ModelQo modelQo, HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
@@ -152,11 +156,11 @@ public class MerchantModelController {
         });
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CompletableFuture<String> delete(@PathVariable Long id) {
-        return modelFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+        return modelFuture.delete(id).thenApply(sid -> {
+            logger.info("删除->ID=" + sid);
             return sid;
         });
     }

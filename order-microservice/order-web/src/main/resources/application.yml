@@ -12,7 +12,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
-#    hostname: 192.168.1.98
+    #    hostname: 192.168.1.98
     preferIpAddress: true
 
 
@@ -35,17 +35,17 @@ security:
   ignored: /favicon.ico,/scripts/**,/styles/**,/images/**,/webjars/**
   sessions: ALWAYS
   oauth2:
-      sso:
-        loginPath: /login
-      client:
-        clientId: ssoclient
-        clientSecret: ssosecret
-        accessTokenUri: http://localhost/oauth/token
-        userAuthorizationUri: http://localhost/oauth/authorize
-        clientAuthenticationScheme: form
-      resource:
-        jwt:
-          keyUri: http://localhost/oauth/token_key
+    sso:
+      loginPath: /login
+    client:
+      clientId: ssoclient
+      clientSecret: ssosecret
+      accessTokenUri: http://localhost/oauth/token
+      userAuthorizationUri: http://localhost/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      jwt:
+        keyUri: http://localhost/oauth/token_key
 
 securityconfig:
   logoutsuccssurl: /tosignout
@@ -53,5 +53,5 @@ securityconfig:
   deniedpage: /deny
   #已使用数据库配置
   urlroles: /**/new/** = admin;
-            /**/edit/** = admin,editor;
-            /**/delete/** = admin
+    /**/edit/** = admin,editor;
+    /**/delete/** = admin

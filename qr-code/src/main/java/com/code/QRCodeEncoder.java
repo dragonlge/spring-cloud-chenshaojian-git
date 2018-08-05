@@ -1,19 +1,20 @@
 package com.code;
 /**
  * Copyright (C) 2018 ChenShaojian (mrcsj@tom.com)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import com.swetake.util.Qrcode;
 import jp.sourceforge.qrcode.QRCodeDecoder;
 import jp.sourceforge.qrcode.data.QRCodeImage;
@@ -74,15 +75,15 @@ public class QRCodeEncoder {
                               Integer size, Integer border, Color front, Color back,
                               Integer scale, String logoPath, String animtePath) {
         try {
-            if(isNull(content)) content = "test";
-            if(isNull(imgPath)) imgPath = "c:/test.png";
-            if(isNull(imgType)) imgType = "png";
-            if(isNull(charater)) charater = "UTF-8";
-            if(isNull(size)) size = 4;
-            if(isNull(border)) border = 10;
-            if(isNull(front)) front = Color.BLACK;
-            if(isNull(back)) back = Color.WHITE;
-            if(isNull(scale)) scale = 4;
+            if (isNull(content)) content = "test";
+            if (isNull(imgPath)) imgPath = "c:/test.png";
+            if (isNull(imgType)) imgType = "png";
+            if (isNull(charater)) charater = "UTF-8";
+            if (isNull(size)) size = 4;
+            if (isNull(border)) border = 10;
+            if (isNull(front)) front = Color.BLACK;
+            if (isNull(back)) back = Color.WHITE;
+            if (isNull(scale)) scale = 4;
 
             Qrcode qrcodeHandler = new Qrcode();
             qrcodeHandler.setQrcodeErrorCorrect('M');
@@ -119,18 +120,18 @@ public class QRCodeEncoder {
             bi.flush();
 
             //放入图标
-            if(!isNull(logoPath) && isNull(animtePath)){
+            if (!isNull(logoPath) && isNull(animtePath)) {
                 File inputFile = new File(logoPath);
                 BufferedImage logo = ImageIO.read(inputFile);
                 bi = modifyImagetogeter(logo, bi, scale);
             }
 
-            if(!isNull(logoPath) && !isNull(animtePath)){
+            if (!isNull(logoPath) && !isNull(animtePath)) {
                 //生成动画
                 File inputFile = new File(logoPath);
                 BufferedImage logo = ImageIO.read(inputFile);
                 generateGif(logo, bi, animtePath, scale);
-            }else{
+            } else {
                 // 生成二维码QRCode图片
                 File imgFile = new File(imgPath);
                 ImageIO.write(bi, imgType, imgFile);
@@ -160,15 +161,15 @@ public class QRCodeEncoder {
                               Integer size, Integer border, Color front, Color back,
                               Integer scale, String logoPath, String topText, String downText, Integer dotChange) {
         try {
-            if(isNull(content)) content = "test";
-            if(isNull(imgPath)) imgPath = "c:\test.jpg";
-            if(isNull(imgType)) imgType = "png";
-            if(isNull(charater)) charater = "UTF-8";
-            if(isNull(size)) size = 4;
-            if(isNull(border)) border = 20;
-            if(isNull(front)) front = Color.BLACK;
-            if(isNull(back)) back = Color.WHITE;
-            if(isNull(scale)) scale = 4;
+            if (isNull(content)) content = "test";
+            if (isNull(imgPath)) imgPath = "c:\test.jpg";
+            if (isNull(imgType)) imgType = "png";
+            if (isNull(charater)) charater = "UTF-8";
+            if (isNull(size)) size = 4;
+            if (isNull(border)) border = 20;
+            if (isNull(front)) front = Color.BLACK;
+            if (isNull(back)) back = Color.WHITE;
+            if (isNull(scale)) scale = 4;
 
             Qrcode qrcodeHandler = new Qrcode();
             qrcodeHandler.setQrcodeErrorCorrect('M');
@@ -196,30 +197,30 @@ public class QRCodeEncoder {
             for (int i = 0; i < s.length; i++) {
                 for (int j = 0; j < s.length; j++) {
                     if (s[j][i]) {
-                        if(dotChange != null && dotChange ==2){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        if (dotChange != null && dotChange == 2) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.BLUE);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.GREEN);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.RED);
                             else
                                 g2d.setColor(front);
-                        }else if(dotChange != null && dotChange ==3){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        } else if (dotChange != null && dotChange == 3) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.GREEN);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.RED);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.BLUE);
                             else
                                 g2d.setColor(front);
-                        }else if(dotChange != null){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        } else if (dotChange != null) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.RED);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.BLUE);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.GREEN);
                             else
                                 g2d.setColor(front);
@@ -230,23 +231,23 @@ public class QRCodeEncoder {
             }
 
             //顶边加文本
-            if(!isNull(topText)){
+            if (!isNull(topText)) {
                 //g2d.drawString(topText, border, border/2 + 5);
-                g2d.drawString(topText, (width-topText.length()*12)/2, border/2 + 5);
+                g2d.drawString(topText, (width - topText.length() * 12) / 2, border / 2 + 5);
             }
 
             //底边加文本
-            if(!isNull(downText)){
+            if (!isNull(downText)) {
                 g2d.setFont(new Font("宋体", 0, 12));
                 //g2d.drawString(downText, border, bi.getHeight() - (border/2) + 5);
-                g2d.drawString(downText, (width-downText.length()*6)/2, bi.getHeight() - (border/2) + 5);
+                g2d.drawString(downText, (width - downText.length() * 6) / 2, bi.getHeight() - (border / 2) + 5);
             }
 
             g2d.dispose();
             bi.flush();
 
             //放入图标
-            if(!isNull(logoPath)){
+            if (!isNull(logoPath)) {
                 File inputFile = new File(logoPath);
                 BufferedImage logo = ImageIO.read(inputFile);
                 bi = modifyImagetogeter(logo, bi, scale);
@@ -281,15 +282,15 @@ public class QRCodeEncoder {
                               Integer size, Integer border, Color front, Color back, Integer scale,
                               String logoPath, String topText, String downText, Color dotColor, String backFile) {
         try {
-            if(isNull(content)) content = "test";
-            if(isNull(imgPath)) imgPath = "c:/test.png";
-            if(isNull(imgType)) imgType = "png";
-            if(isNull(charater)) charater = "UTF-8";
-            if(isNull(size)) size = 4;
-            if(isNull(border)) border = size * 2;
-            if(isNull(front)) front = Color.BLACK;
-            if(isNull(back)) back = Color.WHITE;
-            if(isNull(scale)) scale = 5;
+            if (isNull(content)) content = "test";
+            if (isNull(imgPath)) imgPath = "c:/test.png";
+            if (isNull(imgType)) imgType = "png";
+            if (isNull(charater)) charater = "UTF-8";
+            if (isNull(size)) size = 4;
+            if (isNull(border)) border = size * 2;
+            if (isNull(front)) front = Color.BLACK;
+            if (isNull(back)) back = Color.WHITE;
+            if (isNull(scale)) scale = 5;
 
 
             Qrcode qrcodeHandler = new Qrcode();
@@ -316,10 +317,10 @@ public class QRCodeEncoder {
 
             BufferedImage bk = null;
             BufferedImage buf = null;
-            if(!isNull(backFile)){
+            if (!isNull(backFile)) {
                 File bkfile = new File(backFile);
                 bk = ImageIO.read(bkfile);
-                if(bk != null){//按二维码大小缩放背景图
+                if (bk != null) {//按二维码大小缩放背景图
                     buf = new BufferedImage(width, width, BufferedImage.TYPE_INT_RGB);
                     buf.getGraphics().drawImage(bk, 0, 0, width, width, null);
                 }
@@ -332,27 +333,27 @@ public class QRCodeEncoder {
                     if (s[j][i]) {
                         int x = j * lineWidth + border;
                         int y = i * lineWidth + border;
-                        if(buf != null){//使用背景图配置前景色
-                            int[] rgb = new int [3];
+                        if (buf != null) {//使用背景图配置前景色
+                            int[] rgb = new int[3];
                             //取新图的颜色
                             int pixel = buf.getRGB(x, y);
                             rgb[0] = (pixel & 0xff0000) >> 16;
                             rgb[1] = (pixel & 0xff00) >> 8;
                             rgb[2] = (pixel & 0xff);
 
-                            front = new Color(rgb[0],rgb[1],rgb[2]);
+                            front = new Color(rgb[0], rgb[1], rgb[2]);
                         }
 
-                        if(dotColor != null){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        if (dotColor != null) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(dotColor);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(dotColor);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(dotColor);
                             else
                                 g2d.setColor(front);
-                        }else
+                        } else
                             g2d.setColor(front);
 
                         g2d.fillRect(x, y, lineWidth, lineWidth);
@@ -362,23 +363,23 @@ public class QRCodeEncoder {
             }
 
             //顶边加文本
-            if(!isNull(topText)){
+            if (!isNull(topText)) {
                 //g2d.drawString(topText, border, border/2 + 5);
-                g2d.drawString(topText, (width-topText.length()*12)/2, border/2 + 5);
+                g2d.drawString(topText, (width - topText.length() * 12) / 2, border / 2 + 5);
             }
 
             //底边加文本
-            if(!isNull(downText)){
+            if (!isNull(downText)) {
                 g2d.setFont(new Font("宋体", 0, 12));
                 //g2d.drawString(downText, border, bi.getHeight() - (border/2) + 5);
-                g2d.drawString(downText, (width-downText.length()*6)/2, bi.getHeight() - (border/2) + 5);
+                g2d.drawString(downText, (width - downText.length() * 6) / 2, bi.getHeight() - (border / 2) + 5);
             }
 
             g2d.dispose();
             bi.flush();
 
             //放入图标
-            if(!isNull(logoPath)){
+            if (!isNull(logoPath)) {
                 File inputFile = new File(logoPath);
                 BufferedImage logo = ImageIO.read(inputFile);
                 bi = modifyImagetogeter(logo, bi, scale);
@@ -409,18 +410,18 @@ public class QRCodeEncoder {
      * @param rount 圆角选项
      */
     public boolean encoderQRCode(String content, String imgPath, String imgType, String charater,
-                                 Integer size, Color front, Color back,Color dotColor, BufferedImage backFile,
+                                 Integer size, Color front, Color back, Color dotColor, BufferedImage backFile,
                                  String regStr, Integer isCheck, Integer rount) {
         try {
-            if(isNull(content)) content = "test";
-            if(isNull(imgPath)) imgPath = "c:\test.png";
-            if(isNull(imgType)) imgType = "png";
-            if(isNull(charater)) charater = "UTF-8";
-            if(isNull(size)) size = 4;
-            if(isNull(front)) front = Color.BLACK;
-            if(isNull(dotColor)) dotColor = front;
-            if(isNull(back)) back = Color.WHITE;
-            if(isNull(regStr)) regStr = "^http://(\\w*\\.){2,4}(\\w*\\:*\\d*/){1}([a-z]*/){3,4}\\d{1,}$";
+            if (isNull(content)) content = "test";
+            if (isNull(imgPath)) imgPath = "c:\test.png";
+            if (isNull(imgType)) imgType = "png";
+            if (isNull(charater)) charater = "UTF-8";
+            if (isNull(size)) size = 4;
+            if (isNull(front)) front = Color.BLACK;
+            if (isNull(dotColor)) dotColor = front;
+            if (isNull(back)) back = Color.WHITE;
+            if (isNull(regStr)) regStr = "^http://(\\w*\\.){2,4}(\\w*\\:*\\d*/){1}([a-z]*/){3,4}\\d{1,}$";
 
 
             Qrcode qrcodeHandler = new Qrcode();
@@ -448,7 +449,7 @@ public class QRCodeEncoder {
 
             //加入背景图
             BufferedImage buf = null;
-            if(!isNull(backFile)){
+            if (!isNull(backFile)) {
                 buf = new BufferedImage(width, width, BufferedImage.TYPE_INT_RGB);//按二维码大小缩放背景图
                 buf.getGraphics().drawImage(backFile, 0, 0, width, width, null);
 
@@ -461,169 +462,167 @@ public class QRCodeEncoder {
                         int x = j * lineWidth + border;
                         int y = i * lineWidth + border;
 
-                        if(i>=0 && i<=6 && j>=0 && j<=6){//三个定点周边留白
+                        if (i >= 0 && i <= 6 && j >= 0 && j <= 6) {//三个定点周边留白
                             g2d.setComposite(AlphaComposite.SrcOver.derive(0.75f));
                             g2d.setColor(dotColor);
                             g2d.fillRect(x, y, lineWidth, lineWidth);
                             //白底
                             g2d.setColor(Color.WHITE);
                             //左侧
-                            if(j == 0 ){
+                            if (j == 0) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y, lineWidth, lineWidth);
                                 //内
-                                if(i < 5)
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i < 5)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //上侧
-                            if(i == 0 ){
+                            if (i == 0) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(j == 6 )
-                                    g2d.fillRect(x, y-lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (j == 6)
+                                    g2d.fillRect(x, y - lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j >0 && j < 5)
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (j > 0 && j < 5)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //下侧
-                            if(i == 6 ){
+                            if (i == 6) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
-                                if(j == 6 )
-                                    g2d.fillRect(x, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
+                                if (j == 6)
+                                    g2d.fillRect(x, y + lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j > 0 && j < 5 )
-                                    g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
+                                if (j > 0 && j < 5)
+                                    g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
                             }
                             //右侧
-                            if(j == 6 ){
+                            if (j == 6) {
                                 //外
-                                g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(i == 6 ){
-                                    g2d.fillRect(x+lineWidth, y, lineWidth, lineWidth);
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (i == 6) {
+                                    g2d.fillRect(x + lineWidth, y, lineWidth, lineWidth);
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                                 }
                                 //内
-                                if(i > 0 && i < 4)
-                                    g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i > 0 && i < 4)
+                                    g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
-                        }
-                        else if(i>=0 && i<=6 && j>=s.length-7 && j<=s.length-1){
+                        } else if (i >= 0 && i <= 6 && j >= s.length - 7 && j <= s.length - 1) {
                             g2d.setComposite(AlphaComposite.SrcOver.derive(0.75f));
                             g2d.setColor(dotColor);
                             g2d.fillRect(x, y, lineWidth, lineWidth);
                             //白底
                             g2d.setColor(Color.WHITE);
                             //左侧
-                            if(j == s.length-7 ){
+                            if (j == s.length - 7) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y, lineWidth, lineWidth);
 
                                 //内
-                                if(i < 5 )
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i < 5)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //上侧
-                            if(i == 0 ){
+                            if (i == 0) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(j == s.length-1 )
-                                    g2d.fillRect(x, y-lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (j == s.length - 1)
+                                    g2d.fillRect(x, y - lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j > s.length -7 && j < s.length-2 )
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (j > s.length - 7 && j < s.length - 2)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //下侧
-                            if(i == 6 ){
+                            if (i == 6) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
-                                if(j == s.length-1 )
-                                    g2d.fillRect(x, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
+                                if (j == s.length - 1)
+                                    g2d.fillRect(x, y + lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j > s.length -7 && j < s.length-2 )
-                                    g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
+                                if (j > s.length - 7 && j < s.length - 2)
+                                    g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
                             }
                             //右侧
-                            if(j == s.length-1 ){
+                            if (j == s.length - 1) {
                                 //外
-                                g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(i == 6 ){
-                                    g2d.fillRect(x+lineWidth, y, lineWidth, lineWidth);
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (i == 6) {
+                                    g2d.fillRect(x + lineWidth, y, lineWidth, lineWidth);
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                                 }
                                 //内
-                                if(i > 0 && i < 4)
-                                    g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i > 0 && i < 4)
+                                    g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
-                        }
-                        else if(i>=s.length-7 && i<=s.length-1 && j>=0 && j<=6){
+                        } else if (i >= s.length - 7 && i <= s.length - 1 && j >= 0 && j <= 6) {
                             g2d.setComposite(AlphaComposite.SrcOver.derive(0.75f));
                             g2d.setColor(dotColor);
                             g2d.fillRect(x, y, lineWidth, lineWidth);
                             //白底
                             g2d.setColor(Color.WHITE);
                             //左侧
-                            if(j == 0 ){
+                            if (j == 0) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y, lineWidth, lineWidth);
                                 //内
-                                if(i < s.length-2 )
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i < s.length - 2)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //上侧
-                            if(i == s.length-7 ){
+                            if (i == s.length - 7) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(j == 6 )
-                                    g2d.fillRect(x, y-lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (j == 6)
+                                    g2d.fillRect(x, y - lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j > 0 && j < 5 )
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (j > 0 && j < 5)
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                             //下侧
-                            if(i == s.length-1 ){
+                            if (i == s.length - 1) {
                                 //外
-                                g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
-                                if(j == 6 )
-                                    g2d.fillRect(x, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
+                                if (j == 6)
+                                    g2d.fillRect(x, y + lineWidth, lineWidth, lineWidth);
                                 //内
-                                if(j > 0 && j < 5 )
-                                    g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
+                                if (j > 0 && j < 5)
+                                    g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
                             }
                             //右侧
-                            if(j == 6 ){
+                            if (j == 6) {
                                 //外
-                                g2d.fillRect(x+lineWidth, y-lineWidth, lineWidth, lineWidth);
-                                if(i == s.length-1 ){
-                                    g2d.fillRect(x+lineWidth, y, lineWidth, lineWidth);
-                                    g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                g2d.fillRect(x + lineWidth, y - lineWidth, lineWidth, lineWidth);
+                                if (i == s.length - 1) {
+                                    g2d.fillRect(x + lineWidth, y, lineWidth, lineWidth);
+                                    g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth, lineWidth);
                                 }
                                 //内
-                                if(i > s.length-7 && i < s.length-2 )
-                                    g2d.fillRect(x-lineWidth, y+lineWidth, lineWidth, lineWidth);
+                                if (i > s.length - 7 && i < s.length - 2)
+                                    g2d.fillRect(x - lineWidth, y + lineWidth, lineWidth, lineWidth);
                             }
                         }//点阵旁边留白
-                        else{
-                            if(!isNull(rount) && rount == 1){//圆
+                        else {
+                            if (!isNull(rount) && rount == 1) {//圆
                                 g2d.setColor(front);
                                 g2d.setComposite(AlphaComposite.SrcOver.derive(0.8f));
-                                g2d.fillRoundRect(x, y, lineWidth*2/3,lineWidth*2/3, lineWidth*1/3, lineWidth*1/3);
+                                g2d.fillRoundRect(x, y, lineWidth * 2 / 3, lineWidth * 2 / 3, lineWidth * 1 / 3, lineWidth * 1 / 3);
 
                                 //白底
                                 g2d.setColor(Color.WHITE);
-                                g2d.fillRoundRect(x+lineWidth, y, lineWidth*2/3,lineWidth*2/3, lineWidth*1/3, lineWidth*1/3);
-                                g2d.fillRoundRect(x, y+lineWidth, lineWidth*2/3,lineWidth*2/3, lineWidth*1/3, lineWidth*1/3);
-                                g2d.fillRoundRect(x+lineWidth, y+lineWidth, lineWidth*2/3,lineWidth*2/3, lineWidth*1/3, lineWidth*1/3);
-                            }else{
+                                g2d.fillRoundRect(x + lineWidth, y, lineWidth * 2 / 3, lineWidth * 2 / 3, lineWidth * 1 / 3, lineWidth * 1 / 3);
+                                g2d.fillRoundRect(x, y + lineWidth, lineWidth * 2 / 3, lineWidth * 2 / 3, lineWidth * 1 / 3, lineWidth * 1 / 3);
+                                g2d.fillRoundRect(x + lineWidth, y + lineWidth, lineWidth * 2 / 3, lineWidth * 2 / 3, lineWidth * 1 / 3, lineWidth * 1 / 3);
+                            } else {
                                 g2d.setColor(front);
                                 g2d.setComposite(AlphaComposite.SrcOver.derive(0.8f));
-                                g2d.fillRect(x, y, lineWidth*2/3,lineWidth*2/3);
+                                g2d.fillRect(x, y, lineWidth * 2 / 3, lineWidth * 2 / 3);
 
                                 //白底
                                 g2d.setColor(Color.WHITE);
-                                g2d.fillRect(x+lineWidth, y, lineWidth*2/3,lineWidth*2/3);
-                                g2d.fillRect(x, y+lineWidth, lineWidth*2/3,lineWidth*2/3);
-                                g2d.fillRect(x+lineWidth, y+lineWidth, lineWidth*2/3,lineWidth*2/3);
+                                g2d.fillRect(x + lineWidth, y, lineWidth * 2 / 3, lineWidth * 2 / 3);
+                                g2d.fillRect(x, y + lineWidth, lineWidth * 2 / 3, lineWidth * 2 / 3);
+                                g2d.fillRect(x + lineWidth, y + lineWidth, lineWidth * 2 / 3, lineWidth * 2 / 3);
                             }
                         }
                     }
@@ -634,8 +633,8 @@ public class QRCodeEncoder {
             bi.flush();
 
             //检测二维码
-            if(!isNull(isCheck) && isCheck ==1
-                    && !checkCode(bi, regStr)){
+            if (!isNull(isCheck) && isCheck == 1
+                    && !checkCode(bi, regStr)) {
                 return false;
             }
 
@@ -671,16 +670,16 @@ public class QRCodeEncoder {
                               Integer scale, String logoPath, String topText, String downText, Integer dotChange,
                               Integer codeVersion) {
         try {
-            if(isNull(content)) content = "test";
-            if(isNull(imgPath)) imgPath = "c:\test.png";
-            if(isNull(imgType)) imgType = "png";
-            if(isNull(charater)) charater = "UTF-8";
-            if(isNull(size)) size = 4;
-            if(isNull(border)) border = 20;
-            if(isNull(front)) front = Color.BLACK;
-            if(isNull(back)) back = Color.WHITE;
-            if(isNull(scale)) scale = 4;
-            if(isNull(codeVersion)) codeVersion = 3;
+            if (isNull(content)) content = "test";
+            if (isNull(imgPath)) imgPath = "c:\test.png";
+            if (isNull(imgType)) imgType = "png";
+            if (isNull(charater)) charater = "UTF-8";
+            if (isNull(size)) size = 4;
+            if (isNull(border)) border = 20;
+            if (isNull(front)) front = Color.BLACK;
+            if (isNull(back)) back = Color.WHITE;
+            if (isNull(scale)) scale = 4;
+            if (isNull(codeVersion)) codeVersion = 3;
 
             Qrcode qrcodeHandler = new Qrcode();
             qrcodeHandler.setQrcodeErrorCorrect('M');
@@ -708,30 +707,30 @@ public class QRCodeEncoder {
             for (int i = 0; i < s.length; i++) {
                 for (int j = 0; j < s.length; j++) {
                     if (s[j][i]) {
-                        if(dotChange != null && dotChange ==2){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        if (dotChange != null && dotChange == 2) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.BLUE);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.GREEN);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.RED);
                             else
                                 g2d.setColor(front);
-                        }else if(dotChange != null && dotChange ==3){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        } else if (dotChange != null && dotChange == 3) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.GREEN);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.RED);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.BLUE);
                             else
                                 g2d.setColor(front);
-                        }else if(dotChange != null){
-                            if(i>=2 && i<=4 && j>=2 && j<=4)
+                        } else if (dotChange != null) {
+                            if (i >= 2 && i <= 4 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.RED);
-                            else if(i>=2 && i<=4 && j>=s.length-5 && j<=s.length-3)
+                            else if (i >= 2 && i <= 4 && j >= s.length - 5 && j <= s.length - 3)
                                 g2d.setColor(Color.BLUE);
-                            else if(i>=s.length-5 && i<=s.length-3 && j>=2 && j<=4)
+                            else if (i >= s.length - 5 && i <= s.length - 3 && j >= 2 && j <= 4)
                                 g2d.setColor(Color.GREEN);
                             else
                                 g2d.setColor(front);
@@ -742,23 +741,23 @@ public class QRCodeEncoder {
             }
 
             //顶边加文本
-            if(!isNull(topText)){
+            if (!isNull(topText)) {
                 //g2d.drawString(topText, border, border/2 + 5);
-                g2d.drawString(topText, (width-topText.length()*12)/2, border/2 + 5);
+                g2d.drawString(topText, (width - topText.length() * 12) / 2, border / 2 + 5);
             }
 
             //底边加文本
-            if(!isNull(downText)){
+            if (!isNull(downText)) {
                 g2d.setFont(new Font("宋体", 0, 12));
                 //g2d.drawString(downText, border, bi.getHeight() - (border/2) + 5);
-                g2d.drawString(downText, (width-downText.length()*8)/2, bi.getHeight() - (border/2) + 5);
+                g2d.drawString(downText, (width - downText.length() * 8) / 2, bi.getHeight() - (border / 2) + 5);
             }
 
             g2d.dispose();
             bi.flush();
 
             //放入图标
-            if(!isNull(logoPath)){
+            if (!isNull(logoPath)) {
                 File inputFile = new File(logoPath);
                 BufferedImage logo = ImageIO.read(inputFile);
                 bi = modifyImagetogeter(logo, bi, scale);
@@ -788,7 +787,7 @@ public class QRCodeEncoder {
 
             Graphics2D g = buf.createGraphics();
             g.drawImage(code, 0, 0, code.getWidth(), code.getHeight(), null);
-            g.drawImage(logo, (code.getWidth()-w)/2,(code.getHeight()-h)/2, w, h, null);
+            g.drawImage(logo, (code.getWidth() - w) / 2, (code.getHeight() - h) / 2, w, h, null);
             g.dispose();
             buf.flush();
         } catch (Exception e) {
@@ -806,11 +805,11 @@ public class QRCodeEncoder {
      * @param animtePath
      * @param scale
      */
-    public void generateGif(BufferedImage logo, BufferedImage code, String animtePath, Integer scale){
-        try{
+    public void generateGif(BufferedImage logo, BufferedImage code, String animtePath, Integer scale) {
+        try {
             BufferedImage src0 = modifyImagetogeter(logo, code, scale);
-            BufferedImage src1 = modifyImagetogeter(logo, code, scale/2);
-            BufferedImage src2 = modifyImagetogeter(logo, code, scale/4);
+            BufferedImage src1 = modifyImagetogeter(logo, code, scale / 2);
+            BufferedImage src2 = modifyImagetogeter(logo, code, scale / 4);
             AnimatedGifEncoder e = new AnimatedGifEncoder();
             e.setRepeat(0);
             e.start(animtePath);
@@ -822,7 +821,7 @@ public class QRCodeEncoder {
             e.addFrame(src2);
             e.finish();
 
-        }catch(Exception er){
+        } catch (Exception er) {
             er.printStackTrace();
         }
     }
@@ -834,15 +833,15 @@ public class QRCodeEncoder {
     public boolean isNull(Object value) {
         if (value == null) {
             return true;
-        } else if(value instanceof String){
+        } else if (value instanceof String) {
             return ((String) value).trim().replaceAll("\\s", "").equals("");
-        }else if(value instanceof Collection) {
+        } else if (value instanceof Collection) {
             return ((Collection) value).isEmpty();
-        } else if(value.getClass().isArray()) {
+        } else if (value.getClass().isArray()) {
             return Array.getLength(value) == 0;
-        } else if(value instanceof Map) {
+        } else if (value instanceof Map) {
             return ((Map) value).isEmpty();
-        }else {
+        } else {
             return false;
         }
 
@@ -855,21 +854,21 @@ public class QRCodeEncoder {
      * @param regStr
      * @return
      */
-    public boolean checkCode(BufferedImage bi, String regStr){
-        if(isNull(regStr)) regStr = "^http://(\\w*\\.){2,4}(\\w*\\:*\\d*/){1}([a-z]*/){3,4}\\d{1,}$";
+    public boolean checkCode(BufferedImage bi, String regStr) {
+        if (isNull(regStr)) regStr = "^http://(\\w*\\.){2,4}(\\w*\\:*\\d*/){1}([a-z]*/){3,4}\\d{1,}$";
 
-        try{
+        try {
             //File inputFile = new File(codeFile);
             //BufferedImage bi = ImageIO.read(inputFile);
             QRCodeDecoder decoder = new QRCodeDecoder();
             String decodedData = new String(decoder.decode(new J2SEImage(bi)));
             //System.out.println(decodedData);
 
-            if(isNull(decodedData))
+            if (isNull(decodedData))
                 return false;
-            else if(decodedData.length() > 0 && !Pattern.matches(regStr,decodedData))
+            else if (decodedData.length() > 0 && !Pattern.matches(regStr, decodedData))
                 return false;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -881,13 +880,13 @@ public class QRCodeEncoder {
      * @param bi
      * @return
      */
-    public String deCode(BufferedImage bi){
+    public String deCode(BufferedImage bi) {
         String decodedData = null;
-        try{
+        try {
             QRCodeDecoder decoder = new QRCodeDecoder();
             decodedData = new String(decoder.decode(new J2SEImage(bi)));
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return decodedData;
@@ -914,7 +913,6 @@ public class QRCodeEncoder {
             return bufImg.getHeight();
 
         }
-
 
 
         public int getPixel(int x, int y) {

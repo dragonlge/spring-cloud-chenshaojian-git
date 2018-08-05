@@ -31,31 +31,31 @@ public class DepartmentService {
     @Autowired
     private CacheComponent cacheComponent;
 
-    public void save(Department department){
+    public void save(Department department) {
         //删除缓存
-        if(!StringUtils.isEmpty(department.getId())){
+        if (!StringUtils.isEmpty(department.getId())) {
             String key = department.getId().toString();
             cacheComponent.remove(Constant.BOSS_BACKEND_DEPARTMENT_ID, key);//删除原有缓存
         }
         departmentRepository.save(department);
         //保存缓存
-        if(!StringUtils.isEmpty(department.getId())){
+        if (!StringUtils.isEmpty(department.getId())) {
             String key = department.getId().toString();
             cacheComponent.put(Constant.BOSS_BACKEND_DEPARTMENT_ID, key, department, 12);//增加缓存，保存12秒
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         //删除缓存
         cacheComponent.remove(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString());
         departmentRepository.deleteById(id);
     }
 
-    public List<Department> findAll(){
+    public List<Department> findAll() {
         return departmentRepository.findAll();
     }
 
-    public Department findOne(Long id){
+    public Department findOne(Long id) {
         Department department = null;
         //使用缓存
         Object object = cacheComponent.get(Constant.BOSS_BACKEND_DEPARTMENT_ID, id.toString());
@@ -66,22 +66,22 @@ public class DepartmentService {
         } else {
             department = (Department) object;
         }
-        return  department;
+        return department;
     }
 
-    public Page<Department> findAll(DepartmentVo departmentVo){
+    public Page<Department> findAll(DepartmentVo departmentVo) {
         Sort sort = new Sort(Sort.Direction.DESC, "created");
-        Pageable pageable  = new PageRequest(departmentVo.getPage(), departmentVo.getSize(), sort);
+        Pageable pageable = new PageRequest(departmentVo.getPage(), departmentVo.getSize(), sort);
 
-        return departmentRepository.findAll(new Specification<Department>(){
+        return departmentRepository.findAll(new Specification<Department>() {
             @Override
             public Predicate toPredicate(Root<Department> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-                if(CommonUtils.isNotNull(departmentVo.getName())){
+                if (CommonUtils.isNotNull(departmentVo.getName())) {
                     predicatesList.add(criteriaBuilder.like(root.get("name"), "%" + departmentVo.getName() + "%"));
                 }
-                if(CommonUtils.isNotNull(departmentVo.getCreated())){
+                if (CommonUtils.isNotNull(departmentVo.getCreated())) {
                     predicatesList.add(criteriaBuilder.greaterThan(root.get("created"), departmentVo.getCreated()));
                 }
 
@@ -91,5 +91,5 @@ public class DepartmentService {
             }
         }, pageable);
     }
-    
+
 }

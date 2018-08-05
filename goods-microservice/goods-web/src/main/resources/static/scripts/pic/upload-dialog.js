@@ -1,5 +1,5 @@
 $(function () {
-    $("#uploadBigpic").on('click',picUp);
+    $("#uploadBigpic").on('click', picUp);
 });
 
 function picUp() {
@@ -58,7 +58,7 @@ function setImgUrl(obj) {
     }
 }
 
-function delImaConfirm(obj){
+function delImaConfirm(obj) {
     var pathinfo = obj.pathInfo;
     if (pathinfo) {
         if (confirm('您确定删除所选图片吗？')) {
@@ -74,8 +74,8 @@ function delImaConfirm(obj){
                         alert(data);
                     }
                 },
-                error:function(data){
-                    $.each(data,function(v){
+                error: function (data) {
+                    $.each(data, function (v) {
                         alert(v);
                     });
                 }

@@ -1,4 +1,4 @@
-(function (){
+(function () {
     var browser = baidu.editor.browser,
         domUtils = baidu.editor.dom.domUtils;
 
@@ -8,22 +8,22 @@
     var uidCount = 0;
 
     var uiUtils = baidu.editor.ui.uiUtils = {
-        uid: function (obj){
-            return (obj ? obj[uidMagic] || (obj[uidMagic] = ++ uidCount) : ++ uidCount);
+        uid: function (obj) {
+            return (obj ? obj[uidMagic] || (obj[uidMagic] = ++uidCount) : ++uidCount);
         },
-        hook: function ( fn, callback ) {
+        hook: function (fn, callback) {
             var dg;
             if (fn && fn._callbacks) {
                 dg = fn;
             } else {
-                dg = function (){
+                dg = function () {
                     var q;
                     if (fn) {
                         q = fn.apply(this, arguments);
                     }
                     var callbacks = dg._callbacks;
                     var k = callbacks.length;
-                    while (k --) {
+                    while (k--) {
                         var r = callbacks[k].apply(this, arguments);
                         if (q === undefined) {
                             q = r;
@@ -36,24 +36,24 @@
             dg._callbacks.push(callback);
             return dg;
         },
-        createElementByHtml: function (html){
+        createElementByHtml: function (html) {
             var el = document.createElement('div');
             el.innerHTML = html;
             el = el.firstChild;
             el.parentNode.removeChild(el);
             return el;
         },
-        getViewportElement: function (){
+        getViewportElement: function () {
             return (browser.ie && browser.quirks) ?
                 document.body : document.documentElement;
         },
-        getClientRect: function (element){
+        getClientRect: function (element) {
             var bcr;
             //trace  IE6下在控制编辑器显隐时可能会报错，catch一下
-            try{
+            try {
                 bcr = element.getBoundingClientRect();
-            }catch(e){
-                bcr={left:0,top:0,height:0,width:0}
+            } catch (e) {
+                bcr = {left: 0, top: 0, height: 0, width: 0}
             }
             var rect = {
                 left: Math.round(bcr.left),
@@ -63,7 +63,7 @@
             };
             var doc;
             while ((doc = element.ownerDocument) !== document &&
-                (element = domUtils.getWindow(doc).frameElement)) {
+            (element = domUtils.getWindow(doc).frameElement)) {
                 bcr = element.getBoundingClientRect();
                 rect.left += bcr.left;
                 rect.top += bcr.top;
@@ -72,10 +72,10 @@
             rect.right = rect.left + rect.width;
             return rect;
         },
-        getViewportRect: function (){
+        getViewportRect: function () {
             var viewportEl = uiUtils.getViewportElement();
             var width = (window.innerWidth || viewportEl.clientWidth) | 0;
-            var height = (window.innerHeight ||viewportEl.clientHeight) | 0;
+            var height = (window.innerHeight || viewportEl.clientHeight) | 0;
             return {
                 left: 0,
                 top: 0,
@@ -85,7 +85,7 @@
                 right: width
             };
         },
-        setViewportOffset: function (element, offset){
+        setViewportOffset: function (element, offset) {
             var rect;
             var fixedLayer = uiUtils.getFixedLayer();
             if (element.parentNode === fixedLayer) {
@@ -95,7 +95,7 @@
                 domUtils.setViewportOffset(element, offset);
             }
         },
-        getEventOffset: function (evt){
+        getEventOffset: function (evt) {
             var el = evt.target || evt.srcElement;
             var rect = uiUtils.getClientRect(el);
             var offset = uiUtils.getViewportOffsetByEvent(evt);
@@ -104,7 +104,7 @@
                 top: offset.top - rect.top
             };
         },
-        getViewportOffsetByEvent: function (evt){
+        getViewportOffsetByEvent: function (evt) {
             var el = evt.target || evt.srcElement;
             var frameEl = domUtils.getWindow(el).frameElement;
             var offset = {
@@ -118,47 +118,48 @@
             }
             return offset;
         },
-        setGlobal: function (id, obj){
+        setGlobal: function (id, obj) {
             root[id] = obj;
-            return magic + '["' + id  + '"]';
+            return magic + '["' + id + '"]';
         },
-        unsetGlobal: function (id){
+        unsetGlobal: function (id) {
             delete root[id];
         },
-        copyAttributes: function (tgt, src){
+        copyAttributes: function (tgt, src) {
             var attributes = src.attributes;
             var k = attributes.length;
-            while (k --) {
+            while (k--) {
                 var attrNode = attributes[k];
-                if ( attrNode.nodeName != 'style' && attrNode.nodeName != 'class' && (!browser.ie || attrNode.specified) ) {
+                if (attrNode.nodeName != 'style' && attrNode.nodeName != 'class' && (!browser.ie || attrNode.specified)) {
                     tgt.setAttribute(attrNode.nodeName, attrNode.nodeValue);
                 }
             }
             if (src.className) {
-                domUtils.addClass(tgt,src.className);
+                domUtils.addClass(tgt, src.className);
             }
             if (src.style.cssText) {
                 tgt.style.cssText += ';' + src.style.cssText;
             }
         },
-        removeStyle: function (el, styleName){
+        removeStyle: function (el, styleName) {
             if (el.style.removeProperty) {
                 el.style.removeProperty(styleName);
             } else if (el.style.removeAttribute) {
                 el.style.removeAttribute(styleName);
             } else throw '';
         },
-        contains: function (elA, elB){
+        contains: function (elA, elB) {
             return elA && elB && (elA === elB ? false : (
                 elA.contains ? elA.contains(elB) :
                     elA.compareDocumentPosition(elB) & 16
-                ));
+            ));
         },
-        startDrag: function (evt, callbacks,doc){
+        startDrag: function (evt, callbacks, doc) {
             var doc = doc || document;
             var startX = evt.clientX;
             var startY = evt.clientY;
-            function handleMouseMove(evt){
+
+            function handleMouseMove(evt) {
                 var x = evt.clientX - startX;
                 var y = evt.clientY - startY;
                 callbacks.ondragmove(x, y);
@@ -168,13 +169,15 @@
                     evt.cancelBubble = true;
                 }
             }
+
             if (doc.addEventListener) {
-                function handleMouseUp(evt){
+                function handleMouseUp(evt) {
                     doc.removeEventListener('mousemove', handleMouseMove, true);
                     doc.removeEventListener('mouseup', handleMouseMove, true);
                     window.removeEventListener('mouseup', handleMouseUp, true);
                     callbacks.ondragstop();
                 }
+
                 doc.addEventListener('mousemove', handleMouseMove, true);
                 doc.addEventListener('mouseup', handleMouseUp, true);
                 window.addEventListener('mouseup', handleMouseUp, true);
@@ -183,13 +186,15 @@
             } else {
                 var elm = evt.srcElement;
                 elm.setCapture();
-                function releaseCaptrue(){
+
+                function releaseCaptrue() {
                     elm.releaseCapture();
                     elm.detachEvent('onmousemove', handleMouseMove);
                     elm.detachEvent('onmouseup', releaseCaptrue);
                     elm.detachEvent('onlosecaptrue', releaseCaptrue);
                     callbacks.ondragstop();
                 }
+
                 elm.attachEvent('onmousemove', handleMouseMove);
                 elm.attachEvent('onmouseup', releaseCaptrue);
                 elm.attachEvent('onlosecaptrue', releaseCaptrue);
@@ -197,7 +202,7 @@
             }
             callbacks.ondragstart();
         },
-        getFixedLayer: function (){
+        getFixedLayer: function () {
             var layer = document.getElementById('edui_fixedlayer');
             if (layer == null) {
                 layer = document.createElement('div');
@@ -217,11 +222,11 @@
             }
             return layer;
         },
-        makeUnselectable: function (element){
+        makeUnselectable: function (element) {
             if (browser.opera || (browser.ie && browser.version < 9)) {
                 element.unselectable = 'on';
                 if (element.hasChildNodes()) {
-                    for (var i=0; i<element.childNodes.length; i++) {
+                    for (var i = 0; i < element.childNodes.length; i++) {
                         if (element.childNodes[i].nodeType == 1) {
                             uiUtils.makeUnselectable(element.childNodes[i]);
                         }
@@ -238,7 +243,8 @@
             }
         }
     };
-    function updateFixedOffset(){
+
+    function updateFixedOffset() {
         var layer = document.getElementById('edui_fixedlayer');
         uiUtils.setViewportOffset(layer, {
             left: 0,
@@ -250,7 +256,8 @@
         //#trace: 1354
 //        setTimeout(updateFixedOffset);
     }
-    function bindFixedLayer(adjOffset){
+
+    function bindFixedLayer(adjOffset) {
         domUtils.on(window, 'scroll', updateFixedOffset);
         domUtils.on(window, 'resize', baidu.editor.utils.defer(updateFixedOffset, 0, true));
     }

@@ -32,7 +32,7 @@ public class BbServiceTest {
     private DepartmentService departmentService;
 
     @Test
-    public void insertData(){
+    public void insertData() {
         Part part = new Part();
         part.setName("admins");
 
@@ -60,9 +60,9 @@ public class BbServiceTest {
     }
 
     //@Test
-    public void getData(){
+    public void getData() {
         Operators operators = operatorService.findByName("admin");
-        assert operators !=null : "not find";
+        assert operators != null : "not find";
         log.info("=================operator name={}, part name={}, department name={}",
                 operators.getName(), operators.getParts().get(0).getName(), operators.getDepartment().getName());
     }

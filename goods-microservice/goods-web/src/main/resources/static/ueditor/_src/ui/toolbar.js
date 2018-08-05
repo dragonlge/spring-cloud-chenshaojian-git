@@ -1,37 +1,37 @@
-(function (){
+(function () {
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
         UIBase = baidu.editor.ui.UIBase,
-        Toolbar = baidu.editor.ui.Toolbar = function (options){
+        Toolbar = baidu.editor.ui.Toolbar = function (options) {
             this.initOptions(options);
             this.initToolbar();
         };
     Toolbar.prototype = {
         items: null,
-        initToolbar: function (){
+        initToolbar: function () {
             this.items = this.items || [];
             this.initUIBase();
         },
-        add: function (item){
+        add: function (item) {
             this.items.push(item);
         },
-        getHtmlTpl: function (){
+        getHtmlTpl: function () {
             var buff = [];
-            for (var i=0; i<this.items.length; i++) {
+            for (var i = 0; i < this.items.length; i++) {
                 buff[i] = this.items[i].renderHtml();
             }
             return '<div id="##" class="edui-toolbar %%" onselectstart="return false;" onmousedown="return $$._onMouseDown(event, this);">' +
                 buff.join('') +
                 '</div>'
         },
-        postRender: function (){
+        postRender: function () {
             var box = this.getDom();
-            for (var i=0; i<this.items.length; i++) {
+            for (var i = 0; i < this.items.length; i++) {
                 this.items[i].postRender();
             }
             uiUtils.makeUnselectable(box);
         },
-        _onMouseDown: function (){
+        _onMouseDown: function () {
             return false;
         }
     };

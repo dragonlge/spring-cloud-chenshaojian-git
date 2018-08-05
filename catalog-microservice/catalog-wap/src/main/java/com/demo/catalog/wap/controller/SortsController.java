@@ -29,26 +29,27 @@ public class SortsController {
     private DiscoveryClient discoveryClient;
 
 
-    @RequestMapping(value="/index")
+    @RequestMapping(value = "/index")
     public CompletableFuture<ModelAndView> findAll() {
         return sortsFuture.findList().thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
-            List<SortsQo> sortses = gson.fromJson(json, new TypeToken<List<SortsQo>>(){}.getType());
+            List<SortsQo> sortses = gson.fromJson(json, new TypeToken<List<SortsQo>>() {
+            }.getType());
             log.info("sorts list json={}", json);
             return new ModelAndView("sorts/index", "sortses", sortses);
         });
     }
 
-    @RequestMapping(value="/service/{name}")
+    @RequestMapping(value = "/service/{name}")
     public String getService(@PathVariable String name) {
         List<ServiceInstance> list = discoveryClient.getInstances(name);
         String serviceUri = "./";
-        if(list != null && list.size() > 0){
-            if(list.size() > 1) {
+        if (list != null && list.size() > 0) {
+            if (list.size() > 1) {
                 Random random = new Random();
                 ServiceInstance service = list.get(random.nextInt(list.size() - 1));
                 serviceUri = service.getUri().toString();
-            }else {
+            } else {
                 ServiceInstance service = list.get(0);
                 serviceUri = service.getUri().toString();
             }

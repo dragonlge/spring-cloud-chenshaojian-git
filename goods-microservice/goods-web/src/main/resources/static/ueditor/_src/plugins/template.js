@@ -7,7 +7,7 @@
 ///commandsDialog  dialogs\template
 UE.plugins['template'] = function () {
     UE.commands['template'] = {
-        execCommand:function (cmd, obj) {
+        execCommand: function (cmd, obj) {
             obj.html && this.execCommand("inserthtml", obj.html);
         }
     };

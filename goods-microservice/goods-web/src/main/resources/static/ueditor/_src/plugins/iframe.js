@@ -5,13 +5,14 @@
 ///commandsTitle  插入Iframe
 ///commandsDialog  dialogs\insertframe
 
-UE.plugins['insertframe'] = function() {
-   var me =this;
-    function deleteIframe(){
+UE.plugins['insertframe'] = function () {
+    var me = this;
+
+    function deleteIframe() {
         me._iframe && delete me._iframe;
     }
 
-    me.addListener("selectionchange",function(){
+    me.addListener("selectionchange", function () {
         deleteIframe();
     });
 

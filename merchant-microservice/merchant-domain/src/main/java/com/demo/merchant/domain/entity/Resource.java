@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_resource")
-public class Resource implements java.io.Serializable{
+public class Resource implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

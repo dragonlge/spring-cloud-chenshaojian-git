@@ -46,7 +46,7 @@ spring:
   jpa:
     database: MYSQL
     show-sql: false
-  ## Hibernate ddl auto (validate|create|create-drop|update)
+    ## Hibernate ddl auto (validate|create|create-drop|update)
     hibernate:
       ddl-auto: none
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
