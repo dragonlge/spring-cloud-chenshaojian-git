@@ -5,8 +5,7 @@ import com.demo.goods.client.util.TreeMapConvert;
 import com.demo.goods.object.GoodsQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,14 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/goods")
+@Slf4j
 public class GoodsController {
-    private static Logger logger = LoggerFactory.getLogger(GoodsController.class);
-
     @Autowired
     private GoodsFuture goodsFuture;
     @Autowired
@@ -54,15 +56,16 @@ public class GoodsController {
     @RequestMapping(value = "/list")
     public CompletableFuture<Page<Map<String, Object>>> findAll(GoodsQo goodsQo) {
         return goodsFuture.findPage(goodsQo).thenApply(json -> {
-            logger.info("goods list = {}", json);
+            log.info("goods list = {}", json);
             Gson gson = TreeMapConvert.getGson();
             TreeMap<String,Object> page = gson.fromJson(json, new TypeToken< TreeMap<String,Object>>(){}.getType());
 
             Pageable pageable = new PageRequest(goodsQo.getPage(), goodsQo.getSize(), null);
             List<GoodsQo> list = new ArrayList<>();
 
-            if(page != null && page.get("content") != null)
+            if(page != null && page.get("content") != null) {
                 list = gson.fromJson(page.get("content").toString(), new TypeToken<List<GoodsQo>>(){}.getType());
+            }
             String count = page.get("totalelements").toString();
 
             return new PageImpl(list, pageable, new Long(count));
@@ -83,7 +86,7 @@ public class GoodsController {
                 serviceUri = service.getUri().toString();
             }
         }
-        logger.info("serviceUri={}", serviceUri);
+        log.info("serviceUri={}", serviceUri);
         return serviceUri;
     }
 

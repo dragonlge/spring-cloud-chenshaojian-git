@@ -29,7 +29,7 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("/picture")
 @Slf4j
-public class PictureController {
+public class PictureRestController {
     @Autowired
     private PictureService pictureService;
 

@@ -31,7 +31,7 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("/goods")
 @Slf4j
-public class GoodsController {
+public class GoodsRestController {
     @Autowired
     private GoodsService goodsService;
 
