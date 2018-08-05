@@ -1,15 +1,13 @@
 package com.demo.catalog.domain.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class CopyUtil {
-
-    private static Logger logger = LoggerFactory.getLogger(CopyUtil.class);
 
     /**
      * 复制对象
@@ -29,7 +27,7 @@ public class CopyUtil {
             BeanUtils.copyProperties(src, t);
             return t;
         } catch (Exception e) {
-            logger.error("复制文件出错", e);
+            log.error("复制文件出错", e);
         }
         return t;
     }

@@ -8,12 +8,15 @@ import com.demo.catalog.domain.service.SubsortsService;
 import com.demo.catalog.domain.util.CommonUtils;
 import com.demo.catalog.object.SubsortsQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -24,9 +27,8 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/subsorts")
+@Slf4j
 public class SubsortsController {
-    private static Logger logger = LoggerFactory.getLogger(SubsortsController.class);
-
     @Autowired
     private SubsortsService subsortsService;
     @Autowired
@@ -100,7 +102,7 @@ public class SubsortsController {
             subsorts.setCreated(new Date());
 
             subsortsService.save(subsorts);
-            logger.info("新增->ID=" + subsorts.getId());
+            log.info("新增->ID=" + subsorts.getId());
             return subsorts.getId().toString();
         });
     }
@@ -112,7 +114,7 @@ public class SubsortsController {
             BeanUtils.copyProperties(subsortsQo, subsorts);
 
             subsortsService.save(subsorts);
-            logger.info("修改->ID=" + subsorts.getId());
+            log.info("修改->ID=" + subsorts.getId());
             return subsorts.getId().toString();
         });
     }
@@ -132,7 +134,7 @@ public class SubsortsController {
                 }
             }
             subsortsService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return id.toString();
         });
     }

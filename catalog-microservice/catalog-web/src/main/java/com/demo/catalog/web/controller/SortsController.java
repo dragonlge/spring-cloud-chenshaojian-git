@@ -10,8 +10,7 @@ import com.demo.catalog.object.SortsQo;
 import com.demo.catalog.object.SubsortsQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -33,9 +32,8 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/sorts")
+@Slf4j
 public class SortsController {
-    private static Logger logger = LoggerFactory.getLogger(SortsController.class);
-
     @Autowired
     private SortsFuture sortsFuture;
     @Autowired
@@ -104,7 +102,7 @@ public class SortsController {
             }
 
             String sid = sortsService.create(sortsQo);
-            logger.info("新增->ID=" + sid);
+            log.info("新增->ID=" + sid);
             return sid;
         });
     }
@@ -146,7 +144,7 @@ public class SortsController {
             }
 
             String sid = sortsService.update(sortsQo);
-            logger.info("修改->ID=" + sid);
+            log.info("修改->ID=" + sid);
             return sid;
         });
     }
@@ -154,7 +152,7 @@ public class SortsController {
     @RequestMapping(value="/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return sortsFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+            log.info("删除->ID="+sid);
             return sid;
         });
     }

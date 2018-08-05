@@ -5,8 +5,7 @@ import com.demo.catalog.client.util.TreeMapConvert;
 import com.demo.catalog.object.SortsQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,9 +20,8 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/sorts")
+@Slf4j
 public class SortsController {
-    private static Logger logger = LoggerFactory.getLogger(SortsController.class);
-
     @Autowired
     private SortsFuture sortsFuture;
 
@@ -36,7 +34,7 @@ public class SortsController {
         return sortsFuture.findList().thenApply(json -> {
             Gson gson = TreeMapConvert.getGson();
             List<SortsQo> sortses = gson.fromJson(json, new TypeToken<List<SortsQo>>(){}.getType());
-            logger.info("sorts list json={}", json);
+            log.info("sorts list json={}", json);
             return new ModelAndView("sorts/index", "sortses", sortses);
         });
     }
@@ -55,7 +53,7 @@ public class SortsController {
                 serviceUri = service.getUri().toString();
             }
         }
-        logger.info("serviceUri={}", serviceUri);
+        log.info("serviceUri={}", serviceUri);
         return serviceUri;
     }
 }

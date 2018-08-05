@@ -1,4 +1,4 @@
-package com.demo.goods.client.service;
+package com.demo.goods.client.feign;
 
 
 import com.demo.goods.object.PictureQo;

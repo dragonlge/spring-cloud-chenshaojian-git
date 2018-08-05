@@ -15,7 +15,6 @@ encrypt:
 # datasource
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/catalogdb?characterEncoding=utf8&useSSL=false
     username: root
     password: 12345678
@@ -44,7 +43,6 @@ spring:
     #useGlobalDataSourceStat=true
 
   jpa:
-    database: MYSQL
     show-sql: false
   ## Hibernate ddl auto (validate|create|create-drop|update)
     hibernate:

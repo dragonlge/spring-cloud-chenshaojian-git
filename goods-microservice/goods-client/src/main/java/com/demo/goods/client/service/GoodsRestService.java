@@ -1,6 +1,7 @@
 package com.demo.goods.client.service;
 
 
+import com.demo.goods.client.feign.GoodsClient;
 import com.demo.goods.object.GoodsQo;
 import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

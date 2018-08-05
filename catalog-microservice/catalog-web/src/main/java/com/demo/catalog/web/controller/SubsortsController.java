@@ -7,8 +7,7 @@ import com.demo.catalog.client.util.TreeMapConvert;
 import com.demo.catalog.object.SubsortsQo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,11 +26,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author yangyueming
+ */
 @RestController
 @RequestMapping("/subsorts")
+@Slf4j
 public class SubsortsController {
-    private static Logger logger = LoggerFactory.getLogger(SubsortsController.class);
-
     @Autowired
     private SubsortsFuture subsortsFuture;
 
@@ -77,7 +78,7 @@ public class SubsortsController {
     @RequestMapping(value="/save", method = RequestMethod.POST)
     public CompletableFuture<String> save(SubsortsQo subsortsQo) {
         return subsortsFuture.create(subsortsQo).thenApply( sid -> {
-            logger.info("新增->ID="+sid);
+            log.info("新增->ID="+sid);
             return sid;
         });
     }
@@ -96,7 +97,7 @@ public class SubsortsController {
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public CompletableFuture<String> update(SubsortsQo subsortsQo) {
         return subsortsFuture.update(subsortsQo).thenApply(sid -> {
-            logger.info("修改->ID="+sid);
+            log.info("修改->ID="+sid);
             return sid;
         });
     }
@@ -104,7 +105,7 @@ public class SubsortsController {
     @RequestMapping(value="/delete/{id}")
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return subsortsFuture.delete(id).thenApply( sid -> {
-            logger.info("删除->ID="+sid);
+            log.info("删除->ID="+sid);
             return sid;
         });
     }

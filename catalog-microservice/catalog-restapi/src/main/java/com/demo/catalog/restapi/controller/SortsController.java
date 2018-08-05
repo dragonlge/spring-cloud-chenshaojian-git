@@ -8,12 +8,15 @@ import com.demo.catalog.domain.util.CommonUtils;
 import com.demo.catalog.object.SortsQo;
 import com.demo.catalog.object.SubsortsQo;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -23,9 +26,8 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/sorts")
+@Slf4j
 public class SortsController {
-    private static Logger logger = LoggerFactory.getLogger(SortsController.class);
-
     @Autowired
     private SortsService sortsService;
 
@@ -102,7 +104,7 @@ public class SortsController {
             }
 
             sortsService.save(sorts);
-            logger.info("新增->ID=" + sorts.getId());
+            log.info("新增->ID=" + sorts.getId());
             return sorts.getId().toString();
         });
     }
@@ -120,7 +122,7 @@ public class SortsController {
             }
 
             sortsService.save(sorts);
-            logger.info("修改->ID=" + sorts.getId());
+            log.info("修改->ID=" + sorts.getId());
             return sorts.getId().toString();
         });
     }
@@ -129,7 +131,7 @@ public class SortsController {
     public CompletableFuture<String> delete(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() -> {
             sortsService.delete(id);
-            logger.info("删除->ID=" + id);
+            log.info("删除->ID=" + id);
             return id.toString();
         });
     }
