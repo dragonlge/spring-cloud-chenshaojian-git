@@ -1,6 +1,6 @@
-package com.demo.merchant.client.service;
+package com.demo.merchant.client.feign;
 
-import com.demo.merchant.object.RoleQo;
+import com.demo.merchant.object.KindQo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,33 +8,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @FeignClient("merchantapi")
-public interface RoleClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/role/{id}")
+public interface KindClient {
+    @RequestMapping(method = RequestMethod.GET, value = "/kind/{id}")
     String findById(@RequestParam("id") Long id);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/role/names/{name}")
+    @RequestMapping(method = RequestMethod.GET, value = "/kind/names/{name}")
     String findByName(@RequestParam("name") String name);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/role/list")
+    @RequestMapping(method = RequestMethod.GET, value = "/kind/list")
     String findList();
 
-    @RequestMapping(method = RequestMethod.GET, value = "/role/page",
+    @RequestMapping(method = RequestMethod.GET, value = "/kind/page",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findPage(@RequestParam("index") Integer index, @RequestParam("size") Integer size,
                     @RequestParam("name") String name);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/role/save",
+    @RequestMapping(method = RequestMethod.POST, value = "/kind/save",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String create(@RequestBody RoleQo roleQo);
+    String create(@RequestBody KindQo kindQo);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/role/update",
+    @RequestMapping(method = RequestMethod.PUT, value = "/kind/update",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String update(@RequestBody RoleQo roleQo);
+    String update(@RequestBody KindQo kindQo);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/role/delete/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/kind/delete/{id}")
     String delete(@RequestParam("id") Long id);
 }

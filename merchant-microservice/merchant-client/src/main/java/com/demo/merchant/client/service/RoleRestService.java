@@ -1,5 +1,6 @@
 package com.demo.merchant.client.service;
 
+import com.demo.merchant.client.feign.RoleClient;
 import com.demo.merchant.object.RoleQo;
 import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

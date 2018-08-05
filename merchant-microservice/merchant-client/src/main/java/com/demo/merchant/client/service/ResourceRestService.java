@@ -1,5 +1,6 @@
 package com.demo.merchant.client.service;
 
+import com.demo.merchant.client.feign.ResourceClient;
 import com.demo.merchant.object.ResourceQo;
 import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

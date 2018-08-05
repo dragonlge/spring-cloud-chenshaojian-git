@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
+/**
+ * @author yangyueming
+ */
 @Repository
 public interface PartRepository extends JpaRepository<Part, Long>, JpaSpecificationExecutor<Part> {
     @Query("select t from Part t where t.name like :name")

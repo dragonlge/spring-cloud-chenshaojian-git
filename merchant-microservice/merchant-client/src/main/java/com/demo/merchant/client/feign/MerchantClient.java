@@ -1,4 +1,4 @@
-package com.demo.merchant.client.service;
+package com.demo.merchant.client.feign;
 
 import com.demo.merchant.object.MerchantQo;
 import org.springframework.cloud.openfeign.FeignClient;
