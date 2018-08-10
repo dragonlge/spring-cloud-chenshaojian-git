@@ -25,6 +25,7 @@
 
     <modules>
         <module>poms</module>
+        <module>common</module>
         <module>spring-boot-demo</module>
         <module>base-microservice</module>
         <module>catalog-microservice</module>

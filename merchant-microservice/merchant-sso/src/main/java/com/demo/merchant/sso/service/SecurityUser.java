@@ -32,9 +32,9 @@ public class SecurityUser extends UserQo implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        List<RoleQo> roles = this.getRoles();
-        if (roles != null) {
-            for (RoleQo role : roles) {
+        List<RoleQo> roleQoList = this.getRoles();
+        if (roleQoList != null) {
+            for (RoleQo role : roleQoList) {
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
                 authorities.add(authority);
             }
