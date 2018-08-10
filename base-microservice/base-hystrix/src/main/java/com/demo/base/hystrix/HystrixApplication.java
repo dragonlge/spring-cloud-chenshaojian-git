@@ -6,6 +6,9 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * @author yangyueming
+ */
 @SpringBootApplication
 @Controller
 @EnableHystrixDashboard

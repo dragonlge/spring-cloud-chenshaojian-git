@@ -109,7 +109,7 @@ public class LoginController {
         String captcha = simple.toString();
         Date now = new Date();
         Long codeTime = Long.valueOf(session.getAttribute("codeTime") + "");
-        if (StringUtils.isEmpty(checkCode) || captcha == null || !(checkCode.equalsIgnoreCase(captcha))) {
+        if (StringUtils.isEmpty(checkCode) || !(checkCode.equalsIgnoreCase(captcha))) {
             request.setAttribute("errorMsg", "验证码错误！");
             return "验证码错误！";
         } else if ((now.getTime() - codeTime) / 1000 / 60 > 5) {//验证码有效长度为5分钟
