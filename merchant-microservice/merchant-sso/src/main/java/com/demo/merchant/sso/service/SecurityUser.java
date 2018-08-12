@@ -34,8 +34,8 @@ public class SecurityUser extends UserQo implements UserDetails {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         List<RoleQo> roleQoList = this.getRoles();
         if (roleQoList != null) {
-            for (RoleQo role : roleQoList) {
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
+            for (RoleQo roleQo : roleQoList) {
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(roleQo.getName());
                 authorities.add(authority);
             }
         }

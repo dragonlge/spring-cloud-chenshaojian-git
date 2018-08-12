@@ -58,20 +58,20 @@ public class LoginController {
         return userFuture.findByName(user.getName()).thenApply(json -> {
             UserQo userQo = new Gson().fromJson(json, UserQo.class);
             //分类列表（顶级菜单）
-            List<KindQo> kindList = new ArrayList<>();
-            List<Long> kindIds = new ArrayList<>();
+            List<KindQo> kindQoList = new ArrayList<>();
+            List<Long> kindIdList = new ArrayList<>();
             for (RoleQo roleQo : userQo.getRoles()) {
                 for (ResourceQo resourceVo : roleQo.getResources()) {
                     //去重，获取分类列表
                     Long kindId = resourceVo.getModel().getKind().getId();
-                    if (!kindIds.contains(kindId)) {
-                        kindList.add(resourceVo.getModel().getKind());
-                        kindIds.add(kindId);
+                    if (!kindIdList.contains(kindId)) {
+                        kindQoList.add(resourceVo.getModel().getKind());
+                        kindIdList.add(kindId);
                     }
                 }
             }
 
-            model.addAttribute("kinds", kindList);
+            model.addAttribute("kinds", kindQoList);
             model.addAttribute("user", user);
             return "home";
         });
