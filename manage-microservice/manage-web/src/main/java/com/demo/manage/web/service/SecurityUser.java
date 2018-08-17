@@ -30,12 +30,12 @@ public class SecurityUser extends Operator implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
         for (Part role : this.getParts()) {
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
-            authorities.add(authority);
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.getName());
+            grantedAuthorityList.add(simpleGrantedAuthority);
         }
-        return authorities;
+        return grantedAuthorityList;
     }
 
     @Override
